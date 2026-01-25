@@ -1,15 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
-
-const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/RaiAnsar', icon: '/images/svg/github.svg' },
-  { name: 'X', href: 'https://x.com/raiansar', icon: '/images/svg/x.svg' },
-  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/raiansar/', icon: '/images/svg/linkedin.svg' },
-  { name: 'Upwork', href: 'https://www.upwork.com/freelancers/iraiansar', icon: '/images/svg/upwork.svg' },
-  { name: 'Fiverr', href: 'https://www.fiverr.com/raiansar', icon: '/images/svg/fiverr.svg' }
-];
 
 export function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -19,54 +10,86 @@ export function Hero() {
   }, []);
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center pt-20 pb-16 relative overflow-hidden">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5" />
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="home" className="hero">
+      <div className="container">
         <div
-          className={`text-center max-w-4xl mx-auto transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+          className={`transition-all duration-1000 ${
+            mounted ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{ transitionDelay: '0.2s' }}
         >
-          <h1
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-all duration-700 delay-200 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-          >
-            <span className="bg-gradient-to-r from-accent to-accent/70 bg-clip-text text-transparent">
-              Rai Ansar
-            </span>
-            {' '}- Freelance WordPress Developer & Server Specialist
-          </h1>
-
+          {/* Eyebrow */}
           <p
-            className={`text-lg md:text-xl text-muted max-w-2xl mx-auto mb-10 leading-relaxed transition-all duration-700 delay-400 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+            className="hero-eyebrow"
+            style={{
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)',
+              transitionDelay: '0.3s',
+            }}
           >
-            I am a WordPress, React & Server Specialist. I specialize in solving complex technical challenges.
-            <br className="hidden md:block" />
-            Expert in debugging, security & optimization with 6+ years of experience.
+            Senior Full-Stack Developer
           </p>
 
-          <div
-            className={`flex items-center justify-center gap-4 flex-wrap transition-all duration-700 delay-600 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+          {/* Main Title */}
+          <h1
+            className="hero-title"
+            style={{
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? 'translateY(0)' : 'translateY(30px)',
+              transition: 'all 1s cubic-bezier(0.25, 0.1, 0.25, 1)',
+              transitionDelay: '0.5s',
+            }}
           >
-            {socialLinks.map((link, index) => (
-              <a
-                key={link.name}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`w-12 h-12 rounded-xl bg-surface flex items-center justify-center shadow-surface hover:bg-accent/10 hover:scale-110 hover:-translate-y-1 active:scale-95 transition-all duration-300 ${mounted ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
-                style={{ transitionDelay: `${800 + index * 100}ms` }}
-                aria-label={`${link.name} Profile`}
-              >
-                <Image
-                  src={link.icon}
-                  alt={link.name}
-                  width={24}
-                  height={24}
-                  className="dark:invert"
-                />
-              </a>
-            ))}
+            I build things
+            <br />
+            for the <span className="text-accent">web</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p
+            className="hero-subtitle"
+            style={{
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)',
+              transitionDelay: '0.7s',
+            }}
+          >
+            Six years crafting digital experiences. From custom applications
+            to cloud infrastructure, I turn complex problems into elegant solutions.
+          </p>
+
+          {/* CTA */}
+          <div
+            className="flex flex-wrap gap-4"
+            style={{
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)',
+              transitionDelay: '0.9s',
+            }}
+          >
+            <a href="#contact" className="btn btn-primary">
+              Start a Project
+            </a>
+            <a href="#services" className="btn btn-secondary">
+              View Services
+            </a>
           </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div
+          className="scroll-indicator hidden md:flex"
+          style={{
+            opacity: mounted ? 1 : 0,
+            transition: 'opacity 1s ease',
+            transitionDelay: '1.5s',
+          }}
+        >
+          <span>Scroll</span>
+          <div className="scroll-line" />
         </div>
       </div>
     </section>

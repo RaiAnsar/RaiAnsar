@@ -1,46 +1,52 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope } from "next/font/google";
+import { Instrument_Serif, Outfit, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Schema } from "@/components/Schema";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument",
   subsets: ["latin"],
+  weight: "400",
   display: "swap",
   preload: true,
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  preload: true,
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  preload: false,
 });
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
-  ],
+  themeColor: "#0A0A0A",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://raiansar.com"),
-  title: "Rai Ansar | WordPress & React Developer, Server Expert",
-  description: "Freelance WordPress & React developer with 6+ years experience. Expert in custom development, security, optimization & server management. 500+ projects completed.",
+  title: "Rai Ansar | Senior Full-Stack Developer",
+  description: "Senior full-stack developer with 6+ years experience. Expert in React, Next.js, WordPress, and cloud infrastructure. 500+ projects delivered.",
   keywords: [
-    "WordPress developer",
+    "full-stack developer",
+    "React developer",
+    "Next.js developer",
     "WordPress expert",
     "server management",
-    "cPanel expert",
-    "WHM specialist",
-    "WordPress security",
-    "malware removal",
-    "WordPress optimization",
-    "WooCommerce developer",
-    "PHP developer",
-    "React developer",
-    "website maintenance",
-    "WordPress debugging",
-    "server migration",
-    "VPS management",
-    "WordPress freelancer",
+    "cloud infrastructure",
+    "web development",
+    "freelance developer",
   ],
   authors: [{ name: "Rai Ansar", url: "https://raiansar.com" }],
   creator: "Rai Ansar",
@@ -49,21 +55,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://raiansar.com",
     siteName: "Rai Ansar",
-    title: "Rai Ansar - WordPress & Server Specialist",
-    description: "Expert WordPress developer and server specialist. 6+ years experience, 500+ projects. Specializing in custom development, security, and optimization.",
+    title: "Rai Ansar - Senior Full-Stack Developer",
+    description: "Senior full-stack developer with 6+ years experience. Building scalable web applications and cloud infrastructure.",
     images: [
       {
         url: "/images/og-image.png",
         width: 1792,
         height: 1024,
-        alt: "Rai Ansar - WordPress Developer | React Specialist | Server Expert",
+        alt: "Rai Ansar - Senior Full-Stack Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rai Ansar - WordPress & Server Specialist",
-    description: "Expert WordPress developer and server specialist. 6+ years experience, 500+ projects. Specializing in custom development, security, and optimization.",
+    title: "Rai Ansar - Senior Full-Stack Developer",
+    description: "Senior full-stack developer with 6+ years experience. Building scalable web applications and cloud infrastructure.",
     creator: "@raiansar",
     images: ["/images/og-image.png"],
   },
@@ -86,13 +92,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://api.emailjs.com" />
         <link rel="dns-prefetch" href="https://api.emailjs.com" />
         <Schema />
       </head>
-      <body className={`${manrope.variable} font-sans bg-background text-foreground antialiased`}>
+      <body className={`${instrumentSerif.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
         <ThemeProvider>
           {children}
         </ThemeProvider>

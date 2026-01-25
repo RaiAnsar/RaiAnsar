@@ -1,8 +1,33 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { skills, skillsDescription } from '@/data/skills';
+
+const skillCategories = [
+  {
+    title: 'Frontend',
+    skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Vue.js'],
+  },
+  {
+    title: 'Backend',
+    skills: ['Node.js', 'PHP', 'Python', 'REST APIs', 'GraphQL'],
+  },
+  {
+    title: 'CMS',
+    skills: ['WordPress', 'WooCommerce', 'Elementor', 'ACF', 'Shopify'],
+  },
+  {
+    title: 'DevOps',
+    skills: ['AWS', 'Docker', 'Linux', 'Nginx', 'CI/CD'],
+  },
+  {
+    title: 'Servers',
+    skills: ['cPanel/WHM', 'VPS', 'Cloudflare', 'DNS', 'SSL'],
+  },
+  {
+    title: 'Databases',
+    skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Firebase'],
+  },
+];
 
 export function Skills() {
   const [ref, inView] = useInView({
@@ -11,83 +36,61 @@ export function Skills() {
   });
 
   return (
-    <section id="skills" className="py-24 overflow-hidden bg-background relative z-10" ref={ref}>
-      <div className="container mx-auto px-4">
-        <h2
-          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16 transition-all duration-600 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          My Skills
-        </h2>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Text Block */}
-          <div
-            className={`transition-all duration-700 delay-200 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}
+    <section id="skills" className="section" ref={ref}>
+      <div className="container">
+        {/* Section header */}
+        <div className="max-w-2xl mb-16 lg:mb-20">
+          <span
+            className="badge"
+            style={{
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s ease',
+            }}
           >
-            <h3 className="text-2xl md:text-3xl font-bold mb-6 leading-tight">
-              {skillsDescription.title}
-            </h3>
-            {skillsDescription.paragraphs.map((paragraph, index) => (
-              <p key={index} className="text-muted text-lg leading-relaxed mb-4">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+            Expertise
+          </span>
 
-          {/* Skills Bars */}
-          <div className="space-y-6">
-            {skills.map((skill, index) => (
-              <SkillBar
-                key={skill.name}
-                skill={skill}
-                index={index}
-                inView={inView}
-              />
-            ))}
-          </div>
+          <h2
+            className="text-title mt-6"
+            style={{
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s ease',
+              transitionDelay: '0.1s',
+            }}
+          >
+            Technologies I work with
+          </h2>
+        </div>
+
+        {/* Skills grid */}
+        <div className="skills-grid">
+          {skillCategories.map((category, categoryIndex) => (
+            <div
+              key={category.title}
+              className="skill-category"
+              style={{
+                opacity: inView ? 1 : 0,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.6s ease',
+                transitionDelay: `${0.2 + categoryIndex * 0.1}s`,
+              }}
+            >
+              <h3 className="skill-category-title">
+                {category.title}
+              </h3>
+              <div className="skill-list">
+                {category.skills.map((skill) => (
+                  <span key={skill} className="skill-item">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function SkillBar({
-  skill,
-  index,
-  inView
-}: {
-  skill: { name: string; percentage: number };
-  index: number;
-  inView: boolean;
-}) {
-  const progressRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (inView && progressRef.current) {
-      setTimeout(() => {
-        if (progressRef.current) {
-          progressRef.current.style.width = `${skill.percentage}%`;
-        }
-      }, 100 + index * 100);
-    }
-  }, [inView, skill.percentage, index]);
-
-  return (
-    <div
-      className={`transition-all duration-500 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
-      style={{ transitionDelay: `${400 + index * 100}ms` }}
-    >
-      <div className="flex justify-between items-center mb-2">
-        <h4 className="font-medium text-foreground">{skill.name}</h4>
-        <span className="text-sm font-semibold text-accent">{skill.percentage}%</span>
-      </div>
-      <div className="h-2 bg-default rounded-full overflow-hidden">
-        <div
-          ref={progressRef}
-          className="h-full bg-gradient-to-r from-accent to-accent/70 rounded-full transition-all duration-1000 ease-out"
-          style={{ width: '0%' }}
-        />
-      </div>
-    </div>
   );
 }

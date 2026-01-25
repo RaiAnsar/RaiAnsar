@@ -1,18 +1,7 @@
 'use client';
 
 import { useInView } from 'react-intersection-observer';
-import { Card } from '@heroui/react';
 import { services } from '@/data/services';
-import Image from 'next/image';
-
-const iconMap: Record<string, string> = {
-  'wordpress-dev': '/images/svg/services/wordpress-dev.svg',
-  'wordpress-maintenance': '/images/svg/services/wordpress-maintenance.svg',
-  'server': '/images/svg/services/server-specialist.svg',
-  'ecommerce': '/images/svg/services/ecommerce.svg',
-  'custom-dev': '/images/svg/services/custom-development.svg',
-  'security': '/images/svg/services/web-security.svg'
-};
 
 export function Services() {
   const [ref, inView] = useInView({
@@ -21,43 +10,80 @@ export function Services() {
   });
 
   return (
-    <section id="services" className="py-24 bg-surface" ref={ref}>
-      <div className="container mx-auto px-4">
-        <h2
-          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16 transition-all duration-600 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          Services
-        </h2>
+    <section id="services" className="section" ref={ref} style={{ backgroundColor: 'var(--bg-elevated)' }}>
+      <div className="container">
+        {/* Section header */}
+        <div className="max-w-2xl mb-16 lg:mb-20">
+          <span
+            className="badge"
+            style={{
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s ease',
+            }}
+          >
+            Services
+          </span>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <h2
+            className="text-title mt-6"
+            style={{
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s ease',
+              transitionDelay: '0.1s',
+            }}
+          >
+            What I do
+          </h2>
+        </div>
+
+        {/* Services list */}
+        <div className="border-t" style={{ borderColor: 'var(--border)' }}>
           {services.map((service, index) => (
             <div
               key={index}
-              className={`transition-all duration-600 hover:-translate-y-2.5 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ transitionDelay: `${200 + index * 100}ms` }}
+              className="service-item"
+              style={{
+                opacity: inView ? 1 : 0,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.6s ease',
+                transitionDelay: `${0.2 + index * 0.1}s`,
+              }}
             >
-              <Card className="h-full" variant="secondary">
-                <Card.Header>
-                  <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center">
-                    <Image
-                      src={iconMap[service.icon] || '/images/svg/services/wordpress-dev.svg'}
-                      alt={service.title}
-                      width={32}
-                      height={32}
-                      loading="lazy"
-                      className="dark:invert"
-                    />
-                  </div>
-                </Card.Header>
-                <Card.Content>
-                  <h3 className="text-xl mb-3 font-semibold">{service.title}</h3>
-                  <Card.Description className="text-muted leading-relaxed">
-                    {service.description}
-                  </Card.Description>
-                </Card.Content>
-              </Card>
+              <span className="service-number">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3 className="service-title">
+                {service.title}
+              </h3>
+              <p className="service-description">
+                {service.description}
+              </p>
             </div>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div
+          className="mt-16 pt-8 border-t"
+          style={{
+            borderColor: 'var(--border)',
+            opacity: inView ? 1 : 0,
+            transform: inView ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'all 0.6s ease',
+            transitionDelay: '0.8s',
+          }}
+        >
+          <p className="text-body mb-4" style={{ color: 'var(--text-muted)' }}>
+            Have a project in mind?
+          </p>
+          <a
+            href="#contact"
+            className="link text-subtitle"
+          >
+            Let&apos;s talk
+          </a>
         </div>
       </div>
     </section>

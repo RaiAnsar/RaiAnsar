@@ -1,6 +1,5 @@
 'use client';
 
-import { Separator } from '@heroui/react';
 import Image from 'next/image';
 
 const socialLinks = [
@@ -11,51 +10,33 @@ const socialLinks = [
   { name: 'Fiverr', href: 'https://www.fiverr.com/raiansar', icon: '/images/svg/fiverr.svg' }
 ];
 
-const navLinks = [
-  { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About' },
-  { href: '#services', label: 'Services' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#testimonials', label: 'Testimonials' },
-  { href: '#faq', label: 'FAQ' },
-  { href: '#contact', label: 'Contact' }
-];
-
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-12 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center gap-8">
+    <footer className="footer">
+      <div className="container">
+        <div className="footer-inner">
           {/* Logo */}
-          <a href="#home" className="text-2xl font-bold text-foreground hover:text-accent transition-colors">
-            RAI ANSAR
+          <a href="#home" className="footer-logo">
+            Rai Ansar
           </a>
 
-          {/* Navigation */}
-          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm text-muted hover:text-accent transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
+          {/* Copyright */}
+          <p className="footer-copyright">
+            &copy; {currentYear} All rights reserved
+          </p>
 
           {/* Social Links */}
-          <div className="flex gap-4">
+          <div className="footer-social">
             {socialLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center hover:bg-accent/10 hover:scale-110 transition-all duration-300"
-                aria-label={`${link.name} Profile`}
+                className="social-link"
+                aria-label={link.name}
               >
                 <Image
                   src={link.icon}
@@ -63,18 +44,11 @@ export function Footer() {
                   width={20}
                   height={20}
                   loading="lazy"
-                  className="dark:invert"
+                  style={{ filter: 'invert(0.4)' }}
                 />
               </a>
             ))}
           </div>
-
-          <Separator className="w-full max-w-md" />
-
-          {/* Copyright */}
-          <p className="text-sm text-muted text-center">
-            &copy; {currentYear} Rai Ansar. All rights reserved.
-          </p>
         </div>
       </div>
     </footer>

@@ -1,15 +1,7 @@
 'use client';
 
 import { useInView } from 'react-intersection-observer';
-import { Button, Card } from '@heroui/react';
 import Image from 'next/image';
-
-const stats = [
-  { number: '500+', label: 'Projects Completed' },
-  { number: '6+', label: 'Years Experience' },
-  { number: '98%', label: 'Client Satisfaction' },
-  { number: '24/7', label: 'Support Available' }
-];
 
 export function About() {
   const [ref, inView] = useInView({
@@ -18,82 +10,114 @@ export function About() {
   });
 
   return (
-    <section id="about" className="py-24 bg-background relative z-10" ref={ref}>
-      <div className="container mx-auto px-4">
-        <h2
-          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16 transition-all duration-600 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-        >
-          About Me
-        </h2>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section id="about" className="section" ref={ref}>
+      <div className="container">
+        <div className="about-grid">
           {/* Image */}
           <div
-            className={`relative aspect-[3/4] max-w-md mx-auto lg:mx-0 rounded-3xl overflow-hidden shadow-overlay transition-all duration-600 delay-200 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}
+            className={`transition-all duration-1000 ${
+              inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+            }`}
           >
-            <picture>
-              <source
-                media="(max-width: 768px)"
-                srcSet="/images/me-mobile-optimized.webp"
-              />
-              <Image
-                src="/images/me-desktop-optimized.webp"
-                alt="Rai Ansar"
-                fill
-                sizes="(max-width: 768px) 300px, 500px"
-                className="object-cover"
-                loading="lazy"
-              />
-            </picture>
+            <div className="about-image-wrapper">
+              <picture>
+                <source
+                  media="(max-width: 768px)"
+                  srcSet="/images/me-mobile-optimized.webp"
+                />
+                <Image
+                  src="/images/me-desktop-optimized.webp"
+                  alt="Rai Ansar"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                  loading="lazy"
+                />
+              </picture>
+              <div className="about-image-frame" />
+            </div>
           </div>
 
           {/* Content */}
           <div
-            className={`transition-all duration-600 delay-400 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
+            className={`transition-all duration-1000 ${
+              inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+            }`}
+            style={{ transitionDelay: '0.2s' }}
           >
-            <p className="text-muted text-lg leading-relaxed mb-6">
-              I am a freelance WordPress expert, React developer, PHP developer, and server management specialist with over 6 years of experience
-              delivering high-quality web development solutions for clients worldwide. My expertise spans across custom development,
-              performance optimization, security hardening, and complex technical problem-solving.
-            </p>
-            <p className="text-muted text-lg leading-relaxed mb-10">
-              As a dedicated web developer, whether you need a custom WordPress plugin rebuilt from scratch, a React + Vite application developed,
-              or server issues resolved, I bring deep technical knowledge and a commitment to excellence to every project.
-              I&apos;ve successfully completed over 500 projects ranging from $500 to $20,000+, maintaining a 98% client satisfaction rate.
-            </p>
+            <span className="badge">About</span>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className={`transition-all duration-500 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-                  style={{ transitionDelay: `${600 + index * 100}ms` }}
-                >
-                  <Card className="text-center" variant="secondary">
-                    <Card.Content>
-                      <div className="text-2xl md:text-3xl font-bold text-accent mb-1">
-                        {stat.number}
-                      </div>
-                      <div className="text-sm text-muted">{stat.label}</div>
-                    </Card.Content>
-                  </Card>
-                </div>
-              ))}
+            <h2
+              className="text-title mt-6 mb-8"
+              style={{
+                opacity: inView ? 1 : 0,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.8s ease',
+                transitionDelay: '0.3s',
+              }}
+            >
+              Building digital products with precision and purpose
+            </h2>
+
+            <div
+              className="space-y-6 mb-10"
+              style={{
+                opacity: inView ? 1 : 0,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.8s ease',
+                transitionDelay: '0.4s',
+              }}
+            >
+              <p className="text-body-lg">
+                I&apos;m a full-stack developer with six years of experience building
+                web applications that scale. My work spans from custom WordPress
+                solutions to modern React applications and cloud infrastructure.
+              </p>
+              <p className="text-body-lg">
+                I believe in clean code, thoughtful architecture, and delivering
+                solutions that work. Every project is an opportunity to solve
+                real problems with elegant, maintainable code.
+              </p>
             </div>
 
-            {/* CTA Button */}
+            {/* Stats - minimal */}
             <div
-              className={`transition-all duration-600 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-              style={{ transitionDelay: '1000ms' }}
+              className="grid grid-cols-3 gap-8 py-8 border-t border-b"
+              style={{
+                borderColor: 'var(--border)',
+                opacity: inView ? 1 : 0,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.8s ease',
+                transitionDelay: '0.5s',
+              }}
             >
-              <Button
-                variant="primary"
-                size="lg"
-                onPress={() => { window.location.href = '#contact'; }}
-              >
-                Let&apos;s Work Together
-              </Button>
+              <div>
+                <div className="text-title mb-1">6+</div>
+                <div className="text-small">Years</div>
+              </div>
+              <div>
+                <div className="text-title mb-1">500+</div>
+                <div className="text-small">Projects</div>
+              </div>
+              <div>
+                <div className="text-title mb-1">98%</div>
+                <div className="text-small">Satisfaction</div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div
+              className="mt-10"
+              style={{
+                opacity: inView ? 1 : 0,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.8s ease',
+                transitionDelay: '0.6s',
+              }}
+            >
+              <a href="#contact" className="btn btn-primary">
+                Work With Me
+              </a>
             </div>
           </div>
         </div>
