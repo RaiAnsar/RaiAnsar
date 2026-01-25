@@ -1,0 +1,38 @@
+# Robots.txt for raiansar.com
+# Allow all web crawlers
+
+User-agent: *
+Allow: /
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://raiansar.com/sitemap.xml
+
+# Block access to private directories
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+
+# Allow search engines to access CSS and JS files
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /images/
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
