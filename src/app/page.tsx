@@ -1,27 +1,22 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 import { Header } from '@/components/sections/Header';
 import { Hero } from '@/components/sections/Hero';
-import { BubblesWrapper } from '@/components/ui/BubblesWrapper';
+import { Cursor } from '@/components/ui/Cursor';
+import { ParticleField } from '@/components/ui/ParticleField';
 
 // Lazy load below-fold components for better LCP
 const About = dynamic(() => import('@/components/sections/About').then(mod => ({ default: mod.About })), {
   loading: () => <div className="min-h-[600px]" />,
 });
 
+const Process = dynamic(() => import('@/components/sections/Process').then(mod => ({ default: mod.Process })), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
 const Services = dynamic(() => import('@/components/sections/Services').then(mod => ({ default: mod.Services })), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const Skills = dynamic(() => import('@/components/sections/Skills').then(mod => ({ default: mod.Skills })), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const Testimonials = dynamic(() => import('@/components/sections/Testimonials').then(mod => ({ default: mod.Testimonials })), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const FAQ = dynamic(() => import('@/components/sections/FAQ').then(mod => ({ default: mod.FAQ })), {
-  loading: () => <div className="min-h-[400px]" />,
+  loading: () => <div className="min-h-[500px]" />,
 });
 
 const Contact = dynamic(() => import('@/components/sections/Contact').then(mod => ({ default: mod.Contact })), {
@@ -35,15 +30,21 @@ const Footer = dynamic(() => import('@/components/sections/Footer').then(mod => 
 export default function Home() {
   return (
     <>
-      <BubblesWrapper />
+      {/* Custom cursor */}
+      <Cursor />
+
+      {/* Particle field background */}
+      <ParticleField />
+
+      {/* Noise overlay for texture */}
+      <div className="noise" />
+
       <Header />
       <main>
         <Hero />
         <About />
         <Services />
-        <Skills />
-        <Testimonials />
-        <FAQ />
+        <Process />
         <Contact />
       </main>
       <Footer />

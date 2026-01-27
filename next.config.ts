@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   // Static export for maximum performance
@@ -12,9 +13,9 @@ const nextConfig: NextConfig = {
   // Clean URLs
   trailingSlash: true,
 
-  // Turbopack for faster builds
-  experimental: {
-    // Enable optimizations
+  // Turbopack configuration - set correct project root
+  turbopack: {
+    root: path.resolve(__dirname),
   },
 };
 

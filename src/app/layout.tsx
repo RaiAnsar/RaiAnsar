@@ -1,49 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Outfit, JetBrains_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { Schema } from "@/components/Schema";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-  preload: true,
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-  preload: true,
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400"],
-  display: "swap",
-  preload: false,
-});
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0A0A0A",
+  themeColor: "#030712",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://raiansar.com"),
-  title: "Rai Ansar | Senior Full-Stack Developer",
-  description: "Senior full-stack developer with 6+ years experience. Expert in React, Next.js, WordPress, and cloud infrastructure. 500+ projects delivered.",
+  title: "Rai Ansar | Full Stack Developer & Software Architect",
+  description: "Crafting efficient, scalable solutions in software & web. Full-stack engineer with 10+ years of experience turning complex problems into elegant digital experiences.",
   keywords: [
     "full-stack developer",
+    "software architect",
     "React developer",
     "Next.js developer",
-    "WordPress expert",
-    "server management",
+    "TypeScript",
+    "Node.js",
+    "WordPress",
     "cloud infrastructure",
     "web development",
     "freelance developer",
@@ -55,21 +32,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://raiansar.com",
     siteName: "Rai Ansar",
-    title: "Rai Ansar - Senior Full-Stack Developer",
-    description: "Senior full-stack developer with 6+ years experience. Building scalable web applications and cloud infrastructure.",
+    title: "Rai Ansar | Full Stack Developer & Software Architect",
+    description: "Crafting efficient, scalable solutions in software & web. Full-stack engineer with 10+ years of experience.",
     images: [
       {
         url: "/images/og-image.png",
         width: 1792,
         height: 1024,
-        alt: "Rai Ansar - Senior Full-Stack Developer",
+        alt: "Rai Ansar - Full Stack Developer & Software Architect",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rai Ansar - Senior Full-Stack Developer",
-    description: "Senior full-stack developer with 6+ years experience. Building scalable web applications and cloud infrastructure.",
+    title: "Rai Ansar | Full Stack Developer & Software Architect",
+    description: "Crafting efficient, scalable solutions in software & web. Full-stack engineer with 10+ years of experience.",
     creator: "@raiansar",
     images: ["/images/og-image.png"],
   },
@@ -92,16 +69,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://api.emailjs.com" />
-        <link rel="dns-prefetch" href="https://api.emailjs.com" />
-        <Schema />
-      </head>
-      <body className={`${instrumentSerif.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+    <html lang="en" className="scroll-smooth">
+      <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`} style={{ fontFamily: 'var(--font-geist-sans), system-ui, -apple-system, sans-serif' }}>
+        {children}
       </body>
     </html>
   );
