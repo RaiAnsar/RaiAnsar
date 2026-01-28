@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useSpring, useMotionValue } from 'framer-motion';
+import { motion, useReducedMotion, useSpring, useMotionValue } from 'framer-motion';
 
 export function Cursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const visibleRef = useRef(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -21,12 +23,16 @@ export function Cursor() {
 
   useEffect(() => {
     // Check for touch device
+    if (shouldReduceMotion) return;
     if ('ontouchstart' in window) return;
 
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+      if (!visibleRef.current) {
+        visibleRef.current = true;
+        setIsVisible(true);
+      }
     };
 
     const handleMouseDown = () => setIsClicking(true);
@@ -61,7 +67,17 @@ export function Cursor() {
       document.removeEventListener('mouseover', handleMouseEnter);
       document.removeEventListener('mouseout', handleMouseLeave);
     };
-  }, [cursorX, cursorY, isVisible]);
+  }, [cursorX, cursorY, shouldReduceMotion]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isVisible) root.classList.add('has-custom-cursor');
+    else root.classList.remove('has-custom-cursor');
+
+    return () => {
+      root.classList.remove('has-custom-cursor');
+    };
+  }, [isVisible]);
 
   if (!isVisible) return null;
 

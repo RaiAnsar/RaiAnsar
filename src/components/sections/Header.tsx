@@ -1,13 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
-import { StatusModal } from '../ui/StatusModal';
+
+const StatusModal = dynamic(() => import('../ui/StatusModal').then((mod) => ({ default: mod.StatusModal })), {
+  ssr: false,
+});
 
 const navLinks = [
-  { href: '#about', label: 'About' },
-  { href: '#services', label: 'Services' },
-  { href: '#process', label: 'Process' },
+  { href: '#about', label: 'My Story' },
+  { href: '#process', label: 'How I Work' },
+  { href: '#services', label: 'Expertise' },
+  { href: '#posts', label: 'Posts' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -21,7 +26,7 @@ export function Header() {
       setScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 const skills = [
   { name: 'React / Next.js', level: 95 },
@@ -50,15 +50,6 @@ export function About() {
   const containerRef = useRef<HTMLElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, 15]);
-
   return (
     <section ref={containerRef} className="section relative" id="about">
       {/* Background elements */}
@@ -69,7 +60,6 @@ export function About() {
             background: 'radial-gradient(circle, rgba(153, 69, 255, 0.15) 0%, transparent 70%)',
             left: '-10%',
             top: '20%',
-            y: y1,
           }}
         />
         <motion.div
@@ -78,7 +68,6 @@ export function About() {
             background: 'radial-gradient(circle, rgba(0, 255, 240, 0.1) 0%, transparent 70%)',
             right: '-5%',
             bottom: '10%',
-            y: y2,
           }}
         />
       </div>
@@ -91,10 +80,10 @@ export function About() {
           transition={{ duration: 0.8 }}
           className="mb-20"
         >
-          <span className="section-label">About Me</span>
+          <span className="section-label">My Story</span>
           <h2 className="section-title max-w-4xl">
-            I craft digital products that people{' '}
-            <span className="gradient-text">love to use.</span>
+            Building products with{' '}
+            <span className="gradient-text">clarity</span>, speed, and taste.
           </h2>
         </motion.div>
 
@@ -175,7 +164,6 @@ export function About() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="relative p-8 mb-8 rounded-3xl overflow-hidden"
               style={{
-                rotate,
                 background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
                 backdropFilter: 'blur(20px)',
                 border: '1px solid rgba(255,255,255,0.08)',

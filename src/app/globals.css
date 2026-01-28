@@ -105,6 +105,11 @@
     text-decoration: none !important;
   }
 
+  :where(a, button, [role="button"], input, textarea, select, summary):focus-visible {
+    outline: 2px solid rgba(0, 255, 240, 0.6);
+    outline-offset: 4px;
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -137,12 +142,31 @@
     background: var(--void);
     color: var(--text-primary);
     overflow-x: hidden;
+    cursor: auto;
+  }
+
+  html.has-custom-cursor body {
     cursor: none;
   }
 
   ::selection {
     background: var(--neon-cyan);
     color: var(--void);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
@@ -210,8 +234,23 @@
   inset: 0;
   z-index: 1000;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.015;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .noise {
+    display: none;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -280,11 +319,9 @@
 
 .gradient-text {
   background: var(--gradient-hero);
-  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-shift 8s ease infinite;
 }
 
 .gradient-text-static {
@@ -294,18 +331,12 @@
   background-clip: text;
 }
 
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 /* Glow text */
 .glow-text {
   text-shadow:
-    0 0 20px rgba(0,255,240,0.5),
-    0 0 40px rgba(0,255,240,0.3),
-    0 0 60px rgba(0,255,240,0.2);
+    0 0 12px rgba(0,255,240,0.35),
+    0 0 24px rgba(0,255,240,0.22),
+    0 0 36px rgba(0,255,240,0.14);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -327,7 +358,7 @@
   background: var(--neon-cyan);
   border: none;
   border-radius: 100px;
-  cursor: none;
+  cursor: pointer;
   overflow: hidden;
   transition: all 0.4s var(--ease-out-expo);
   text-decoration: none;
@@ -376,7 +407,7 @@
   background: transparent;
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 100px;
-  cursor: none;
+  cursor: pointer;
   transition: all 0.4s var(--ease-out-expo);
   text-decoration: none;
 }
@@ -574,8 +605,8 @@
 .blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  animation: blob-morph 15s ease-in-out infinite;
+  filter: blur(70px);
+  animation: blob-morph 40s ease-in-out infinite;
 }
 
 @keyframes blob-morph {
@@ -585,15 +616,15 @@
   }
   25% {
     border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-    transform: rotate(90deg) scale(1.1);
+    transform: rotate(90deg) scale(1.02);
   }
   50% {
     border-radius: 50% 60% 30% 70% / 40% 40% 60% 50%;
-    transform: rotate(180deg) scale(0.95);
+    transform: rotate(180deg) scale(0.98);
   }
   75% {
     border-radius: 60% 40% 60% 30% / 60% 50% 40% 60%;
-    transform: rotate(270deg) scale(1.05);
+    transform: rotate(270deg) scale(1.01);
   }
 }
 
@@ -868,12 +899,6 @@
    ANIMATED GRADIENT BORDERS
    ───────────────────────────────────────────────────────────────────────────── */
 
-@property --border-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
 .gradient-border-animated {
   position: relative;
   border-radius: 24px;
@@ -886,7 +911,7 @@
   inset: -2px;
   border-radius: inherit;
   background: conic-gradient(
-    from var(--border-angle, 0deg),
+    from 0deg,
     transparent 20%,
     var(--border-color-1, #00fff0) 40%,
     var(--border-color-2, #9945ff) 60%,
@@ -898,7 +923,7 @@
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   padding: 2px;
-  animation: border-rotate 4s linear infinite;
+  animation: border-spin 4s linear infinite;
   opacity: 0;
   transition: opacity 0.5s var(--ease-out-expo);
   pointer-events: none;
@@ -908,8 +933,8 @@
   opacity: 1;
 }
 
-@keyframes border-rotate {
-  to { --border-angle: 360deg; }
+@keyframes border-spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────

@@ -48,9 +48,10 @@ const socialLinks = [
 
 const navLinks = [
   { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About' },
-  { href: '#services', label: 'Services' },
-  { href: '#process', label: 'Process' },
+  { href: '#about', label: 'My Story' },
+  { href: '#process', label: 'How I Work' },
+  { href: '#services', label: 'Expertise' },
+  { href: '#posts', label: 'Posts' },
   { href: '#contact', label: 'Contact' },
 ];
 

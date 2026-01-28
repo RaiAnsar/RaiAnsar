@@ -1,10 +1,7 @@
-'use client';
-
 import dynamic from 'next/dynamic';
 import { Header } from '@/components/sections/Header';
 import { Hero } from '@/components/sections/Hero';
-import { Cursor } from '@/components/ui/Cursor';
-import { ParticleField } from '@/components/ui/ParticleField';
+import { DeferredEffects } from '@/components/ui/DeferredEffects';
 
 // Lazy load below-fold components for better LCP
 const About = dynamic(() => import('@/components/sections/About').then(mod => ({ default: mod.About })), {
@@ -19,6 +16,10 @@ const Services = dynamic(() => import('@/components/sections/Services').then(mod
   loading: () => <div className="min-h-[500px]" />,
 });
 
+const Posts = dynamic(() => import('@/components/sections/Posts').then(mod => ({ default: mod.Posts })), {
+  loading: () => <div className="min-h-[500px]" />,
+});
+
 const Contact = dynamic(() => import('@/components/sections/Contact').then(mod => ({ default: mod.Contact })), {
   loading: () => <div className="min-h-[600px]" />,
 });
@@ -30,11 +31,8 @@ const Footer = dynamic(() => import('@/components/sections/Footer').then(mod => 
 export default function Home() {
   return (
     <>
-      {/* Custom cursor */}
-      <Cursor />
-
-      {/* Particle field background */}
-      <ParticleField />
+      {/* Defer non-essential effects until the browser is idle */}
+      <DeferredEffects />
 
       {/* Noise overlay for texture */}
       <div className="noise" />
@@ -43,8 +41,9 @@ export default function Home() {
       <main>
         <Hero />
         <About />
-        <Services />
         <Process />
+        <Services />
+        <Posts />
         <Contact />
       </main>
       <Footer />

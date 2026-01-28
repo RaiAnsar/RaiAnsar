@@ -24,7 +24,6 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
   const [isAvailable, setIsAvailable] = useState(true);
   const [isLiveSync, setIsLiveSync] = useState(false);
   const [statusData, setStatusData] = useState<StatusData | null>(null);
-  const [lastFetch, setLastFetch] = useState<Date | null>(null);
 
   // Fetch real status from server
   const fetchStatus = useCallback(async () => {
@@ -34,7 +33,6 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
         const data: StatusData = await res.json();
         setStatusData(data);
         setIsLiveSync(true);
-        setLastFetch(new Date());
 
         // Use real status if available
         if (data.status === 'available') {
@@ -56,6 +54,8 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
   }, []);
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const updateTime = () => {
       const now = new Date();
 
@@ -88,7 +88,7 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
       clearInterval(timeInterval);
       clearInterval(statusInterval);
     };
-  }, [fetchStatus]);
+  }, [fetchStatus, isOpen]);
 
   // Close on escape key
   useEffect(() => {

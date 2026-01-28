@@ -90,7 +90,7 @@ export function Schema() {
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "WordPress & Server Services",
-      "itemListElement": services.map((service, index) => ({
+      "itemListElement": services.map((service) => ({
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",

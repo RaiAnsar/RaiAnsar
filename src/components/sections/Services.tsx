@@ -1,692 +1,474 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { MotionValue, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { AmbientOrbs, FloatingParticles } from '@/components/ui/AmbientOrbs';
 
-// Service type with size for bento grid
-type ServiceSize = 'featured' | 'large' | 'standard';
-
-interface Service {
+type Expertise = {
   id: string;
-  name: string;
+  title: string;
   category: string;
   description: string;
-  stack: string[];
+  bullets: string[];
+  accentFrom: string;
+  accentTo: string;
   icon: React.ReactNode;
-  gradient: string;
-  glow: string;
-  glowRGB: string;
-  size: ServiceSize;
-}
+};
 
-const services: Service[] = [
+const expertise: Expertise[] = [
   {
     id: 'frontend',
-    name: 'FRONTEND',
+    title: 'FRONTEND',
     category: 'Digital Experience',
-    description: 'Crafting immersive digital journeys that captivate and convert. Pixel-perfect interfaces with fluid animations and seamless interactions that users love.',
-    stack: ['React / Next.js', 'TypeScript', 'Framer Motion', 'Tailwind CSS', 'Three.js'],
+    description:
+      'High-performance landing pages and web apps—clean UI engineering, accessible UX, and polished interactions.',
+    bullets: ['React / Next.js', 'TypeScript', 'Design Systems', 'Accessibility + UX'],
+    accentFrom: '#06b6d4',
+    accentTo: '#2563eb',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
-        <rect x="2" y="3" width="20" height="14" rx="2" />
-        <path d="M8 21h8M12 17v4" />
-        <path d="M7 8l3 3-3 3M12 14h5" strokeLinecap="round" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M2 12h20" />
+        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
       </svg>
     ),
-    gradient: 'from-[#00fff0] to-[#00a8ff]',
-    glow: '#00fff0',
-    glowRGB: '0, 255, 240',
-    size: 'featured',
   },
   {
     id: 'backend',
-    name: 'BACKEND',
+    title: 'BACKEND',
     category: 'System Architecture',
-    description: 'Building robust, scalable server-side solutions. Secure APIs and microservices engineered for performance at any scale.',
-    stack: ['Node.js', 'Python', 'PostgreSQL', 'Redis', 'GraphQL'],
+    description:
+      'Secure APIs and scalable services with pragmatic architecture—built for reliability, performance, and maintainability.',
+    bullets: ['Node.js / Python', 'PostgreSQL', 'Redis / Caching', 'Auth + Integrations'],
+    accentFrom: '#8b5cf6',
+    accentTo: '#a855f7',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
         <ellipse cx="12" cy="6" rx="8" ry="3" />
-        <path d="M4 6v6c0 1.657 3.582 3 8 3s8-1.343 8-3V6" />
-        <path d="M4 12v6c0 1.657 3.582 3 8 3s8-1.343 8-3v-6" />
+        <path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6" />
+        <path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" />
       </svg>
     ),
-    gradient: 'from-[#9945ff] to-[#6366f1]',
-    glow: '#9945ff',
-    glowRGB: '153, 69, 255',
-    size: 'large',
   },
   {
     id: 'wordpress',
-    name: 'WORDPRESS',
+    title: 'WORDPRESS',
     category: 'CMS Expertise',
-    description: 'Complete WordPress solutions from hosting to custom development. Migrations, theme design, custom plugins, and expert debugging.',
-    stack: ['Hosting', 'Migrations', 'Theme Design', 'Custom Plugins', 'Debugging'],
+    description:
+      'Custom themes, plugins, migrations, and debugging—plus performance and security hardening for production sites.',
+    bullets: ['Custom Themes', 'Plugin Development', 'WooCommerce', 'Speed + Security'],
+    accentFrom: '#0ea5e9',
+    accentTo: '#22c55e',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
         <circle cx="12" cy="12" r="10" />
-        <path d="M2.5 12h3l2.5 8L12 6l3 10 2-4h4.5" />
+        <path d="M7 9l2.5 8L12 6l2.5 11L17 9" />
       </svg>
     ),
-    gradient: 'from-[#21759b] to-[#464646]',
-    glow: '#21759b',
-    glowRGB: '33, 117, 155',
-    size: 'standard',
   },
   {
-    id: 'ai',
-    name: 'AI',
-    category: 'Intelligent Solutions',
-    description: 'Integrating cutting-edge AI to automate and enhance. LLMs and predictive models for smarter applications.',
-    stack: ['OpenAI', 'LangChain', 'Python', 'ML Models'],
+    id: 'ecommerce',
+    title: 'E‑COMMERCE',
+    category: 'Conversion Systems',
+    description:
+      'Checkout flows, catalog logic, performance, and integrations—engineered to convert and scale smoothly.',
+    bullets: ['Stripe / Payments', 'Shipping + Tax', 'Analytics', 'SEO Foundations'],
+    accentFrom: '#ec4899',
+    accentTo: '#f97316',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
-        <circle cx="12" cy="12" r="3" />
-        <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
+        <path d="M6 6h15l-1.5 9h-12z" />
+        <path d="M6 6l-2-3H2" />
+        <circle cx="9" cy="20" r="1.5" />
+        <circle cx="18" cy="20" r="1.5" />
       </svg>
     ),
-    gradient: 'from-[#ff2d92] to-[#ec4899]',
-    glow: '#ff2d92',
-    glowRGB: '255, 45, 146',
-    size: 'standard',
   },
   {
     id: 'devops',
-    name: 'DEVOPS',
-    category: 'Cloud Infrastructure',
-    description: 'Automating deployment pipelines. Container orchestration ensuring your software runs smoothly.',
-    stack: ['Docker', 'Kubernetes', 'AWS', 'CI/CD'],
+    title: 'DEVOPS',
+    category: 'Deployment & Reliability',
+    description:
+      'Secure deployments, automation, and monitoring—so your product stays stable, fast, and easy to maintain.',
+    bullets: ['Docker', 'Linux / Nginx', 'CI/CD', 'Monitoring + Backups'],
+    accentFrom: '#22c55e',
+    accentTo: '#06b6d4',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
+        <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" />
         <circle cx="12" cy="12" r="3" />
-        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-        <circle cx="12" cy="12" r="9" strokeDasharray="4 2" />
       </svg>
     ),
-    gradient: 'from-[#22c55e] to-[#10b981]',
-    glow: '#22c55e',
-    glowRGB: '34, 197, 94',
-    size: 'standard',
   },
 ];
 
-// Size classes for bento grid
-const sizeClasses: Record<ServiceSize, string> = {
-  featured: 'col-span-12 lg:col-span-7 row-span-2',
-  large: 'col-span-12 md:col-span-6 lg:col-span-5 row-span-2',
-  standard: 'col-span-12 md:col-span-6 lg:col-span-4',
-};
-
-function ServiceCard({
-  service,
-  isActive,
-  onClick,
+function ExpertiseCard({
+  item,
   index,
+  total,
+  progress,
+  isActive,
 }: {
-  service: Service;
-  isActive: boolean;
-  onClick: () => void;
+  item: Expertise;
   index: number;
+  total: number;
+  progress: MotionValue<number>;
+  isActive: boolean;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const radius = 620;
+  const position = useTransform(progress, (v) => v * Math.max(1, total - 1));
+  const offset = useTransform(position, (p) => index - p);
+  const angle = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * 0.55));
 
-  // Mouse tracking for 3D tilt
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const x = useTransform(angle, (a) => Math.sin(a) * radius * 1.05);
+  const z = useTransform([angle, offset], ([a, o]: number[]) => {
+    return Math.cos(a) * radius - radius - Math.abs(o) * 160;
+  });
+  const rotateY = useTransform(angle, (a) => (-a * 180) / Math.PI);
 
-  const mouseXSpring = useSpring(x, { stiffness: 400, damping: 90 });
-  const mouseYSpring = useSpring(y, { stiffness: 400, damping: 90 });
+  const opacity = useTransform(offset, (o) => {
+    const abs = Math.abs(o);
+    if (abs > 1.4) return 0;
+    return 1 - abs / 1.4;
+  });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['12deg', '-12deg']);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-12deg', '12deg']);
-
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!cardRef.current) return;
-      const rect = cardRef.current.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-      const xPct = mouseX / rect.width - 0.5;
-      const yPct = mouseY / rect.height - 0.5;
-      x.set(xPct);
-      y.set(yPct);
-
-      // Update CSS variables for spotlight
-      cardRef.current.style.setProperty('--mouse-x', `${(mouseX / rect.width) * 100}%`);
-      cardRef.current.style.setProperty('--mouse-y', `${(mouseY / rect.height) * 100}%`);
-    },
-    [x, y]
-  );
-
-  const handleMouseLeave = useCallback(() => {
-    x.set(0);
-    y.set(0);
-    setIsHovered(false);
-  }, [x, y]);
-
-  const isFeatured = service.size === 'featured';
-  const isLarge = service.size === 'large';
+  const scale = useTransform(offset, (o) => 1 - Math.min(0.14, Math.abs(o) * 0.06));
+  const y = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * -10));
 
   return (
     <motion.div
-      ref={cardRef}
-      className={`${sizeClasses[service.size]} relative`}
-      initial={{ opacity: 0, y: 60, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{
-        duration: 0.7,
-        delay: 0.1 * index,
-        ease: [0.19, 1, 0.22, 1],
-      }}
+      className="absolute top-24 md:top-auto w-[85vw] sm:w-[90vw] max-w-6xl h-[70vh] sm:h-[70vh] md:h-[70vh] flex flex-col lg:flex-row overflow-hidden rounded-2xl sm:rounded-3xl bg-[#0D1117] border border-white/10 shadow-2xl origin-center"
       style={{
-        perspective: '1000px',
+        opacity,
+        scale,
+        x,
+        y,
+        z,
+        rotateY,
+        transformStyle: 'preserve-3d',
+        backfaceVisibility: 'hidden',
+        willChange: 'transform, opacity',
+        zIndex: isActive ? 3 : 1,
+        pointerEvents: isActive ? 'auto' : 'none',
       }}
+      aria-hidden={!isActive}
     >
-      {/* Animated gradient border wrapper */}
-      <motion.div
-        className="gradient-border-animated h-full"
-        style={
-          {
-            '--border-color-1': service.glow,
-            '--border-color-2': service.glow,
-            '--border-color-3': 'transparent',
-          } as React.CSSProperties
-        }
-      >
-        {/* Main card */}
-        <motion.div
-          className="service-card h-full cursor-pointer group"
+      <div className="flex-1 p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-center relative z-10">
+        <div
+          className="inline-flex self-start items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-white text-xs sm:text-sm font-bold tracking-wider mb-4 sm:mb-6 border border-white/10"
           style={{
-            rotateX: isHovered ? rotateX : 0,
-            rotateY: isHovered ? rotateY : 0,
-            transformStyle: 'preserve-3d',
-            ['--card-glow' as string]: `rgba(${service.glowRGB}, 0.1)`,
+            background: `linear-gradient(90deg, ${item.accentFrom}33, ${item.accentTo}33)`,
           }}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={handleMouseLeave}
-          onClick={onClick}
-          whileHover={{ scale: 1.02 }}
-          transition={{ duration: 0.4 }}
         >
-          {/* Subtle glow layer - reduced opacity */}
-          <div
-            className="service-card-glow"
-            style={{ ['--glow-color' as string]: `rgba(${service.glowRGB}, 0.08)` }}
-          />
+          <span className="opacity-90">{item.category}</span>
+        </div>
 
-          {/* Ambient orbs - pushed further back with lower opacity */}
-          <div className="absolute inset-0 opacity-40">
-            <AmbientOrbs
-              color={service.glow}
-              count={isFeatured ? 3 : isLarge ? 2 : 1}
-              minSize={isFeatured ? 60 : 40}
-              maxSize={isFeatured ? 120 : 80}
-            />
-          </div>
+        <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 sm:mb-6 md:mb-8 tracking-tighter text-white">
+          {item.title}
+        </h3>
 
-          {/* Floating particles - more subtle */}
-          {(isFeatured || isLarge) && (
-            <div className="absolute inset-0 opacity-50">
-              <FloatingParticles color={service.glow} count={isFeatured ? 4 : 3} />
+        <p className="text-base sm:text-lg md:text-xl text-white/55 leading-relaxed mb-6 sm:mb-8 md:mb-12 max-w-2xl">
+          {item.description}
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8 md:mb-12">
+          {item.bullets.map((bullet) => (
+            <div key={bullet} className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base text-white/70">
+              <div
+                className="w-1.5 h-1.5 rounded-full shrink-0"
+                style={{
+                  background: `linear-gradient(90deg, ${item.accentFrom}, ${item.accentTo})`,
+                }}
+              />
+              <span>{bullet}</span>
             </div>
-          )}
+          ))}
+        </div>
 
-          {/* Corner accent lines */}
-          <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none overflow-hidden">
-            <motion.div
-              className="absolute top-4 left-4 w-8 h-[1px]"
-              style={{ background: `linear-gradient(90deg, ${service.glow}, transparent)` }}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: isHovered ? 1 : 0.5 }}
-              transition={{ duration: 0.3 }}
-            />
-            <motion.div
-              className="absolute top-4 left-4 w-[1px] h-8"
-              style={{ background: `linear-gradient(180deg, ${service.glow}, transparent)` }}
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: isHovered ? 1 : 0.5 }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-          <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none overflow-hidden">
-            <motion.div
-              className="absolute bottom-4 right-4 w-8 h-[1px]"
-              style={{ background: `linear-gradient(-90deg, ${service.glow}, transparent)` }}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: isHovered ? 1 : 0.5 }}
-              transition={{ duration: 0.3 }}
-            />
-            <motion.div
-              className="absolute bottom-4 right-4 w-[1px] h-8"
-              style={{ background: `linear-gradient(0deg, ${service.glow}, transparent)` }}
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: isHovered ? 1 : 0.5 }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-
-          {/* Glassmorphism content panel - THIS FIXES READABILITY */}
-          <div
-            className={`absolute inset-3 rounded-xl z-[5] pointer-events-none`}
-            style={{
-              background: 'linear-gradient(135deg, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0.4) 100%)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.03)',
-            }}
-          />
-
-          {/* Content wrapper with depth */}
-          <div
-            className={`relative z-10 h-full ${isFeatured ? 'p-10' : 'p-8'}`}
-            style={{ transform: 'translateZ(20px)' }}
+        <div>
+          <a
+            className="inline-flex items-center gap-3 text-base sm:text-lg font-bold transition-all duration-300 group w-fit"
+            href="#contact"
+            style={{ color: item.accentFrom }}
           >
-            {/* Service number - repositioned */}
-            <motion.span
-              className="absolute -top-2 -right-2 text-[6rem] lg:text-[8rem] font-black leading-none pointer-events-none select-none"
-              style={{
-                background: `linear-gradient(135deg, rgba(${service.glowRGB}, 0.12) 0%, transparent 60%)`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
-            >
-              {String(index + 1).padStart(2, '0')}
-            </motion.span>
+            Start Project
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6">
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
 
-            {/* 3D Icon with enhanced glow */}
-            <div className="icon-3d-container mb-8 relative">
-              {/* Icon glow ring */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl"
-                style={{
-                  background: `radial-gradient(circle, rgba(${service.glowRGB}, 0.3) 0%, transparent 70%)`,
-                  filter: 'blur(20px)',
-                }}
-                animate={{
-                  scale: isHovered ? [1, 1.2, 1] : 1,
-                  opacity: isHovered ? [0.5, 0.8, 0.5] : 0.3,
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <motion.div
-                className={`icon-3d ${isFeatured ? 'w-20 h-20' : 'w-[72px] h-[72px]'} relative`}
-                style={{
-                  background: `linear-gradient(135deg, ${service.glow}, ${service.gradient.includes('to-[') ? service.gradient.split('to-[')[1].replace(']', '') : service.glow})`,
-                  ['--icon-glow' as string]: `rgba(${service.glowRGB}, 0.5)`,
-                }}
-                whileHover={{ scale: 1.15, rotateY: 15, rotateX: -5 }}
-                transition={{ duration: 0.4, type: 'spring', stiffness: 300 }}
+      {/* Right illustration */}
+      <div className="flex-1 relative hidden lg:block">
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{ background: `linear-gradient(135deg, ${item.accentFrom}, ${item.accentTo})` }}
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="relative w-80 h-80">
+            <motion.div
+              className="absolute inset-0"
+              animate={shouldReduceMotion || !isActive ? undefined : { rotate: 360 }}
+              transition={
+                shouldReduceMotion || !isActive
+                  ? undefined
+                  : { duration: 40, repeat: Infinity, ease: 'linear' }
+              }
+            >
+              <div className="absolute inset-0 border-2 border-dashed border-white/15 rounded-full" />
+              <div className="absolute inset-10 border border-white/10 rounded-full" />
+            </motion.div>
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div
+                className="text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.18)]"
+                style={{ color: item.accentFrom }}
               >
-                <motion.span
-                  className="text-white relative z-10"
-                  animate={{
-                    filter: isHovered ? 'drop-shadow(0 0 8px rgba(255,255,255,0.5))' : 'none'
-                  }}
-                >
-                  {service.icon}
-                </motion.span>
-              </motion.div>
+                {item.icon}
+              </div>
             </div>
-
-            {/* Category label with glow */}
-            <motion.span
-              className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase mb-4"
-              style={{
-                color: service.glow,
-                textShadow: `0 0 20px rgba(${service.glowRGB}, 0.5)`,
-              }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 + index * 0.1 }}
-            >
-              <span
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: service.glow, boxShadow: `0 0 10px ${service.glow}` }}
-              />
-              {service.category}
-            </motion.span>
-
-            {/* Service name with text shadow for contrast */}
-            <motion.h3
-              className={`font-black tracking-tight mb-4 ${
-                isFeatured ? 'text-4xl lg:text-5xl' : 'text-2xl lg:text-3xl'
-              } text-white`}
-              style={{
-                textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-              }}
-              whileHover={{
-                textShadow: `0 0 30px rgba(${service.glowRGB}, 0.3)`,
-              }}
-            >
-              {service.name}
-            </motion.h3>
-
-            {/* Description with better contrast */}
-            <p
-              className={`text-white/60 leading-relaxed mb-8 ${
-                isFeatured ? 'text-base lg:text-lg max-w-xl' : 'text-sm'
-              }`}
-              style={{
-                textShadow: '0 1px 3px rgba(0, 0, 0, 0.3)',
-              }}
-            >
-              {service.description}
-            </p>
-
-            {/* Tech stack with enhanced styling */}
-            <div className="flex flex-wrap gap-2 mt-auto">
-              {service.stack.map((tech, i) => (
-                <motion.span
-                  key={tech}
-                  className="relative px-4 py-2 text-xs font-medium rounded-full cursor-default overflow-hidden"
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: 'rgba(255, 255, 255, 0.7)',
-                  }}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.3 + index * 0.1 + i * 0.05,
-                  }}
-                  whileHover={{
-                    background: `rgba(${service.glowRGB}, 0.15)`,
-                    borderColor: `rgba(${service.glowRGB}, 0.4)`,
-                    color: '#ffffff',
-                    scale: 1.05,
-                    y: -2,
-                  }}
-                >
-                  {/* Shimmer effect */}
-                  <motion.span
-                    className="absolute inset-0 -translate-x-full"
-                    style={{
-                      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
-                    }}
-                    animate={{ x: ['0%', '200%'] }}
-                    transition={{
-                      duration: 2,
-                      delay: i * 0.3,
-                      repeat: Infinity,
-                      repeatDelay: 3,
-                    }}
-                  />
-                  <span className="relative z-10">{tech}</span>
-                </motion.span>
-              ))}
-            </div>
-
-            {/* Active indicator */}
-            {isActive && (
-              <motion.div
-                className="absolute top-6 right-6 flex items-center gap-2"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-              >
-                <span className="text-xs font-medium uppercase tracking-widest" style={{ color: service.glow }}>
-                  Active
-                </span>
-                <motion.div
-                  className="w-2.5 h-2.5 rounded-full"
-                  style={{ backgroundColor: service.glow }}
-                  animate={{
-                    scale: [1, 1.3, 1],
-                    opacity: [1, 0.7, 1],
-                  }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                />
-              </motion.div>
-            )}
           </div>
-
-          {/* Hover border glow */}
-          <motion.div
-            className="absolute inset-0 rounded-3xl pointer-events-none"
-            style={{
-              border: `1px solid rgba(${service.glowRGB}, 0.2)`,
-              boxShadow: `inset 0 0 30px rgba(${service.glowRGB}, 0.05)`,
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          />
-        </motion.div>
-      </motion.div>
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#0D1117]" />
+      </div>
     </motion.div>
   );
 }
 
-export function Services() {
-  const [activeService, setActiveService] = useState('frontend');
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
+function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
+  const shouldReduceMotion = useReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const swipeStart = useRef<{ x: number; y: number; time: number } | null>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
   });
 
-  const containerRef = useRef<HTMLElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+  // Hold the first/last card for a bit so users can’t “skip” past the section edges.
+  const edgeHold = shouldReduceMotion ? 0 : 0.085;
+  const progress = useTransform(scrollYProgress, (v) => {
+    const start = edgeHold;
+    const end = edgeHold;
+    const range = 1 - start - end;
+    if (range <= 0) return 0;
+    const t = (v - start) / range;
+    return Math.min(1, Math.max(0, t));
+  });
 
-  // Mouse tracking for section spotlight
-  const handleSectionMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!gridRef.current) return;
-    const rect = gridRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    gridRef.current.style.setProperty('--spotlight-x', `${x}px`);
-    gridRef.current.style.setProperty('--spotlight-y', `${y}px`);
+  useEffect(() => {
+    const unsubscribe = progress.on('change', (v) => {
+      const maxIndex = Math.max(1, expertise.length - 1);
+      const idx = Math.min(expertise.length - 1, Math.max(0, Math.round(v * maxIndex)));
+      setActiveIndex((prev) => (prev === idx ? prev : idx));
+    });
+    return () => unsubscribe();
+  }, [progress]);
+
+  const marqueeX = useTransform(progress, [0, 1], ['65%', '-65%']);
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      const el = sectionRef.current;
+      if (!el) return;
+
+      const sectionTop = window.scrollY + el.getBoundingClientRect().top;
+      const totalScroll = Math.max(1, el.offsetHeight - window.innerHeight);
+      const maxIndex = Math.max(1, expertise.length - 1);
+      const range = 1 - edgeHold - edgeHold;
+      const normalized = index / maxIndex;
+      const targetProgress = edgeHold + normalized * Math.max(0, range);
+      const top = sectionTop + totalScroll * targetProgress;
+
+      window.scrollTo({
+        top,
+        behavior: shouldReduceMotion ? 'auto' : 'smooth',
+      });
+    },
+    [sectionRef, shouldReduceMotion, edgeHold]
+  );
+
+  const onTouchStart = useCallback((event: React.TouchEvent) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    swipeStart.current = { x: touch.clientX, y: touch.clientY, time: Date.now() };
   }, []);
+
+  const onTouchEnd = useCallback(
+    (event: React.TouchEvent) => {
+      const start = swipeStart.current;
+      swipeStart.current = null;
+      if (!start) return;
+
+      const touch = event.changedTouches[0];
+      if (!touch) return;
+
+      const dx = touch.clientX - start.x;
+      const dy = touch.clientY - start.y;
+      const dt = Date.now() - start.time;
+
+      // Quick, mostly-horizontal swipe switches cards.
+      if (dt > 650) return;
+      const absX = Math.abs(dx);
+      const absY = Math.abs(dy);
+      if (absX < 56 || absX < absY * 1.2) return;
+
+      const next = Math.min(
+        expertise.length - 1,
+        Math.max(0, activeIndex + (dx < 0 ? 1 : -1))
+      );
+      if (next !== activeIndex) scrollToIndex(next);
+    },
+    [activeIndex, scrollToIndex]
+  );
+
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      const key = event.key;
+      if (key === 'ArrowRight' || key === 'ArrowDown') {
+        event.preventDefault();
+        scrollToIndex(Math.min(expertise.length - 1, activeIndex + 1));
+      } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+        event.preventDefault();
+        scrollToIndex(Math.max(0, activeIndex - 1));
+      } else if (key === 'Home') {
+        event.preventDefault();
+        scrollToIndex(0);
+      } else if (key === 'End') {
+        event.preventDefault();
+        scrollToIndex(expertise.length - 1);
+      }
+    },
+    [activeIndex, scrollToIndex]
+  );
+
+  return (
+    <>
+      {/* Dots nav */}
+      <div className="absolute bottom-6 sm:bottom-12 left-4 sm:left-1/2 sm:-translate-x-1/2 z-50 flex items-center gap-3 sm:gap-4 bg-black/40 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-white/10 overflow-x-auto max-w-[calc(100vw-2rem)] sm:max-w-fit no-scrollbar">
+        {expertise.map((item, index) => {
+          const isActive = index === activeIndex;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              className="relative group"
+              onClick={() => scrollToIndex(index)}
+              aria-label={item.title}
+              aria-current={isActive ? 'true' : undefined}
+            >
+              <div
+                className="w-3 h-3 rounded-full transition-colors"
+                style={{
+                  background: isActive ? item.accentFrom : 'rgba(255,255,255,0.2)',
+                }}
+              />
+              <div className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-mono whitespace-nowrap bg-black px-2 py-1 rounded border border-white/10">
+                {item.title}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Marquee stroke text */}
+      <motion.div
+        className="absolute bottom-0 h-full leading-[100vh] flex justify-center whitespace-nowrap text-[18vh] sm:text-[30vw] md:text-[38vw] font-black text-transparent select-none pointer-events-none left-0 opacity-50 sm:opacity-100"
+        style={{
+          x: marqueeX,
+          WebkitTextStroke: '2px rgba(255, 255, 255, 0.08)',
+        }}
+      >
+        CODE • COFFEE • <span className="text-white/10" style={{ WebkitTextStroke: '0px' }}>INNOVATION</span> • CREATIVITY •{' '}
+        <span className="text-white/10" style={{ WebkitTextStroke: '0px' }}>
+          PASSION •
+        </span>
+      </motion.div>
+
+      {/* Cards */}
+      <div
+        className="relative w-full h-full flex items-center justify-center"
+        style={{ perspective: '1600px', transformStyle: 'preserve-3d' }}
+        tabIndex={0}
+        role="region"
+        aria-label="Expertise carousel"
+        onKeyDown={onKeyDown}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        {expertise.map((item, index) => {
+          if (Math.abs(index - activeIndex) > 1) return null;
+          return (
+            <ExpertiseCard
+              key={item.id}
+              item={item}
+              index={index}
+              total={expertise.length}
+              progress={progress}
+              isActive={index === activeIndex}
+            />
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
+function ServicesPlaceholder() {
+  const first = expertise[0];
+  if (!first) return null;
+
+  return (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-[85vw] sm:w-[90vw] max-w-6xl h-[70vh] flex flex-col lg:flex-row overflow-hidden rounded-2xl sm:rounded-3xl bg-[#0D1117] border border-white/10 shadow-2xl">
+        <div className="flex-1 p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+          <div className="text-xs font-mono tracking-[0.2em] uppercase text-white/40 mb-4">
+            Expertise
+          </div>
+          <div className="text-5xl md:text-6xl font-black tracking-tighter text-white mb-6">
+            {first.title}
+          </div>
+          <div className="text-white/55 text-lg leading-relaxed max-w-2xl">
+            {first.description}
+          </div>
+        </div>
+        <div className="flex-1 relative hidden lg:flex items-center justify-center">
+          <div className="text-white/20">{first.icon}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Services() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [observeRef, inView] = useInView({
+    rootMargin: '1200px 0px',
+    triggerOnce: true,
+  });
+
+  const setRefs = useCallback(
+    (node: HTMLElement | null) => {
+      sectionRef.current = node;
+      observeRef(node);
+    },
+    [observeRef]
+  );
+
+  const sectionHeightVh = useMemo(() => Math.max(560, expertise.length * 160), []);
 
   return (
     <section
-      ref={containerRef}
-      className="section relative overflow-hidden"
+      ref={setRefs}
+      className="relative w-full"
       id="services"
-      onMouseMove={handleSectionMouseMove}
+      style={{ height: `${sectionHeightVh}vh` }}
     >
-      {/* Enhanced background elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Large gradient orbs */}
-        <motion.div
-          className="absolute w-[1000px] h-[1000px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(153, 69, 255, 0.12) 0%, transparent 60%)',
-            right: '-25%',
-            top: '0%',
-            filter: 'blur(60px)',
-          }}
-          animate={{
-            scale: [1, 1.1, 1],
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute w-[800px] h-[800px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(0, 255, 240, 0.08) 0%, transparent 60%)',
-            left: '-15%',
-            bottom: '0%',
-            filter: 'blur(60px)',
-          }}
-          animate={{
-            scale: [1, 1.15, 1],
-            x: [0, -20, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute w-[600px] h-[600px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(255, 45, 146, 0.06) 0%, transparent 60%)',
-            right: '20%',
-            bottom: '-10%',
-            filter: 'blur(80px)',
-          }}
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.5, 0.8, 0.5],
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </div>
-
-      <div className="container relative z-10" ref={ref}>
-        {/* Section header with enhanced animation */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-          className="mb-20"
-        >
-          <motion.span
-            className="section-label"
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            What I Do
-          </motion.span>
-          <h2 className="section-title max-w-4xl">
-            Expertise that delivers{' '}
-            <span className="gradient-text">exceptional results.</span>
-          </h2>
-          <motion.p
-            className="text-xl text-white/50 max-w-2xl mt-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            From concept to deployment, I bring your ideas to life with cutting-edge technology
-            and meticulous attention to detail.
-          </motion.p>
-        </motion.div>
-
-        {/* Service filter tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex gap-3 mb-16 overflow-x-auto pb-4 scrollbar-hide"
-        >
-          {services.map((service, i) => (
-            <motion.button
-              key={service.id}
-              onClick={() => setActiveService(service.id)}
-              className={`relative px-6 py-3 rounded-full font-semibold text-sm whitespace-nowrap transition-all duration-300 ${
-                activeService === service.id
-                  ? 'text-[#030303]'
-                  : 'text-white/90 hover:text-white bg-white/10 border border-white/20 hover:bg-white/15 hover:border-white/40'
-              }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.05 }}
-            >
-              {activeService === service.id && (
-                <motion.div
-                  layoutId="activeServiceTab"
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: `linear-gradient(135deg, ${service.glow}, ${service.gradient.includes('to-[') ? service.gradient.split('to-[')[1].replace(']', '') : service.glow})`,
-                    boxShadow: `0 0 30px ${service.glow}60`,
-                  }}
-                  transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
-                />
-              )}
-              <span className="relative z-10">{service.name}</span>
-            </motion.button>
-          ))}
-        </motion.div>
-
-        {/* Bento grid with spotlight container */}
-        <div
-          ref={gridRef}
-          className="spotlight-container"
-          style={{ ['--spotlight-color' as string]: 'rgba(0, 255, 240, 0.04)' }}
-        >
-          <div className="grid grid-cols-12 auto-rows-[minmax(280px,auto)] gap-6">
-            {services.map((service, index) => (
-              <ServiceCard
-                key={service.id}
-                service={service}
-                isActive={activeService === service.id}
-                onClick={() => setActiveService(service.id)}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Enhanced CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-24 text-center"
-        >
-          <motion.p
-            className="text-white/40 mb-8 text-lg"
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.9 }}
-          >
-            Ready to start your project?
-          </motion.p>
-          <motion.a
-            href="#contact"
-            className="group relative inline-flex items-center gap-4 px-10 py-5 text-lg font-bold text-[#030303] bg-[#00fff0] rounded-full overflow-hidden"
-            whileHover={{
-              scale: 1.05,
-            }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {/* Animated gradient overlay */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-[#00fff0] via-[#9945ff] to-[#ff2d92]"
-              initial={{ x: '-100%' }}
-              whileHover={{ x: '0%' }}
-              transition={{ duration: 0.5 }}
-            />
-            <span className="relative z-10 transition-colors duration-300 group-hover:text-white" style={{ color: '#030303' }}>
-              Let&apos;s Build Something Amazing
-            </span>
-            <motion.svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#030303"
-              strokeWidth="2.5"
-              className="relative z-10 transition-colors duration-300 group-hover:stroke-white"
-              style={{ color: '#030303' }}
-              whileHover={{ x: 5 }}
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </motion.svg>
-
-            {/* Glow effect */}
-            <motion.div
-              className="absolute inset-0 rounded-full"
-              style={{
-                boxShadow: '0 0 60px rgba(0, 255, 240, 0.5)',
-              }}
-              initial={{ opacity: 0.5 }}
-              whileHover={{ opacity: 1 }}
-            />
-          </motion.a>
-        </motion.div>
+      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+        {inView ? <ServicesCarousel sectionRef={sectionRef} /> : <ServicesPlaceholder />}
       </div>
     </section>
   );
