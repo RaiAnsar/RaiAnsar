@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const skills = [
   { name: 'React / Next.js', level: 95 },
@@ -26,21 +26,20 @@ function SkillBar({ name, level, delay }: { name: string; level: number; delay: 
   const isInView = useInView(ref, { once: true });
 
   return (
-    <div ref={ref} className="mb-6">
-      <div className="flex justify-between mb-2">
-        <span className="text-sm font-medium text-white/80">{name}</span>
-        <span className="text-sm font-mono text-[#F2D0A4]">{level}%</span>
+    <div ref={ref} className="mb-8">
+      <div className="flex justify-between mb-3">
+        <span className="text-sm font-semibold tracking-wide uppercase text-white/80">{name}</span>
+        <span className="text-sm font-mono text-[#00fff0]">{level}%</span>
       </div>
-      <div className="h-1 bg-white/10 rounded-full overflow-hidden" role="progressbar" aria-valuenow={level} aria-valuemin={0} aria-valuemax={100} aria-label={`${name} skill level`}>
+      <div className="h-2 bg-white/5 rounded-full overflow-hidden">
         <motion.div
           className="h-full rounded-full"
           style={{
-            background: 'linear-gradient(90deg, #F2D0A4 0%, #9945ff 50%, #ff2d92 100%)',
+            background: 'linear-gradient(90deg, #00fff0 0%, #9945ff 50%, #ff2d92 100%)',
           }}
           initial={{ width: 0 }}
           animate={isInView ? { width: `${level}%` } : { width: 0 }}
-          transition={{ duration: 1, delay, ease: [0.19, 1, 0.22, 1] }}
-          aria-hidden="true"
+          transition={{ duration: 1.5, delay, ease: [0.19, 1, 0.22, 1] }}
         />
       </div>
     </div>
@@ -51,25 +50,42 @@ export function About() {
   const containerRef = useRef<HTMLElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start center', 'end center'],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+
   return (
-    <section ref={containerRef} className="section relative" id="about" role="region" aria-label="About section">
+    <section
+      ref={containerRef}
+      className="section relative"
+      id="about"
+      role="region"
+      aria-label="About section"
+    >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <motion.div
-          className="absolute w-[500px] h-[500px] rounded-full"
+          className="absolute w-[600px] h-[600px] rounded-full"
           style={{
             background: 'radial-gradient(circle, rgba(153, 69, 255, 0.15) 0%, transparent 70%)',
             left: '-10%',
             top: '20%',
           }}
+          animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute w-[400px] h-[400px] rounded-full"
+          className="absolute w-[500px] h-[500px] rounded-full"
           style={{
             background: 'radial-gradient(circle, rgba(0, 255, 240, 0.1) 0%, transparent 70%)',
             right: '-5%',
             bottom: '10%',
           }}
+          animate={{ y: [0, 40, 0], x: [0, -25, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
@@ -80,6 +96,7 @@ export function About() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
           className="mb-20"
+          style={{ y }}
         >
           <span className="section-label">My Story</span>
           <h2 className="section-title max-w-4xl">
@@ -88,17 +105,17 @@ export function About() {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-start">
           {/* Left: Story */}
           <div>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p className="text-xl md:text-2xl text-white/70 leading-relaxed mb-8">
+              <p className="text-xl md:text-2xl text-white/70 leading-relaxed mb-8 font-light">
                 From freelance platforms to leading development teams, I&apos;ve built a career
-                as a <span className="text-white">full-stack architect</span> who transforms
+                as a <span className="text-white font-medium">full-stack architect</span> who transforms
                 complex challenges into elegant, scalable solutions.
               </p>
               <p className="text-lg text-white/50 leading-relaxed mb-12">
@@ -110,14 +127,14 @@ export function About() {
 
             {/* Experience timeline */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="space-y-4"
+              className="space-y-6"
               role="list"
               aria-label="Work experience timeline"
             >
-              <h3 className="text-sm font-semibold tracking-widest uppercase text-white/40 mb-6">
+              <h3 className="text-sm font-semibold tracking-widest uppercase text-white/40 mb-8">
                 Experience
               </h3>
               {experiences.map((exp, index) => (
@@ -125,33 +142,41 @@ export function About() {
                   key={exp.year}
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                  transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
                   whileHover={{ x: 10 }}
-                  className="flex items-start gap-6 group p-4 -mx-4 rounded-xl transition-all duration-300"
+                  className="flex items-start gap-6 group p-4 -mx-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md transition-all duration-300"
                   role="listitem"
                   aria-label={`${exp.role} at ${exp.company}, ${exp.year}`}
-                  style={{
-                    background: exp.type === 'current' ? 'linear-gradient(135deg, rgba(0,255,240,0.05) 0%, transparent 100%)' : 'transparent',
-                  }}
                 >
                   <span
-                    className={`font-mono text-sm ${exp.type === 'current' ? 'text-[#F2D0A4]' : 'text-white/30'}`}
+                    className={`font-mono text-sm ${exp.type === 'current' ? 'text-[#00fff0]' : 'text-white/30'}`}
                     style={exp.type === 'current' ? { textShadow: '0 0 20px rgba(0,255,240,0.5)' } : {}}
                   >
                     {exp.year}
                   </span>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="font-semibold text-white group-hover:text-[#F2D0A4] transition-colors">
+                      <h4 className="font-semibold text-white group-hover:text-[#00fff0] transition-colors text-lg">
                         {exp.role}
                       </h4>
                       {exp.type === 'current' && (
-                        <span
-                          className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#030303] bg-[#F2D0A4] rounded-full"
-                          style={{ boxShadow: '0 0 15px rgba(0,255,240,0.5)' }}
-                        >
-                          Now
-                        </span>
+                        <motion.span
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="flex items-center gap-1.5 px-2 py-0.5 text-[10px] font-semibold rounded-full"
+                            style={{
+                              background: 'rgba(0, 255, 240, 0.15)',
+                              color: '#00fff0',
+                            }}
+                            aria-label="Currently working here"
+                          >
+                            <span
+                              className="w-1.5 h-1.5 rounded-full animate-pulse"
+                              style={{ background: '#00fff0', boxShadow: '0 0 6px #00fff0' }}
+                              aria-hidden="true"
+                            />
+                            Current
+                          </motion.span>
                       )}
                     </div>
                     <p className="text-sm text-white/40">{exp.company}</p>
@@ -164,87 +189,82 @@ export function About() {
           {/* Right: Skills + 3D Card */}
           <div>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative p-8 mb-8 rounded-3xl overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
-              }}
+              className="space-y-8"
             >
-              {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none" aria-hidden="true">
-                <div className="absolute top-4 left-4 w-8 h-px bg-gradient-to-r from-[#F2D0A4] to-transparent" />
-                <div className="absolute top-4 left-4 w-px h-8 bg-gradient-to-b from-[#F2D0A4] to-transparent" />
-              </div>
-              <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none" aria-hidden="true">
-                <div className="absolute bottom-4 right-4 w-8 h-px bg-gradient-to-l from-[#9945ff] to-transparent" />
-                <div className="absolute bottom-4 right-4 w-px h-8 bg-gradient-to-t from-[#9945ff] to-transparent" />
-              </div>
-              <h3 className="text-sm font-semibold tracking-widest uppercase text-white/40 mb-8">
-                Technical Skills
-              </h3>
-              {skills.map((skill, index) => (
-                <SkillBar
-                  key={skill.name}
-                  name={skill.name}
-                  level={skill.level}
-                  delay={0.5 + index * 0.1}
+              {/* Skills card */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative p-8 mb-8 rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-md"
+              >
+                {/* Glow effect */}
+                <motion.div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: 'radial-gradient(600px circle at 50% 50%, rgba(0,255,240,0.08) 0%, transparent 70%)',
+                  }}
                 />
-              ))}
-            </motion.div>
 
-            {/* Code block */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              whileHover={{ scale: 1.02 }}
-              className="relative overflow-hidden rounded-2xl"
-              style={{
-                background: 'linear-gradient(135deg, rgba(10,10,10,0.9) 0%, rgba(20,20,20,0.8) 100%)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 60px rgba(153,69,255,0.03)',
-              }}
-            >
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5" style={{ background: 'rgba(0,0,0,0.3)' }} role="presentation">
-                <div className="flex gap-1.5" aria-hidden="true">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]" style={{ boxShadow: '0 0 10px rgba(255,95,86,0.5)' }} />
-                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" style={{ boxShadow: '0 0 10px rgba(255,189,46,0.5)' }} />
-                  <div className="w-3 h-3 rounded-full bg-[#27ca40]" style={{ boxShadow: '0 0 10px rgba(39,202,64,0.5)' }} />
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none" aria-hidden="true">
+                  <div className="absolute top-4 left-4 w-8 h-px bg-gradient-to-r from-[#00fff0] to-transparent" />
+                  <div className="absolute top-4 left-4 w-px h-8 bg-gradient-to-b from-[#00fff0] to-transparent" />
                 </div>
-                <span className="ml-2 text-xs text-white/30 font-mono" aria-label="Code file: developer.ts">developer.ts</span>
-              </div>
-              <pre className="p-6 text-sm font-mono leading-loose overflow-x-auto">
-                <code>
-                  <span className="text-[#ff79c6]">const</span>{' '}
-                  <span className="text-[#8be9fd]">developer</span>{' '}
-                  <span className="text-[#ff79c6]">=</span> {'{'}
-                  {'\n'}
-                  {'  '}<span className="text-[#50fa7b]">name</span>:{' '}
-                  <span className="text-[#f1fa8c]">&quot;Rai Ansar&quot;</span>,
-                  {'\n'}
-                  {'  '}<span className="text-[#50fa7b]">role</span>:{' '}
-                  <span className="text-[#f1fa8c]">&quot;Full-Stack Engineer&quot;</span>,
-                  {'\n'}
-                  {'  '}<span className="text-[#50fa7b]">passion</span>:{' '}
-                  <span className="text-[#bd93f9]">Infinity</span>,
-                  {'\n'}
-                  {'  '}<span className="text-[#50fa7b]">coffee</span>:{' '}
-                  <span className="text-[#ff79c6]">true</span>,
-                  {'\n'}
-                  {'  '}<span className="text-[#8be9fd]">build</span>:{' '}
-                  <span className="text-[#ff79c6]">()</span>{' '}
-                  <span className="text-[#ff79c6]">=&gt;</span>{' '}
-                  <span className="text-[#f1fa8c]">&quot;amazing things&quot;</span>
-                  {'\n'}
-                  {'}'};
-                </code>
-              </pre>
+                <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none" aria-hidden="true">
+                  <div className="absolute bottom-4 right-4 w-8 h-px bg-gradient-to-l from-[#9945ff] to-transparent" />
+                  <div className="absolute bottom-4 right-4 w-px h-8 bg-gradient-to-t from-[#9945ff] to-transparent" />
+                </div>
+
+                <h3 className="text-sm font-semibold tracking-widest uppercase text-white/40 mb-8">
+                  Technical Skills
+                </h3>
+                {skills.map((skill, index) => (
+                  <SkillBar
+                    key={skill.name}
+                    name={skill.name}
+                    level={skill.level}
+                    delay={0.5 + index * 0.1}
+                  />
+                ))}
+              </motion.div>
+
+              {/* Code block */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                whileHover={{ scale: 1.02 }}
+                className="relative overflow-hidden rounded-2xl"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(10,10,10,0.9) 0%, rgba(20,20,20,0.8) 100%)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 60px rgba(153,69,255,0.03)',
+                }}
+              >
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5" style={{ background: 'rgba(0,0,0,0.3)' }}>
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]" style={{ boxShadow: '0 0 10px rgba(255,95,86,0.5)' }} />
+                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" style={{ boxShadow: '0 0 10px rgba(255,189,46,0.5)' }} />
+                    <div className="w-3 h-3 rounded-full bg-[#27ca40]" style={{ boxShadow: '0 0 10px rgba(39,202,64,0.5)' }} />
+                  </div>
+                  <span className="ml-2 text-xs text-white/30 font-mono">developer.ts</span>
+                </div>
+                <pre className="p-6 text-sm font-mono leading-loose overflow-x-auto">
+                  <code dangerouslySetInnerHTML={{
+                    __html: `<span class="text-[#ff79c6]">const</span> <span class="text-[#8be9fd]">developer</span> <span class="text-[#ff79c6]">=</span> {<span class="text-[#50fa7b]">name</span>: <span class="text-[#f1fa8c]">"Rai Ansar"</span>,
+  <span class="text-[#50fa7b]">role</span>: <span class="text-[#f1fa8c]">"Full-Stack Engineer"</span>,
+  <span class="text-[#50fa7b]">passion</span>: <span class="text-[#bd93f9]">Infinity</span>,
+  <span class="text-[#50fa7b]">coffee</span>: <span class="text-[#ff79c6]">true</span>,
+  <span class="text-[#8be9fd]">build</span>: <span class="text-[#ff79c6]">()</span> <span class="text-[#ff79c6]">=></span> <span class="text-[#f1fa8c]">"amazing things"</span>
+};`
+                  }} />
+                </pre>
+              </motion.div>
             </motion.div>
           </div>
         </div>
