@@ -13,7 +13,7 @@ const socialLinks = [
         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
       </svg>
     ),
-    color: '#00fff0',
+    color: '#F2D0A4',
   },
   {
     name: 'LinkedIn',
@@ -111,6 +111,8 @@ function FloatingInput({
   name,
   value,
   onChange,
+  onBlur,
+  error,
   required = false,
   placeholder,
 }: {
@@ -119,6 +121,8 @@ function FloatingInput({
   name: string;
   value: string;
   onChange: (value: string) => void;
+  onBlur?: (name: string) => void;
+  error?: string;
   required?: boolean;
   placeholder?: string;
 }) {
@@ -135,31 +139,50 @@ function FloatingInput({
       <motion.label
         className={`absolute left-4 transition-all duration-300 pointer-events-none ${
           isFocused || value
-            ? 'top-2 text-xs text-[#00fff0]'
+            ? 'top-2 text-xs text-[#F2D0A4]'
             : 'top-1/2 -translate-y-1/2 text-white/40'
         }`}
+        htmlFor={name}
       >
         {label}
       </motion.label>
       <input
         ref={inputRef}
+        id={name}
         type={type}
         name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onBlur={() => {
+          setIsFocused(false);
+          if (onBlur) onBlur(name);
+        }}
         required={required}
         placeholder={isFocused ? placeholder : ''}
+        aria-describedby={error ? `${name}-error` : undefined}
         className={`w-full px-4 pt-6 pb-3 bg-white/[0.03] border rounded-xl text-white placeholder:text-white/20 outline-none transition-all duration-300 ${
-          isFocused
-            ? 'border-[#00fff0] shadow-[0_0_20px_rgba(0,255,240,0.15)]'
-            : 'border-white/10 hover:border-white/20'
+          error
+            ? 'border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.15)]'
+            : isFocused
+              ? 'border-[#F2D0A4] shadow-[0_0_20px_rgba(0,255,240,0.15)]'
+              : 'border-white/10 hover:border-white/20'
         }`}
       />
-      {isFocused && (
+      {error && (
+        <motion.p
+          id={`${name}-error`}
+          className="absolute -bottom-5 left-4 text-xs text-red-400"
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {error}
+        </motion.p>
+      )}
+      {isFocused && !error && (
         <motion.div
-          className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-[#00fff0] via-[#9945ff] to-[#ff2d92]"
+          className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-[#F2D0A4] via-[#9945ff] to-[#ff2d92]"
           layoutId="inputFocus"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
@@ -175,6 +198,8 @@ function FloatingTextarea({
   name,
   value,
   onChange,
+  onBlur,
+  error,
   required = false,
   rows = 5,
   placeholder,
@@ -183,6 +208,8 @@ function FloatingTextarea({
   name: string;
   value: string;
   onChange: (value: string) => void;
+  onBlur?: (name: string) => void;
+  error?: string;
   required?: boolean;
   rows?: number;
   placeholder?: string;
@@ -199,27 +226,46 @@ function FloatingTextarea({
       <motion.label
         className={`absolute left-4 transition-all duration-300 pointer-events-none ${
           isFocused || value
-            ? 'top-2 text-xs text-[#00fff0]'
+            ? 'top-2 text-xs text-[#F2D0A4]'
             : 'top-4 text-white/40'
         }`}
+        htmlFor={name}
       >
         {label}
       </motion.label>
       <textarea
+        id={name}
         name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onBlur={() => {
+          setIsFocused(false);
+          if (onBlur) onBlur(name);
+        }}
         required={required}
         rows={rows}
         placeholder={isFocused ? placeholder : ''}
+        aria-describedby={error ? `${name}-error` : undefined}
         className={`w-full px-4 pt-8 pb-3 bg-white/[0.03] border rounded-xl text-white placeholder:text-white/20 outline-none transition-all duration-300 resize-none ${
-          isFocused
-            ? 'border-[#00fff0] shadow-[0_0_20px_rgba(0,255,240,0.15)]'
-            : 'border-white/10 hover:border-white/20'
+          error
+            ? 'border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.15)]'
+            : isFocused
+              ? 'border-[#F2D0A4] shadow-[0_0_20px_rgba(0,255,240,0.15)]'
+              : 'border-white/10 hover:border-white/20'
         }`}
       />
+      {error && (
+        <motion.p
+          id={`${name}-error`}
+          className="absolute -bottom-5 left-4 text-xs text-red-400"
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {error}
+        </motion.p>
+      )}
     </motion.div>
   );
 }
@@ -235,15 +281,71 @@ export function Contact() {
     message: '',
   });
 
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const [touched, setTouched] = useState({
+    name: false,
+    email: false,
+    message: false,
+    budget: false,
+  });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      name: formData.name.trim() === '' ? 'Name is required' : '',
+      email: formData.email.trim() === '' ? 'Email is required' : !validateEmail(formData.email) ? 'Please enter a valid email' : '',
+      message: formData.message.trim() === '' ? 'Message is required' : formData.message.trim().length < 10 ? 'Message must be at least 10 characters' : '',
+    };
+
+    setErrors(newErrors);
+    return !Object.values(newErrors).some(error => error !== '');
+  };
+
   const handleChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Clear error for this field when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleBlur = (name: string) => {
+    setTouched((prev) => ({ ...prev, [name]: true }));
+
+    // Validate on blur if field has been touched
+    if (touched[name as keyof typeof touched]) {
+      if (name === 'email' && !validateEmail(formData.email)) {
+        setErrors((prev) => ({ ...prev, email: 'Please enter a valid email' }));
+      } else if (name === 'name' && formData.name.trim() === '') {
+        setErrors((prev) => ({ ...prev, name: 'Name is required' }));
+      } else if (name === 'message' && formData.message.trim().length < 10) {
+        setErrors((prev) => ({ ...prev, message: 'Message must be at least 10 characters' }));
+      }
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      // Mark all fields as touched to show all errors
+      setTouched({ name: true, email: true, message: true, budget: true });
+      return;
+    }
+
     setIsSubmitting(true);
     setFormStatus('idle');
 
@@ -257,11 +359,15 @@ export function Contact() {
         if (result.status === 200) {
           setFormStatus('success');
           setFormData({ name: '', email: '', budget: '', message: '' });
+          setTouched({ name: false, email: false, message: false, budget: false });
+          setErrors({ name: '', email: '', message: '' });
         }
       } else {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         setFormStatus('success');
         setFormData({ name: '', email: '', budget: '', message: '' });
+        setTouched({ name: false, email: false, message: false, budget: false });
+        setErrors({ name: '', email: '', message: '' });
       }
     } catch {
       setFormStatus('error');
@@ -391,7 +497,7 @@ export function Contact() {
                 className="flex items-center gap-4 group"
                 whileHover={{ x: 10 }}
               >
-                <div className="w-12 h-12 rounded-xl bg-[#00fff0]/10 border border-[#00fff0]/30 flex items-center justify-center text-[#00fff0] group-hover:bg-[#00fff0]/20 transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-[#F2D0A4]/10 border border-[#F2D0A4]/30 flex items-center justify-center text-[#F2D0A4] group-hover:bg-[#F2D0A4]/20 transition-colors">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <rect x="2" y="4" width="20" height="16" rx="2" />
                     <path d="m22 7-10 5L2 7" />
@@ -399,7 +505,7 @@ export function Contact() {
                 </div>
                 <div>
                   <span className="text-xs font-medium text-white/40 uppercase tracking-wider block mb-1">Email</span>
-                  <span className="text-white font-medium group-hover:text-[#00fff0] transition-colors">
+                  <span className="text-white font-medium group-hover:text-[#F2D0A4] transition-colors">
                     hi@raiansar.com
                   </span>
                 </div>
@@ -488,8 +594,8 @@ export function Contact() {
             >
               {/* Corner accents */}
               <div className="absolute top-0 left-0 w-20 h-20 pointer-events-none">
-                <div className="absolute top-4 left-4 w-12 h-px bg-gradient-to-r from-[#00fff0] to-transparent" />
-                <div className="absolute top-4 left-4 w-px h-12 bg-gradient-to-b from-[#00fff0] to-transparent" />
+                <div className="absolute top-4 left-4 w-12 h-px bg-gradient-to-r from-[#F2D0A4] to-transparent" />
+                <div className="absolute top-4 left-4 w-px h-12 bg-gradient-to-b from-[#F2D0A4] to-transparent" />
               </div>
               <div className="absolute bottom-0 right-0 w-20 h-20 pointer-events-none">
                 <div className="absolute bottom-4 right-4 w-12 h-px bg-gradient-to-l from-[#ff2d92] to-transparent" />
@@ -535,6 +641,8 @@ export function Contact() {
                     name="name"
                     value={formData.name}
                     onChange={(value) => handleChange('name', value)}
+                    onBlur={handleBlur}
+                    error={touched.name ? errors.name : ''}
                     required
                     placeholder="John Doe"
                   />
@@ -544,6 +652,8 @@ export function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={(value) => handleChange('email', value)}
+                    onBlur={handleBlur}
+                    error={touched.email ? errors.email : ''}
                     required
                     placeholder="john@example.com"
                   />
@@ -565,7 +675,7 @@ export function Contact() {
                         onClick={() => handleChange('budget', budget)}
                         className={`px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                           formData.budget === budget
-                            ? 'bg-[#00fff0] text-[#030303] shadow-[0_0_20px_rgba(0,255,240,0.3)]'
+                            ? 'bg-[#F2D0A4] text-[#030303] shadow-[0_0_20px_rgba(0,255,240,0.3)]'
                             : 'bg-white/[0.03] border border-white/10 text-white/60 hover:border-white/30 hover:text-white'
                         }`}
                       >
@@ -580,6 +690,8 @@ export function Contact() {
                   name="message"
                   value={formData.message}
                   onChange={(value) => handleChange('message', value)}
+                  onBlur={handleBlur}
+                  error={touched.message ? errors.message : ''}
                   required
                   rows={5}
                   placeholder="Tell me about your project..."
@@ -588,7 +700,7 @@ export function Contact() {
                 <MagneticButton
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 px-8 bg-gradient-to-r from-[#00fff0] via-[#9945ff] to-[#ff2d92] rounded-xl text-white font-semibold text-lg flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,255,240,0.3)] hover:shadow-[0_0_50px_rgba(0,255,240,0.5)] transition-shadow"
+                  className="w-full py-4 px-8 bg-gradient-to-r from-[#F2D0A4] via-[#9945ff] to-[#ff2d92] rounded-xl text-white font-semibold text-lg flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,255,240,0.3)] hover:shadow-[0_0_50px_rgba(0,255,240,0.5)] transition-shadow"
                 >
                   {isSubmitting ? (
                     <>

@@ -28,7 +28,7 @@
   --color-graphite: #1a1a1a;
   --color-smoke: #2a2a2a;
 
-  --color-neon-cyan: #00fff0;
+  --color-neon-cyan: #F2D0A4;
   --color-neon-pink: #ff2d92;
   --color-neon-purple: #9945ff;
   --color-neon-blue: #0066ff;
@@ -50,7 +50,7 @@
     --smoke: #2a2a2a;
 
     /* Neon Accents */
-    --neon-cyan: #00fff0;
+    --neon-cyan: #F2D0A4;
     --neon-pink: #ff2d92;
     --neon-purple: #9945ff;
     --neon-blue: #0066ff;
@@ -62,7 +62,7 @@
     --text-tertiary: #555555;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, #00fff0 0%, #9945ff 50%, #ff2d92 100%);
+    --gradient-hero: linear-gradient(135deg, #F2D0A4 0%, #9945ff 50%, #ff2d92 100%);
     --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
     --gradient-glow: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,255,240,0.06), transparent 40%);
 
@@ -107,6 +107,20 @@
 
   :where(a, button, [role="button"], input, textarea, select, summary):focus-visible {
     outline: 2px solid rgba(0, 255, 240, 0.6);
+    outline-offset: 4px;
+  }
+
+  /* Better focus states for all interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid rgba(0, 255, 240, 0.6);
+    outline-offset: 4px;
+  }
+
+  /* Skip link focus */
+  #skip-link:focus {
+    outline: 3px solid rgba(0, 255, 240, 0.8);
     outline-offset: 4px;
   }
 
@@ -913,7 +927,7 @@
   background: conic-gradient(
     from 0deg,
     transparent 20%,
-    var(--border-color-1, #00fff0) 40%,
+    var(--border-color-1, #F2D0A4) 40%,
     var(--border-color-2, #9945ff) 60%,
     var(--border-color-3, #ff2d92) 80%,
     transparent 100%

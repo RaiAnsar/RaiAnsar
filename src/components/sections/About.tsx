@@ -29,17 +29,18 @@ function SkillBar({ name, level, delay }: { name: string; level: number; delay: 
     <div ref={ref} className="mb-6">
       <div className="flex justify-between mb-2">
         <span className="text-sm font-medium text-white/80">{name}</span>
-        <span className="text-sm font-mono text-[#00fff0]">{level}%</span>
+        <span className="text-sm font-mono text-[#F2D0A4]">{level}%</span>
       </div>
-      <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+      <div className="h-1 bg-white/10 rounded-full overflow-hidden" role="progressbar" aria-valuenow={level} aria-valuemin={0} aria-valuemax={100} aria-label={`${name} skill level`}>
         <motion.div
           className="h-full rounded-full"
           style={{
-            background: 'linear-gradient(90deg, #00fff0 0%, #9945ff 50%, #ff2d92 100%)',
+            background: 'linear-gradient(90deg, #F2D0A4 0%, #9945ff 50%, #ff2d92 100%)',
           }}
           initial={{ width: 0 }}
           animate={isInView ? { width: `${level}%` } : { width: 0 }}
           transition={{ duration: 1, delay, ease: [0.19, 1, 0.22, 1] }}
+          aria-hidden="true"
         />
       </div>
     </div>
@@ -51,9 +52,9 @@ export function About() {
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
   return (
-    <section ref={containerRef} className="section relative" id="about">
+    <section ref={containerRef} className="section relative" id="about" role="region" aria-label="About section">
       {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <motion.div
           className="absolute w-[500px] h-[500px] rounded-full"
           style={{
@@ -113,6 +114,8 @@ export function About() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="space-y-4"
+              role="list"
+              aria-label="Work experience timeline"
             >
               <h3 className="text-sm font-semibold tracking-widest uppercase text-white/40 mb-6">
                 Experience
@@ -125,24 +128,26 @@ export function About() {
                   transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
                   whileHover={{ x: 10 }}
                   className="flex items-start gap-6 group p-4 -mx-4 rounded-xl transition-all duration-300"
+                  role="listitem"
+                  aria-label={`${exp.role} at ${exp.company}, ${exp.year}`}
                   style={{
                     background: exp.type === 'current' ? 'linear-gradient(135deg, rgba(0,255,240,0.05) 0%, transparent 100%)' : 'transparent',
                   }}
                 >
                   <span
-                    className={`font-mono text-sm ${exp.type === 'current' ? 'text-[#00fff0]' : 'text-white/30'}`}
+                    className={`font-mono text-sm ${exp.type === 'current' ? 'text-[#F2D0A4]' : 'text-white/30'}`}
                     style={exp.type === 'current' ? { textShadow: '0 0 20px rgba(0,255,240,0.5)' } : {}}
                   >
                     {exp.year}
                   </span>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="font-semibold text-white group-hover:text-[#00fff0] transition-colors">
+                      <h4 className="font-semibold text-white group-hover:text-[#F2D0A4] transition-colors">
                         {exp.role}
                       </h4>
                       {exp.type === 'current' && (
                         <span
-                          className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#030303] bg-[#00fff0] rounded-full"
+                          className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#030303] bg-[#F2D0A4] rounded-full"
                           style={{ boxShadow: '0 0 15px rgba(0,255,240,0.5)' }}
                         >
                           Now
@@ -171,11 +176,11 @@ export function About() {
               }}
             >
               {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none">
-                <div className="absolute top-4 left-4 w-8 h-px bg-gradient-to-r from-[#00fff0] to-transparent" />
-                <div className="absolute top-4 left-4 w-px h-8 bg-gradient-to-b from-[#00fff0] to-transparent" />
+              <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none" aria-hidden="true">
+                <div className="absolute top-4 left-4 w-8 h-px bg-gradient-to-r from-[#F2D0A4] to-transparent" />
+                <div className="absolute top-4 left-4 w-px h-8 bg-gradient-to-b from-[#F2D0A4] to-transparent" />
               </div>
-              <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none">
+              <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none" aria-hidden="true">
                 <div className="absolute bottom-4 right-4 w-8 h-px bg-gradient-to-l from-[#9945ff] to-transparent" />
                 <div className="absolute bottom-4 right-4 w-px h-8 bg-gradient-to-t from-[#9945ff] to-transparent" />
               </div>
@@ -206,13 +211,13 @@ export function About() {
                 boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 60px rgba(153,69,255,0.03)',
               }}
             >
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5" style={{ background: 'rgba(0,0,0,0.3)' }}>
-                <div className="flex gap-1.5">
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5" style={{ background: 'rgba(0,0,0,0.3)' }} role="presentation">
+                <div className="flex gap-1.5" aria-hidden="true">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f56]" style={{ boxShadow: '0 0 10px rgba(255,95,86,0.5)' }} />
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" style={{ boxShadow: '0 0 10px rgba(255,189,46,0.5)' }} />
                   <div className="w-3 h-3 rounded-full bg-[#27ca40]" style={{ boxShadow: '0 0 10px rgba(39,202,64,0.5)' }} />
                 </div>
-                <span className="ml-2 text-xs text-white/30 font-mono">developer.ts</span>
+                <span className="ml-2 text-xs text-white/30 font-mono" aria-label="Code file: developer.ts">developer.ts</span>
               </div>
               <pre className="p-6 text-sm font-mono leading-loose overflow-x-auto">
                 <code>
@@ -250,6 +255,7 @@ export function About() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, delay: 0.8 }}
           className="mt-32 overflow-hidden"
+          aria-hidden="true"
         >
           <div className="marquee">
             <div className="marquee-content">

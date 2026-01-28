@@ -14,7 +14,7 @@ module.exports = {
         steel: '#141414',
         graphite: '#1a1a1a',
         smoke: '#2a2a2a',
-        'neon-cyan': '#00fff0',
+        'neon-cyan': '#F2D0A4',
         'neon-pink': '#ff2d92',
         'neon-purple': '#9945ff',
         'neon-blue': '#0066ff',

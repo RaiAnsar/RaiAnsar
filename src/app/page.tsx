@@ -2,6 +2,9 @@ import dynamic from 'next/dynamic';
 import { Header } from '@/components/sections/Header';
 import { Hero } from '@/components/sections/Hero';
 import { DeferredEffects } from '@/components/ui/DeferredEffects';
+import { ScrollProgress } from '@/components/ui/ScrollProgress';
+import { BackToTop } from '@/components/ui/BackToTop';
+import { SkipLink } from '@/components/ui/SkipLink';
 
 // Lazy load below-fold components for better LCP
 const About = dynamic(() => import('@/components/sections/About').then(mod => ({ default: mod.About })), {
@@ -31,14 +34,23 @@ const Footer = dynamic(() => import('@/components/sections/Footer').then(mod => 
 export default function Home() {
   return (
     <>
+      {/* Skip to main content link for accessibility */}
+      <SkipLink />
+
+      {/* Scroll progress indicator */}
+      <ScrollProgress />
+
+      {/* Back to top button */}
+      <BackToTop />
+
       {/* Defer non-essential effects until the browser is idle */}
       <DeferredEffects />
 
       {/* Noise overlay for texture */}
-      <div className="noise" />
+      <div className="noise" aria-hidden="true" />
 
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero />
         <About />
         <Process />

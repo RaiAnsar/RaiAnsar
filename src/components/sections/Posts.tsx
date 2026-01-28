@@ -50,12 +50,13 @@ export function Posts() {
   });
 
   return (
-    <section id="posts" className="section relative" ref={ref}>
+    <section id="posts" className="section relative" ref={ref} role="region" aria-label="Posts section">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: 'radial-gradient(900px circle at 40% 10%, rgba(0,255,240,0.06), transparent 55%)',
         }}
+        aria-hidden="true"
       />
 
       <div className="container relative z-10">
@@ -81,7 +82,8 @@ export function Posts() {
               key={post.title}
               href={post.href}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label={`Read article: ${post.title}`}
               initial={{ opacity: 0, y: 18 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.05 * index }}
@@ -144,7 +146,7 @@ export function Posts() {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="mt-12"
         >
-          <a href="https://dev.to/" target="_blank" rel="noreferrer" className="btn-secondary">
+          <a href="https://dev.to/" target="_blank" rel="noopener noreferrer" className="btn-secondary">
             <span>View all posts</span>
           </a>
         </motion.div>

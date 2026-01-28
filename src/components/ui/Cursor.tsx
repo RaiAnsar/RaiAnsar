@@ -96,7 +96,7 @@ export function Cursor() {
           width: isHovering ? 60 : 20,
           height: isHovering ? 60 : 20,
           scale: isClicking ? 0.8 : 1,
-          backgroundColor: isHovering ? '#ff2d92' : '#00fff0',
+          backgroundColor: isHovering ? '#ff2d92' : '#F2D0A4',
         }}
         transition={{ duration: 0.15 }}
       />

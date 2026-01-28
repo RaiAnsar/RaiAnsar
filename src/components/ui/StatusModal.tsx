@@ -157,7 +157,7 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                     }}
                   >
                     {isAvailable ? (
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00fff0" strokeWidth="2">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F2D0A4" strokeWidth="2">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                         <polyline points="22 4 12 14.01 9 11.01" />
                       </svg>
@@ -173,7 +173,7 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                     <div className="flex items-center gap-2">
                       <h3
                         className="text-xl font-bold"
-                        style={{ color: isAvailable ? '#00fff0' : '#ffb400' }}
+                        style={{ color: isAvailable ? '#F2D0A4' : '#ffb400' }}
                       >
                         {isAvailable ? 'AVAILABLE' : 'AWAY'}
                       </h3>
@@ -182,7 +182,7 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                           className="px-2 py-0.5 text-[10px] font-semibold rounded-full"
                           style={{
                             background: 'rgba(0,255,240,0.15)',
-                            color: '#00fff0',
+                            color: '#F2D0A4',
                             border: '1px solid rgba(0,255,240,0.3)',
                           }}
                         >
@@ -294,10 +294,10 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                   }}
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00fff0" strokeWidth="2">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F2D0A4" strokeWidth="2">
                       <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                     </svg>
-                    <span className="text-xs font-semibold text-[#00fff0] uppercase tracking-wider">How It Works</span>
+                    <span className="text-xs font-semibold text-[#F2D0A4] uppercase tracking-wider">How It Works</span>
                   </div>
                   <p className="text-xs text-white/50 leading-relaxed">
                     {isLiveSync

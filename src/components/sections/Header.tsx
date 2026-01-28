@@ -30,6 +30,25 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <>
       <motion.header
@@ -37,6 +56,7 @@ export function Header() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+        role="banner"
       >
         <div className="container">
           <div className="relative flex items-center justify-between">
@@ -46,6 +66,7 @@ export function Header() {
               className="relative z-10 group"
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 400 }}
+              aria-label="Rai Ansar - Home"
             >
               <span className="text-2xl font-black tracking-tight text-white">
                 RAI
@@ -54,7 +75,7 @@ export function Header() {
             </motion.a>
 
             {/* Desktop Navigation - Centered */}
-            <nav className="hidden md:flex items-center gap-6 lg:gap-8 absolute left-1/2 -translate-x-1/2">
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8 absolute left-1/2 -translate-x-1/2" aria-label="Main navigation">
               {navLinks.map((link, index) => (
                 <motion.a
                   key={link.href}
@@ -77,7 +98,7 @@ export function Header() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
                 onClick={() => setStatusModalOpen(true)}
-                className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer transition-all duration-300 hover:scale-105"
+                className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#F2D0A4] focus:ring-offset-2 focus:ring-offset-[#030303]"
                 style={{
                   background: 'rgba(0, 255, 240, 0.1)',
                   border: '1px solid rgba(0, 255, 240, 0.2)',
@@ -85,10 +106,11 @@ export function Header() {
                 whileHover={{
                   boxShadow: '0 0 20px rgba(0, 255, 240, 0.3)',
                 }}
+                aria-label="Check availability status"
               >
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00fff0] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00fff0]"></span>
+                <span className="relative flex h-2 w-2" aria-hidden="true">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F2D0A4] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F2D0A4]"></span>
                 </span>
                 <span className="text-xs font-medium text-white/80">Available</span>
               </motion.button>
@@ -96,7 +118,7 @@ export function Header() {
               {/* CTA Button */}
               <motion.a
                 href="#contact"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#030303] bg-[#00fff0] rounded-full magnetic"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#030303] bg-[#F2D0A4] rounded-full magnetic focus:outline-none focus:ring-2 focus:ring-[#F2D0A4] focus:ring-offset-2 focus:ring-offset-[#030303]"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
@@ -104,9 +126,10 @@ export function Header() {
                   scale: 1.05,
                   boxShadow: '0 0 30px rgba(0, 255, 240, 0.4)',
                 }}
+                aria-label="Contact me"
               >
                 <span>Let&apos;s Talk</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </motion.a>
@@ -115,8 +138,8 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center bg-transparent border-none outline-none"
-              aria-label="Toggle menu"
+              className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center bg-transparent border-none outline-none focus:outline-none focus:ring-2 focus:ring-[#F2D0A4] focus:ring-offset-2 focus:ring-offset-[#030303] rounded-lg"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               style={{ background: 'transparent' }}
             >
               <div className="relative w-6 h-4">
@@ -158,13 +181,16 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
           >
             <div className="flex flex-col items-center justify-center min-h-screen gap-8">
               {navLinks.map((link, index) => (
                 <motion.a
                   key={link.href}
                   href={link.href}
-                  className="text-4xl font-bold text-white hover:text-[#00fff0] transition-colors no-underline"
+                  className="text-4xl font-bold text-white hover:text-[#F2D0A4] transition-colors no-underline focus:outline-none focus:ring-2 focus:ring-[#F2D0A4] rounded-lg px-4 py-2"
                   style={{ textDecoration: 'none' }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -177,7 +203,7 @@ export function Header() {
               ))}
               {/* Status button in mobile menu */}
               <motion.button
-                className="flex items-center gap-3 px-6 py-3 text-lg font-medium text-white/80 hover:text-[#00fff0] transition-all rounded-full border-none outline-none"
+                className="flex items-center gap-3 px-6 py-3 text-lg font-medium text-white/80 hover:text-[#F2D0A4] transition-all rounded-full border-none outline-none focus:outline-none focus:ring-2 focus:ring-[#F2D0A4]"
                 style={{
                   background: 'rgba(0, 255, 240, 0.08)',
                   border: '1px solid rgba(0, 255, 240, 0.2)',
@@ -194,16 +220,17 @@ export function Header() {
                   setMobileMenuOpen(false);
                   setStatusModalOpen(true);
                 }}
+                aria-label="Check availability status"
               >
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00fff0] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00fff0]"></span>
+                <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F2D0A4] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F2D0A4]"></span>
                 </span>
                 <span>Check Status</span>
               </motion.button>
               <motion.a
                 href="#contact"
-                className="mt-8 btn-primary"
+                className="mt-8 btn-primary focus:outline-none focus:ring-2 focus:ring-[#F2D0A4]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
