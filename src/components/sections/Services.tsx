@@ -10,8 +10,6 @@ type Expertise = {
   category: string;
   description: string;
   bullets: string[];
-  accentFrom: string;
-  accentTo: string;
   icon: React.ReactNode;
 };
 
@@ -23,30 +21,11 @@ const expertise: Expertise[] = [
     description:
       'High-performance landing pages and web apps—clean UI engineering, accessible UX, and polished interactions.',
     bullets: ['React / Next.js', 'TypeScript', 'Design Systems', 'Accessibility + UX'],
-    accentFrom: '#06b6d4',
-    accentTo: '#2563eb',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
         <circle cx="12" cy="12" r="10" />
         <path d="M2 12h20" />
         <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-      </svg>
-    ),
-  },
-  {
-    id: 'backend',
-    title: 'BACKEND',
-    category: 'System Architecture',
-    description:
-      'Secure APIs and scalable services with pragmatic architecture—built for reliability, performance, and maintainability.',
-    bullets: ['Node.js / Python', 'PostgreSQL', 'Redis / Caching', 'Auth + Integrations'],
-    accentFrom: '#8b5cf6',
-    accentTo: '#a855f7',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
-        <ellipse cx="12" cy="6" rx="8" ry="3" />
-        <path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6" />
-        <path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" />
       </svg>
     ),
   },
@@ -57,10 +36,8 @@ const expertise: Expertise[] = [
     description:
       'Custom themes, plugins, migrations, and debugging—plus performance and security hardening for production sites.',
     bullets: ['Custom Themes', 'Plugin Development', 'WooCommerce', 'Speed + Security'],
-    accentFrom: '#0ea5e9',
-    accentTo: '#22c55e',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
         <circle cx="12" cy="12" r="10" />
         <path d="M7 9l2.5 8L12 6l2.5 11L17 9" />
       </svg>
@@ -73,10 +50,8 @@ const expertise: Expertise[] = [
     description:
       'Checkout flows, catalog logic, performance, and integrations—engineered to convert and scale smoothly.',
     bullets: ['Stripe / Payments', 'Shipping + Tax', 'Analytics', 'SEO Foundations'],
-    accentFrom: '#ec4899',
-    accentTo: '#f97316',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
         <path d="M6 6h15l-1.5 9h-12z" />
         <path d="M6 6l-2-3H2" />
         <circle cx="9" cy="20" r="1.5" />
@@ -90,13 +65,26 @@ const expertise: Expertise[] = [
     category: 'Deployment & Reliability',
     description:
       'Secure deployments, automation, and monitoring—so your product stays stable, fast, and easy to maintain.',
-    bullets: ['Docker', 'Linux / Nginx', 'CI/CD', 'Monitoring + Backups'],
-    accentFrom: '#22c55e',
-    accentTo: '#06b6d4',
+    bullets: ['Docker', 'AWS / Cloud', 'CI/CD', 'Monitoring + Backups'],
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
         <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" />
         <circle cx="12" cy="12" r="3" />
+      </svg>
+    ),
+  },
+  {
+    id: 'backend',
+    title: 'BACKEND',
+    category: 'System Architecture',
+    description:
+      'Secure APIs and scalable services with pragmatic architecture—built for reliability, performance, and maintainability.',
+    bullets: ['Node.js / Python', 'PostgreSQL', 'Redis / Caching', 'Auth + Integrations'],
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
+        <ellipse cx="12" cy="6" rx="8" ry="3" />
+        <path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6" />
+        <path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" />
       </svg>
     ),
   },
@@ -116,29 +104,29 @@ function ExpertiseCard({
   isActive: boolean;
 }) {
   const shouldReduceMotion = useReducedMotion();
-  const radius = 620;
+  const radius = 480;
   const position = useTransform(progress, (v) => v * Math.max(1, total - 1));
   const offset = useTransform(position, (p) => index - p);
-  const angle = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * 0.55));
+  const angle = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * 0.35));
 
-  const x = useTransform(angle, (a) => Math.sin(a) * radius * 1.05);
+  const x = useTransform(angle, (a) => Math.sin(a) * radius * 1.1);
   const z = useTransform([angle, offset], ([a, o]: number[]) => {
-    return Math.cos(a) * radius - radius - Math.abs(o) * 160;
+    return Math.cos(a as number) * radius - radius - Math.abs(o as number) * 60;
   });
   const rotateY = useTransform(angle, (a) => (-a * 180) / Math.PI);
 
   const opacity = useTransform(offset, (o) => {
     const abs = Math.abs(o);
-    if (abs > 1.4) return 0;
-    return 1 - abs / 1.4;
+    if (abs > 2.5) return 0;
+    return 1 - abs / 2.5;
   });
 
-  const scale = useTransform(offset, (o) => 1 - Math.min(0.14, Math.abs(o) * 0.06));
-  const y = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * -10));
+  const scale = useTransform(offset, (o) => 1 - Math.min(0.08, Math.abs(o) * 0.03));
+  const y = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * -4));
 
   return (
     <motion.div
-      className="absolute top-24 md:top-auto w-[85vw] sm:w-[90vw] max-w-6xl h-[70vh] sm:h-[70vh] md:h-[70vh] flex flex-col lg:flex-row overflow-hidden rounded-2xl sm:rounded-3xl bg-[#0D1117] border border-white/10 shadow-2xl origin-center"
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88vw] max-w-4xl h-[60vh] max-h-[550px] flex flex-col lg:flex-row overflow-hidden rounded-3xl bg-[#111] border border-white/[0.08] shadow-2xl origin-center"
       style={{
         opacity,
         scale,
@@ -149,36 +137,36 @@ function ExpertiseCard({
         transformStyle: 'preserve-3d',
         backfaceVisibility: 'hidden',
         willChange: 'transform, opacity',
-        zIndex: isActive ? 3 : 1,
+        zIndex: isActive ? 10 : 5 - Math.abs(index),
         pointerEvents: isActive ? 'auto' : 'none',
       }}
       aria-hidden={!isActive}
     >
-      <div className="flex-1 p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-center relative z-10">
+      <div className="flex-1 p-8 lg:p-10 flex flex-col justify-center relative z-10">
         <div
-          className="inline-flex self-start items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-white text-xs sm:text-sm font-bold tracking-wider mb-4 sm:mb-6 border border-white/10"
+          className="inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full text-white text-xs font-semibold tracking-wider mb-5 border border-white/[0.08]"
           style={{
-            background: `linear-gradient(90deg, ${item.accentFrom}33, ${item.accentTo}33)`,
+            background: 'linear-gradient(90deg, rgba(255,107,53,0.15), rgba(255,133,85,0.08))',
           }}
         >
           <span className="opacity-90">{item.category}</span>
         </div>
 
-        <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 sm:mb-6 md:mb-8 tracking-tighter text-white">
+        <h3 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 tracking-tighter text-white">
           {item.title}
         </h3>
 
-        <p className="text-base sm:text-lg md:text-xl text-white/55 leading-relaxed mb-6 sm:mb-8 md:mb-12 max-w-2xl">
+        <p className="text-base md:text-lg text-white/50 leading-relaxed mb-6 max-w-lg">
           {item.description}
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8 md:mb-12">
+        <div className="grid grid-cols-2 gap-2 mb-6">
           {item.bullets.map((bullet) => (
-            <div key={bullet} className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base text-white/70">
+            <div key={bullet} className="flex items-center gap-2 text-white/60 text-sm">
               <div
                 className="w-1.5 h-1.5 rounded-full shrink-0"
                 style={{
-                  background: `linear-gradient(90deg, ${item.accentFrom}, ${item.accentTo})`,
+                  background: 'linear-gradient(90deg, #ff6b35, #ff8555)',
                 }}
               />
               <span>{bullet}</span>
@@ -188,12 +176,12 @@ function ExpertiseCard({
 
         <div>
           <a
-            className="inline-flex items-center gap-3 text-base sm:text-lg font-bold transition-all duration-300 group w-fit"
+            className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 group w-fit hover:gap-3"
             href="#contact"
-            style={{ color: item.accentFrom }}
+            style={{ color: '#ff6b35' }}
           >
             Start Project
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover:translate-x-1">
               <path d="M5 12h14" />
               <path d="m12 5 7 7-7 7" />
             </svg>
@@ -202,13 +190,13 @@ function ExpertiseCard({
       </div>
 
       {/* Right illustration */}
-      <div className="flex-1 relative hidden lg:block">
+      <div className="flex-1 relative hidden lg:block overflow-hidden">
         <div
-          className="absolute inset-0 opacity-20"
-          style={{ background: `linear-gradient(135deg, ${item.accentFrom}, ${item.accentTo})` }}
+          className="absolute inset-0 opacity-10"
+          style={{ background: 'linear-gradient(135deg, #ff6b35, #ff8555)' }}
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative w-80 h-80">
+          <div className="relative w-56 h-56 xl:w-64 xl:h-64">
             <motion.div
               className="absolute inset-0"
               animate={shouldReduceMotion || !isActive ? undefined : { rotate: 360 }}
@@ -218,21 +206,18 @@ function ExpertiseCard({
                   : { duration: 40, repeat: Infinity, ease: 'linear' }
               }
             >
-              <div className="absolute inset-0 border-2 border-dashed border-white/15 rounded-full" />
-              <div className="absolute inset-10 border border-white/10 rounded-full" />
+              <div className="absolute inset-0 border-2 border-dashed border-white/20 rounded-full" />
+              <div className="absolute inset-6 border border-white/10 rounded-full" />
             </motion.div>
 
             <div className="absolute inset-0 flex items-center justify-center">
-              <div
-                className="text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.18)]"
-                style={{ color: item.accentFrom }}
-              >
+              <div className="text-[#ff6b35] drop-shadow-[0_0_30px_rgba(255,107,53,0.3)]">
                 {item.icon}
               </div>
             </div>
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#0D1117]" />
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-[#111]" />
       </div>
     </motion.div>
   );
@@ -248,14 +233,14 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
     offset: ['start start', 'end start'],
   });
 
-  // Hold the first/last card for a bit so users can’t “skip” past the section edges.
-  const edgeHold = shouldReduceMotion ? 0 : 0.085;
+  // Asymmetric holds - more at end for last card
+  const startHold = shouldReduceMotion ? 0 : 0.12;
+  const endHold = shouldReduceMotion ? 0 : 0.28; // Much more hold at end
+  
   const progress = useTransform(scrollYProgress, (v) => {
-    const start = edgeHold;
-    const end = edgeHold;
-    const range = 1 - start - end;
+    const range = 1 - startHold - endHold;
     if (range <= 0) return 0;
-    const t = (v - start) / range;
+    const t = (v - startHold) / range;
     return Math.min(1, Math.max(0, t));
   });
 
@@ -268,7 +253,7 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
     return () => unsubscribe();
   }, [progress]);
 
-  const marqueeX = useTransform(progress, [0, 1], ['65%', '-65%']);
+  const marqueeX = useTransform(progress, [0, 1], ['50%', '-50%']);
 
   const scrollToIndex = useCallback(
     (index: number) => {
@@ -278,9 +263,9 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
       const sectionTop = window.scrollY + el.getBoundingClientRect().top;
       const totalScroll = Math.max(1, el.offsetHeight - window.innerHeight);
       const maxIndex = Math.max(1, expertise.length - 1);
-      const range = 1 - edgeHold - edgeHold;
+      const range = 1 - startHold - endHold;
       const normalized = index / maxIndex;
-      const targetProgress = edgeHold + normalized * Math.max(0, range);
+      const targetProgress = startHold + normalized * Math.max(0, range);
       const top = sectionTop + totalScroll * targetProgress;
 
       window.scrollTo({
@@ -288,7 +273,7 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
         behavior: shouldReduceMotion ? 'auto' : 'smooth',
       });
     },
-    [sectionRef, shouldReduceMotion, edgeHold]
+    [sectionRef, shouldReduceMotion, startHold, endHold]
   );
 
   const onTouchStart = useCallback((event: React.TouchEvent) => {
@@ -310,7 +295,6 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
       const dy = touch.clientY - start.y;
       const dt = Date.now() - start.time;
 
-      // Quick, mostly-horizontal swipe switches cards.
       if (dt > 650) return;
       const absX = Math.abs(dx);
       const absY = Math.abs(dy);
@@ -347,8 +331,8 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
 
   return (
     <>
-      {/* Dots nav */}
-      <div className="absolute bottom-6 sm:bottom-12 left-4 sm:left-1/2 sm:-translate-x-1/2 z-50 flex items-center gap-3 sm:gap-4 bg-black/40 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-white/10 overflow-x-auto max-w-[calc(100vw-2rem)] sm:max-w-fit no-scrollbar">
+      {/* Dots nav - fixed at bottom */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-black/50 backdrop-blur-md px-5 py-3 rounded-full border border-white/10">
         {expertise.map((item, index) => {
           const isActive = index === activeIndex;
           return (
@@ -361,12 +345,13 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
               aria-current={isActive ? 'true' : undefined}
             >
               <div
-                className="w-3 h-3 rounded-full transition-colors"
+                className="w-2.5 h-2.5 rounded-full transition-all duration-300"
                 style={{
-                  background: isActive ? item.accentFrom : 'rgba(255,255,255,0.2)',
+                  background: isActive ? '#ff6b35' : 'rgba(255,255,255,0.25)',
+                  transform: isActive ? 'scale(1.2)' : 'scale(1)',
                 }}
               />
-              <div className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-mono whitespace-nowrap bg-black px-2 py-1 rounded border border-white/10">
+              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium whitespace-nowrap bg-[#1a1a1a] px-2 py-1 rounded border border-white/10 pointer-events-none">
                 {item.title}
               </div>
             </button>
@@ -376,22 +361,19 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
 
       {/* Marquee stroke text */}
       <motion.div
-        className="absolute bottom-0 h-full leading-[100vh] flex justify-center whitespace-nowrap text-[18vh] sm:text-[30vw] md:text-[38vw] font-black text-transparent select-none pointer-events-none left-0 opacity-50 sm:opacity-100"
+        className="absolute bottom-0 h-full leading-[100vh] flex justify-center whitespace-nowrap text-[20vw] font-black text-transparent select-none pointer-events-none left-0 opacity-30"
         style={{
           x: marqueeX,
-          WebkitTextStroke: '2px rgba(255, 255, 255, 0.08)',
+          WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.05)',
         }}
       >
-        CODE • COFFEE • <span className="text-white/10" style={{ WebkitTextStroke: '0px' }}>INNOVATION</span> • CREATIVITY •{' '}
-        <span className="text-white/10" style={{ WebkitTextStroke: '0px' }}>
-          PASSION •
-        </span>
+        CODE • CREATE • CONQUER • DEPLOY • SCALE •
       </motion.div>
 
       {/* Cards */}
       <div
         className="relative w-full h-full flex items-center justify-center"
-        style={{ perspective: '1600px', transformStyle: 'preserve-3d' }}
+        style={{ perspective: '1200px', transformStyle: 'preserve-3d' }}
         tabIndex={0}
         role="region"
         aria-label="Expertise carousel"
@@ -399,19 +381,16 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        {expertise.map((item, index) => {
-          if (Math.abs(index - activeIndex) > 1) return null;
-          return (
-            <ExpertiseCard
-              key={item.id}
-              item={item}
-              index={index}
-              total={expertise.length}
-              progress={progress}
-              isActive={index === activeIndex}
-            />
-          );
-        })}
+        {expertise.map((item, index) => (
+          <ExpertiseCard
+            key={item.id}
+            item={item}
+            index={index}
+            total={expertise.length}
+            progress={progress}
+            isActive={index === activeIndex}
+          />
+        ))}
       </div>
     </>
   );
@@ -423,20 +402,20 @@ function ServicesPlaceholder() {
 
   return (
     <div className="absolute inset-0 flex items-center justify-center">
-      <div className="w-[85vw] sm:w-[90vw] max-w-6xl h-[70vh] flex flex-col lg:flex-row overflow-hidden rounded-2xl sm:rounded-3xl bg-[#0D1117] border border-white/10 shadow-2xl">
-        <div className="flex-1 p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-          <div className="text-xs font-mono tracking-[0.2em] uppercase text-white/40 mb-4">
-            Expertise
+      <div className="w-[88vw] max-w-4xl h-[60vh] max-h-[550px] flex flex-col lg:flex-row overflow-hidden rounded-3xl bg-[#111] border border-white/[0.08] shadow-2xl">
+        <div className="flex-1 p-8 lg:p-10 flex flex-col justify-center">
+          <div className="text-xs font-medium tracking-widest uppercase text-white/40 mb-4">
+            {first.category}
           </div>
           <div className="text-5xl md:text-6xl font-black tracking-tighter text-white mb-6">
             {first.title}
           </div>
-          <div className="text-white/55 text-lg leading-relaxed max-w-2xl">
+          <div className="text-white/50 text-lg leading-relaxed max-w-lg">
             {first.description}
           </div>
         </div>
-        <div className="flex-1 relative hidden lg:flex items-center justify-center">
-          <div className="text-white/20">{first.icon}</div>
+        <div className="flex-1 relative hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ff6b35]/10 to-transparent">
+          <div className="text-[#ff6b35]/30">{first.icon}</div>
         </div>
       </div>
     </div>
@@ -446,7 +425,7 @@ function ServicesPlaceholder() {
 export function Services() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [observeRef, inView] = useInView({
-    rootMargin: '1200px 0px',
+    rootMargin: '1000px 0px',
     triggerOnce: true,
   });
 
@@ -458,12 +437,13 @@ export function Services() {
     [observeRef]
   );
 
-  const sectionHeightVh = useMemo(() => Math.max(560, expertise.length * 160), []);
+  // Much more height - 220vh per card for very generous viewing time
+  const sectionHeightVh = useMemo(() => Math.max(900, expertise.length * 220), []);
 
   return (
     <section
       ref={setRefs}
-      className="relative w-full"
+      className="relative w-full bg-[#0a0a0a]"
       id="services"
       style={{ height: `${sectionHeightVh}vh` }}
     >

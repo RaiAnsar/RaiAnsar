@@ -5,6 +5,8 @@ import { DeferredEffects } from '@/components/ui/DeferredEffects';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
 import { BackToTop } from '@/components/ui/BackToTop';
 import { SkipLink } from '@/components/ui/SkipLink';
+import { LiquidBlob } from '@/components/ui/LiquidBlob';
+import { CustomCursor } from '@/components/ui/CustomCursor';
 
 // Lazy load below-fold components for better LCP
 const About = dynamic(() => import('@/components/sections/About').then(mod => ({ default: mod.About })), {
@@ -13,6 +15,10 @@ const About = dynamic(() => import('@/components/sections/About').then(mod => ({
 
 const Process = dynamic(() => import('@/components/sections/Process').then(mod => ({ default: mod.Process })), {
   loading: () => <div className="min-h-[400px]" />,
+});
+
+const CodeMarquee = dynamic(() => import('@/components/sections/CodeMarquee').then(mod => ({ default: mod.CodeMarquee })), {
+  loading: () => <div className="min-h-[300px]" />,
 });
 
 const Services = dynamic(() => import('@/components/sections/Services').then(mod => ({ default: mod.Services })), {
@@ -37,6 +43,12 @@ export default function Home() {
       {/* Skip to main content link for accessibility */}
       <SkipLink />
 
+      {/* Custom cursor */}
+      <CustomCursor />
+
+      {/* Liquid blob backgrounds */}
+      <LiquidBlob />
+
       {/* Scroll progress indicator */}
       <ScrollProgress />
 
@@ -54,6 +66,7 @@ export default function Home() {
         <Hero />
         <About />
         <Process />
+        <CodeMarquee />
         <Services />
         <Posts />
         <Contact />

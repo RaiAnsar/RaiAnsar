@@ -6,15 +6,16 @@ import "./globals.css";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#030712",
+  themeColor: "#0a0a0a",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://raiansar.com"),
-  title: "Rai Ansar | Full Stack Developer & Software Architect",
-  description: "Crafting efficient, scalable solutions in software & web. Full-stack engineer with 10+ years of experience turning complex problems into elegant digital experiences.",
+  title: "Rai Ansar | Full-Stack Developer & DevOps Expert",
+  description: "DevOps, infrastructure & speed experts. We turn slow, crashing sites into sub-2-second machines that convert. 10+ years of experience in full-stack development.",
   keywords: [
     "full-stack developer",
+    "DevOps engineer",
     "software architect",
     "React developer",
     "Next.js developer",
@@ -22,8 +23,9 @@ export const metadata: Metadata = {
     "Node.js",
     "WordPress",
     "cloud infrastructure",
-    "web development",
+    "web performance",
     "freelance developer",
+    "site optimization",
   ],
   authors: [{ name: "Rai Ansar", url: "https://raiansar.com" }],
   creator: "Rai Ansar",
@@ -32,21 +34,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://raiansar.com",
     siteName: "Rai Ansar",
-    title: "Rai Ansar | Full Stack Developer & Software Architect",
-    description: "Crafting efficient, scalable solutions in software & web. Full-stack engineer with 10+ years of experience.",
+    title: "Rai Ansar | Full-Stack Developer & DevOps Expert",
+    description: "DevOps, infrastructure & speed experts. We turn slow, crashing sites into sub-2-second machines that convert.",
     images: [
       {
         url: "/images/og-image.png",
         width: 1792,
         height: 1024,
-        alt: "Rai Ansar - Full Stack Developer & Software Architect",
+        alt: "Rai Ansar - Full-Stack Developer & DevOps Expert",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rai Ansar | Full Stack Developer & Software Architect",
-    description: "Crafting efficient, scalable solutions in software & web. Full-stack engineer with 10+ years of experience.",
+    title: "Rai Ansar | Full-Stack Developer & DevOps Expert",
+    description: "DevOps, infrastructure & speed experts. We turn slow, crashing sites into sub-2-second machines that convert.",
     creator: "@raiansar",
     images: ["/images/og-image.png"],
   },
