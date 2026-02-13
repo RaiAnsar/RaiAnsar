@@ -1,34 +1,99 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, FormEvent } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
+import emailjs from '@emailjs/browser';
 import { TextScramble } from '@/components/ui/TextScramble';
-import { Magnetic } from '@/components/ui/Magnetic';
-import { GlowCard } from '@/components/ui/GlowCard';
 
-const testimonials = [
-  {
-    quote: "Acefina reduced our infrastructure costs by 45% while improving performance. They delivered in 2 weeks what our team couldn't do in 6 months.",
-    author: 'Sarah Chen',
-    role: 'CTO, TechStart Inc',
-  },
-  {
-    quote: "Our site went from 8 seconds to 1.2 seconds load time. Conversion rate jumped 30% the same month.",
-    author: 'Marcus Rodriguez',
-    role: 'CEO, GrowthLabs',
-  },
-  {
-    quote: "No jargon, no excuses. They identified issues in our AWS setup that were costing us $4k/month unnecessarily.",
-    author: 'Emily Thompson',
-    role: 'Engineering Manager, CloudFlow',
-  },
+type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+const socialLinks = [
+  { name: 'GitHub', href: 'https://github.com/RaiAnsar', icon: '/images/svg/github.svg' },
+  { name: 'X', href: 'https://x.com/raiansar', icon: '/images/svg/x.svg' },
+  { name: 'Upwork', href: 'https://www.upwork.com/freelancers/iraiansar', icon: '/images/svg/upwork.svg' },
+  { name: 'Fiverr', href: 'https://www.fiverr.com/raiansar', icon: '/images/svg/fiverr.svg' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/raiansar/', icon: '/images/svg/linkedin.svg' },
 ];
+
+function formatBudget(value: number): string {
+  if (value >= 1000) {
+    return `$${(value / 1000).toFixed(value % 1000 === 0 ? 0 : 1)}k`;
+  }
+  return `$${value}`;
+}
 
 export function Contact() {
   const containerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.2 });
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const formRef = useRef<HTMLFormElement>(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.15 });
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+    budget: 5000,
+  });
+  const [status, setStatus] = useState<FormStatus>('idle');
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'budget' ? Number(value) : value,
+    }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (status === 'submitting') return;
+
+    setStatus('submitting');
+
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          budget: formatBudget(formData.budget),
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      );
+
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '', budget: 5000 });
+
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
+  };
+
+  const inputClasses =
+    'w-full bg-[#161616] border border-[#2a2a2a] rounded-xl px-5 py-4 text-white placeholder-[#6b6b6b] text-sm outline-none transition-all duration-300 focus:border-[#ff6b35] focus:ring-1 focus:ring-[#ff6b35]/30';
 
   return (
     <section
@@ -38,124 +103,346 @@ export function Contact() {
       role="region"
       aria-label="Contact section"
     >
-      {/* Solid background */}
-      <div className="absolute inset-0 bg-[#0a0a0a]" />
+      {/* Subtle gradient accent */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#ff6b35]/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container relative z-10">
-        {/* CTA Section */}
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-24"
+          className="text-center mb-20"
         >
           <span className="inline-block text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase mb-6">
             <TextScramble text="// Contact" delay={0} />
           </span>
-          
+
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-            <TextScramble text="Let's build" delay={200} />
+            <TextScramble text="Let's Work" delay={200} />
             <br />
             <span className="gradient-text">
-              <TextScramble text="something great" delay={400} />
+              <TextScramble text="Together" delay={400} />
             </span>
           </h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-lg text-[#606060] max-w-xl mx-auto mb-10"
+            className="text-lg text-[#a0a0a0] max-w-xl mx-auto"
           >
-            Book a free 15-minute call. No sales pitch — just honest advice on how we can help.
+            Have a project in mind? Let&apos;s discuss how I can help bring your
+            vision to life.
           </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Magnetic strength={0.3}>
-              <motion.a
-                href="https://calendly.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-flex"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span>Book a Call</span>
-              </motion.a>
-            </Magnetic>
-            <Magnetic strength={0.3}>
-              <motion.a
-                href="https://wa.me/923000000000"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary inline-flex"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="opacity-80">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-                <span>WhatsApp</span>
-              </motion.a>
-            </Magnetic>
-          </motion.div>
         </motion.div>
 
-        {/* Testimonials */}
+        {/* Two-column layout */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-3xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 max-w-5xl mx-auto"
         >
-          <div className="text-center mb-12">
-            <span className="text-[#505050] text-sm uppercase tracking-widest">Testimonials</span>
-          </div>
+          {/* Left Column: Form */}
+          <motion.div variants={itemVariants} className="lg:col-span-3">
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="space-y-6"
+              noValidate
+            >
+              {/* Name */}
+              <div>
+                <label
+                  htmlFor="contact-name"
+                  className="block text-sm text-[#a0a0a0] mb-2 tracking-wide"
+                >
+                  Name
+                </label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your full name"
+                  required
+                  className={inputClasses}
+                />
+              </div>
 
-          <Magnetic strength={0.03}>
-            <GlowCard className="p-8 md:p-12 rounded-2xl text-center">
-              <motion.p
-                key={activeTestimonial}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="text-xl md:text-2xl text-[#a0a0a0] leading-relaxed mb-8 italic"
-              >
-                &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
-              </motion.p>
-              <motion.div
-                key={`author-${activeTestimonial}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-              >
-                <div className="text-white font-semibold text-lg">{testimonials[activeTestimonial].author}</div>
-                <div className="text-[#505050] text-sm">{testimonials[activeTestimonial].role}</div>
-              </motion.div>
-            </GlowCard>
-          </Magnetic>
+              {/* Email */}
+              <div>
+                <label
+                  htmlFor="contact-email"
+                  className="block text-sm text-[#a0a0a0] mb-2 tracking-wide"
+                >
+                  Email
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  required
+                  className={inputClasses}
+                />
+              </div>
 
-          {/* Dots */}
-          <div className="flex justify-center gap-3 mt-8">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveTestimonial(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === activeTestimonial
-                    ? 'w-8 bg-[#ff6b35]'
-                    : 'bg-[#333] hover:bg-[#444]'
-                }`}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
-            ))}
-          </div>
+              {/* Message */}
+              <div>
+                <label
+                  htmlFor="contact-message"
+                  className="block text-sm text-[#a0a0a0] mb-2 tracking-wide"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell me about your project..."
+                  required
+                  rows={5}
+                  className={`${inputClasses} resize-none`}
+                />
+              </div>
+
+              {/* Budget Range */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label
+                    htmlFor="contact-budget"
+                    className="block text-sm text-[#a0a0a0] tracking-wide"
+                  >
+                    Budget Range
+                  </label>
+                  <span className="text-sm font-semibold text-[#ff6b35]">
+                    {formatBudget(formData.budget)}
+                  </span>
+                </div>
+                <input
+                  id="contact-budget"
+                  type="range"
+                  name="budget"
+                  min={500}
+                  max={25000}
+                  step={500}
+                  value={formData.budget}
+                  onChange={handleChange}
+                  className="w-full h-2 bg-[#2a2a2a] rounded-full appearance-none cursor-pointer accent-[#ff6b35] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#ff6b35] [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(255,107,53,0.4)] [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#ff6b35] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
+                />
+                <div className="flex justify-between mt-1.5">
+                  <span className="text-xs text-[#6b6b6b]">$500</span>
+                  <span className="text-xs text-[#6b6b6b]">$25,000</span>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <motion.button
+                type="submit"
+                disabled={status === 'submitting'}
+                className="w-full bg-[#ff6b35] hover:bg-[#e55a28] disabled:bg-[#ff6b35]/60 text-white font-semibold py-4 px-8 rounded-xl transition-colors duration-300 flex items-center justify-center gap-3 text-sm tracking-wide uppercase cursor-pointer disabled:cursor-not-allowed"
+                whileHover={{ scale: status === 'submitting' ? 1 : 1.02 }}
+                whileTap={{ scale: status === 'submitting' ? 1 : 0.98 }}
+              >
+                {status === 'submitting' && (
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                )}
+                {status === 'idle' && 'Send Message'}
+                {status === 'submitting' && 'Sending...'}
+                {status === 'success' && 'Message Sent!'}
+                {status === 'error' && 'Failed — Try Again'}
+              </motion.button>
+
+              {/* Status Messages */}
+              {status === 'success' && (
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center text-sm text-green-400"
+                >
+                  Thanks for reaching out! I&apos;ll get back to you within 24
+                  hours.
+                </motion.p>
+              )}
+              {status === 'error' && (
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center text-sm text-red-400"
+                >
+                  Something went wrong. Please try again or reach out directly
+                  via email.
+                </motion.p>
+              )}
+            </form>
+          </motion.div>
+
+          {/* Right Column: Info + Social */}
+          <motion.div
+            variants={itemVariants}
+            className="lg:col-span-2 flex flex-col gap-10"
+          >
+            {/* Quick Info */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-white font-semibold text-lg mb-2">
+                  Get in touch
+                </h3>
+                <p className="text-[#a0a0a0] text-sm leading-relaxed">
+                  Whether you need a full website, a landing page, or technical
+                  consulting, I&apos;m here to help. Drop me a message and
+                  I&apos;ll respond within 24 hours.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-[#161616] border border-[#2a2a2a] flex items-center justify-center shrink-0">
+                    <svg
+                      className="w-4 h-4 text-[#ff6b35]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs text-[#6b6b6b] uppercase tracking-wider">
+                      Email
+                    </p>
+                    <a
+                      href="mailto:hello@raiansar.com"
+                      className="text-sm text-white hover:text-[#ff6b35] transition-colors"
+                    >
+                      hello@raiansar.com
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-[#161616] border border-[#2a2a2a] flex items-center justify-center shrink-0">
+                    <svg
+                      className="w-4 h-4 text-[#ff6b35]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs text-[#6b6b6b] uppercase tracking-wider">
+                      Based in
+                    </p>
+                    <p className="text-sm text-white">Pakistan</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-[#161616] border border-[#2a2a2a] flex items-center justify-center shrink-0">
+                    <svg
+                      className="w-4 h-4 text-[#ff6b35]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs text-[#6b6b6b] uppercase tracking-wider">
+                      Availability
+                    </p>
+                    <p className="text-sm text-green-400">
+                      Open for projects
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="h-px bg-[#2a2a2a]" />
+
+            {/* Social Links */}
+            <div>
+              <h3 className="text-white font-semibold text-sm uppercase tracking-widest mb-5">
+                Find me on
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {socialLinks.map((link, index) => (
+                  <motion.a
+                    key={link.name}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl px-4 py-3 hover:border-[#ff6b35]/40 transition-all duration-300"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ duration: 0.4, delay: 0.8 + index * 0.08 }}
+                    whileHover={{ y: -2 }}
+                  >
+                    <Image
+                      src={link.icon}
+                      alt={link.name}
+                      width={18}
+                      height={18}
+                      className="invert opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                    <span className="text-sm text-[#a0a0a0] group-hover:text-white transition-colors duration-300">
+                      {link.name}
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
