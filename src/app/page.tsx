@@ -13,7 +13,15 @@ const About = dynamic(() => import('@/components/sections/About').then(mod => ({
   loading: () => <div className="min-h-[600px]" />,
 });
 
+const Services = dynamic(() => import('@/components/sections/Services').then(mod => ({ default: mod.Services })), {
+  loading: () => <div className="min-h-[500px]" />,
+});
+
 const Process = dynamic(() => import('@/components/sections/Process').then(mod => ({ default: mod.Process })), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
+const Skills = dynamic(() => import('@/components/sections/Skills').then(mod => ({ default: mod.Skills })), {
   loading: () => <div className="min-h-[400px]" />,
 });
 
@@ -21,12 +29,16 @@ const CodeMarquee = dynamic(() => import('@/components/sections/CodeMarquee').th
   loading: () => <div className="min-h-[300px]" />,
 });
 
-const Services = dynamic(() => import('@/components/sections/Services').then(mod => ({ default: mod.Services })), {
+const Testimonials = dynamic(() => import('@/components/sections/Testimonials').then(mod => ({ default: mod.Testimonials })), {
   loading: () => <div className="min-h-[500px]" />,
 });
 
-const Posts = dynamic(() => import('@/components/sections/Posts').then(mod => ({ default: mod.Posts })), {
-  loading: () => <div className="min-h-[500px]" />,
+const FAQ = dynamic(() => import('@/components/sections/FAQ').then(mod => ({ default: mod.FAQ })), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
+const CTA = dynamic(() => import('@/components/sections/CTA').then(mod => ({ default: mod.CTA })), {
+  loading: () => <div className="min-h-[300px]" />,
 });
 
 const Contact = dynamic(() => import('@/components/sections/Contact').then(mod => ({ default: mod.Contact })), {
@@ -65,10 +77,13 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <Hero />
         <About />
-        <Process />
-        <CodeMarquee />
         <Services />
-        <Posts />
+        <Process />
+        <Skills />
+        <CodeMarquee />
+        <Testimonials />
+        <FAQ />
+        <CTA />
         <Contact />
       </main>
       <Footer />
