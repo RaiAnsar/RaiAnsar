@@ -1,32 +1,32 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { MotionValue, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { TextScramble } from '@/components/ui/TextScramble';
 
-type Expertise = {
+type Service = {
   id: string;
   title: string;
   category: string;
   description: string;
-  bullets: string[];
+  pills: string[];
   accent: string;
   accentRgb: string;
   icon: React.ReactNode;
 };
 
-const expertise: Expertise[] = [
+const services: Service[] = [
   {
     id: 'frontend',
-    title: 'FRONTEND',
+    title: 'Frontend',
     category: 'Digital Experience',
     description:
-      'High-performance landing pages and web apps—clean UI engineering, accessible UX, and polished interactions.',
-    bullets: ['React / Next.js', 'TypeScript', 'Design Systems', 'Accessibility + UX'],
+      'High-performance landing pages and web apps — clean UI engineering, accessible UX, and polished interactions that convert.',
+    pills: ['React / Next.js', 'TypeScript', 'Design Systems', 'Accessibility'],
     accent: '#ff6b35',
     accentRgb: '255,107,53',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
         <circle cx="12" cy="12" r="10" />
         <path d="M2 12h20" />
         <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
@@ -35,15 +35,15 @@ const expertise: Expertise[] = [
   },
   {
     id: 'wordpress',
-    title: 'WORDPRESS',
+    title: 'WordPress',
     category: 'CMS Expertise',
     description:
-      'Custom themes, plugins, migrations, and debugging—plus performance and security hardening for production sites.',
-    bullets: ['Custom Themes', 'Plugin Development', 'WooCommerce', 'Speed + Security'],
+      'Custom themes, plugins, migrations, and debugging — plus performance and security hardening for production sites.',
+    pills: ['Custom Themes', 'Plugin Dev', 'WooCommerce', 'Speed + Security'],
     accent: '#3b82f6',
     accentRgb: '59,130,246',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
         <circle cx="12" cy="12" r="10" />
         <path d="M7 9l2.5 8L12 6l2.5 11L17 9" />
       </svg>
@@ -51,15 +51,15 @@ const expertise: Expertise[] = [
   },
   {
     id: 'ecommerce',
-    title: 'E-COMMERCE',
+    title: 'E-Commerce',
     category: 'Conversion Systems',
     description:
-      'Checkout flows, catalog logic, performance, and integrations—engineered to convert and scale smoothly.',
-    bullets: ['Stripe / Payments', 'Shipping + Tax', 'Analytics', 'SEO Foundations'],
+      'Checkout flows, catalog logic, performance, and integrations — engineered to convert and scale smoothly.',
+    pills: ['Stripe / Payments', 'Shipping + Tax', 'Analytics', 'SEO'],
     accent: '#10b981',
     accentRgb: '16,185,129',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
         <path d="M6 6h15l-1.5 9h-12z" />
         <path d="M6 6l-2-3H2" />
         <circle cx="9" cy="20" r="1.5" />
@@ -69,15 +69,15 @@ const expertise: Expertise[] = [
   },
   {
     id: 'devops',
-    title: 'DEVOPS',
+    title: 'DevOps',
     category: 'Deployment & Reliability',
     description:
-      'Secure deployments, automation, and monitoring—so your product stays stable, fast, and easy to maintain.',
-    bullets: ['Docker', 'AWS / Cloud', 'CI/CD', 'Monitoring + Backups'],
+      'Secure deployments, automation, and monitoring — so your product stays stable, fast, and easy to maintain.',
+    pills: ['Docker', 'AWS / Cloud', 'CI/CD', 'Monitoring'],
     accent: '#8b5cf6',
     accentRgb: '139,92,246',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
         <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" />
         <circle cx="12" cy="12" r="3" />
       </svg>
@@ -85,15 +85,15 @@ const expertise: Expertise[] = [
   },
   {
     id: 'backend',
-    title: 'BACKEND',
+    title: 'Backend',
     category: 'System Architecture',
     description:
-      'Secure APIs and scalable services with pragmatic architecture—built for reliability, performance, and maintainability.',
-    bullets: ['Node.js / Python', 'PostgreSQL', 'Redis / Caching', 'Auth + Integrations'],
+      'Secure APIs and scalable services with pragmatic architecture — built for reliability, performance, and maintainability.',
+    pills: ['Node.js / Python', 'PostgreSQL', 'Redis / Caching', 'Auth + APIs'],
     accent: '#f59e0b',
     accentRgb: '245,158,11',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
         <ellipse cx="12" cy="6" rx="8" ry="3" />
         <path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6" />
         <path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" />
@@ -102,400 +102,214 @@ const expertise: Expertise[] = [
   },
 ];
 
-function ExpertiseCard({
-  item,
-  index,
-  total,
-  progress,
-  isActive,
-}: {
-  item: Expertise;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-  isActive: boolean;
-}) {
-  const shouldReduceMotion = useReducedMotion();
-  const radius = 700;
-  const position = useTransform(progress, (v) => v * Math.max(1, total - 1));
-  const offset = useTransform(position, (p) => index - p);
-  const angle = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * 0.6));
+function StickyServiceCard({ service, index, total }: { service: Service; index: number; total: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  const x = useTransform(angle, (a) => Math.sin(a) * radius * 1.1);
-  const z = useTransform([angle, offset], ([a, o]: number[]) => {
-    return Math.cos(a as number) * radius - radius - Math.abs(o as number) * 60;
-  });
-  const rotateY = useTransform(angle, (a) => (-a * 180) / Math.PI);
-
-  const opacity = useTransform(offset, (o) => {
-    const abs = Math.abs(o);
-    if (abs > 2.5) return 0;
-    return 1 - abs / 2.5;
-  });
-
-  const scale = useTransform(offset, (o) => 1 - Math.min(0.08, Math.abs(o) * 0.03));
-  const y = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * -4));
+  // Each card sticks a bit lower so they stack visually
+  const stickyTop = 80 + index * 20;
 
   return (
-    <motion.div
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88vw] max-w-4xl h-[60vh] max-h-[550px] flex flex-col lg:flex-row overflow-hidden rounded-3xl shadow-2xl origin-center"
+    <div
+      ref={ref}
+      className="sticky"
       style={{
-        opacity,
-        scale,
-        x,
-        y,
-        z,
-        rotateY,
-        transformStyle: 'preserve-3d',
-        backfaceVisibility: 'hidden',
-        willChange: 'transform, opacity',
-        zIndex: isActive ? 10 : 5 - Math.abs(index),
-        pointerEvents: isActive ? 'auto' : 'none',
-        background: `linear-gradient(145deg, rgba(${item.accentRgb},0.08) 0%, #0f0f0f 40%, #111 100%)`,
-        border: `1px solid rgba(${item.accentRgb},0.15)`,
+        top: `${stickyTop}px`,
+        zIndex: index + 1,
+        paddingBottom: index < total - 1 ? '2rem' : '0',
       }}
-      aria-hidden={!isActive}
     >
-      <div className="flex-1 p-8 lg:p-10 flex flex-col justify-center relative z-10">
-        {/* Category pill - clou.ch style */}
-        <div
-          className="inline-flex self-start items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider mb-6 border"
-          style={{
-            background: `rgba(${item.accentRgb},0.1)`,
-            borderColor: `rgba(${item.accentRgb},0.25)`,
-            color: item.accent,
-          }}
-        >
-          {item.category}
-        </div>
-
-        <h3 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 tracking-tighter text-white">
-          {item.title}
-        </h3>
-
-        <p className="text-base md:text-lg text-white/50 leading-relaxed mb-6 max-w-lg">
-          {item.description}
-        </p>
-
-        <div className="grid grid-cols-2 gap-2 mb-6">
-          {item.bullets.map((bullet) => (
-            <div key={bullet} className="flex items-center gap-2 text-white/60 text-sm">
-              <div
-                className="w-1.5 h-1.5 rounded-full shrink-0"
-                style={{ background: item.accent }}
-              />
-              <span>{bullet}</span>
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <a
-            className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 group w-fit hover:gap-3"
-            href="#contact"
-            style={{ color: item.accent }}
-          >
-            Start Project
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover:translate-x-1">
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      {/* Right illustration - clou.ch inspired with colored circle motif */}
-      <div className="flex-1 relative hidden lg:block overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{ background: `linear-gradient(135deg, ${item.accent}, transparent)` }}
-        />
-        {/* Large decorative circle like clou.ch */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative w-64 h-64 xl:w-72 xl:h-72">
-            {/* Outer circle */}
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: `radial-gradient(circle, rgba(${item.accentRgb},0.06) 0%, transparent 70%)`,
-              }}
-            />
-            <motion.div
-              className="absolute inset-0"
-              animate={shouldReduceMotion || !isActive ? undefined : { rotate: 360 }}
-              transition={
-                shouldReduceMotion || !isActive
-                  ? undefined
-                  : { duration: 40, repeat: Infinity, ease: 'linear' }
-              }
-            >
-              <div
-                className="absolute inset-0 border-2 border-dashed rounded-full"
-                style={{ borderColor: `rgba(${item.accentRgb},0.2)` }}
-              />
-              <div
-                className="absolute inset-6 border rounded-full"
-                style={{ borderColor: `rgba(${item.accentRgb},0.1)` }}
-              />
-            </motion.div>
-
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div style={{ color: item.accent, filter: `drop-shadow(0 0 30px rgba(${item.accentRgb},0.3))` }}>
-                {item.icon}
+      <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
+        className="relative overflow-hidden rounded-[2rem] group cursor-default shadow-2xl"
+        style={{
+          background: `linear-gradient(160deg, rgba(${service.accentRgb},0.14) 0%, rgba(${service.accentRgb},0.04) 35%, #0c0c0c 100%)`,
+          border: `1px solid rgba(${service.accentRgb},0.18)`,
+          boxShadow: `0 30px 60px -15px rgba(0,0,0,0.7), 0 0 0 1px rgba(${service.accentRgb},0.08)`,
+        }}
+      >
+        <div className="relative z-10 grid md:grid-cols-5 gap-6 p-8 md:p-12 lg:p-16 min-h-[380px] md:min-h-[440px]">
+          {/* Left content - 3 cols */}
+          <div className="md:col-span-3 flex flex-col justify-between">
+            <div>
+              {/* Pills row */}
+              <div className="flex flex-wrap gap-2 mb-8">
+                {service.pills.map((pill) => (
+                  <span
+                    key={pill}
+                    className="px-3.5 py-1.5 rounded-full text-xs font-medium border"
+                    style={{
+                      color: `rgba(${service.accentRgb},0.9)`,
+                      borderColor: `rgba(${service.accentRgb},0.25)`,
+                      background: `rgba(${service.accentRgb},0.08)`,
+                    }}
+                  >
+                    {pill}
+                  </span>
+                ))}
               </div>
+
+              {/* Title */}
+              <h3 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-3 tracking-tight">
+                {service.title}
+              </h3>
+
+              {/* Category */}
+              <p
+                className="text-sm font-semibold tracking-[0.15em] uppercase mb-6"
+                style={{ color: service.accent }}
+              >
+                {service.category}
+              </p>
+
+              {/* Description */}
+              <p className="text-base md:text-lg text-white/45 leading-relaxed max-w-xl">
+                {service.description}
+              </p>
+            </div>
+
+            {/* CTA */}
+            <div className="mt-8">
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 group/link hover:gap-3"
+                style={{ color: service.accent }}
+              >
+                Start Project
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover/link:translate-x-1">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </a>
             </div>
           </div>
-        </div>
-        <div
-          className="absolute inset-0"
-          style={{ background: 'linear-gradient(to left, transparent, transparent 30%, #111)' }}
-        />
-      </div>
-    </motion.div>
-  );
-}
 
-function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
-  const shouldReduceMotion = useReducedMotion();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const swipeStart = useRef<{ x: number; y: number; time: number } | null>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end start'],
-  });
-
-  // Asymmetric holds - more at end for last card
-  const startHold = shouldReduceMotion ? 0 : 0.12;
-  const endHold = shouldReduceMotion ? 0 : 0.28; // Much more hold at end
-  
-  const progress = useTransform(scrollYProgress, (v) => {
-    const range = 1 - startHold - endHold;
-    if (range <= 0) return 0;
-    const t = (v - startHold) / range;
-    return Math.min(1, Math.max(0, t));
-  });
-
-  useEffect(() => {
-    const unsubscribe = progress.on('change', (v) => {
-      const maxIndex = Math.max(1, expertise.length - 1);
-      const idx = Math.min(expertise.length - 1, Math.max(0, Math.round(v * maxIndex)));
-      setActiveIndex((prev) => (prev === idx ? prev : idx));
-    });
-    return () => unsubscribe();
-  }, [progress]);
-
-  const marqueeX = useTransform(progress, [0, 1], ['50%', '-50%']);
-
-  const scrollToIndex = useCallback(
-    (index: number) => {
-      const el = sectionRef.current;
-      if (!el) return;
-
-      const sectionTop = window.scrollY + el.getBoundingClientRect().top;
-      const totalScroll = Math.max(1, el.offsetHeight - window.innerHeight);
-      const maxIndex = Math.max(1, expertise.length - 1);
-      const range = 1 - startHold - endHold;
-      const normalized = index / maxIndex;
-      const targetProgress = startHold + normalized * Math.max(0, range);
-      const top = sectionTop + totalScroll * targetProgress;
-
-      window.scrollTo({
-        top,
-        behavior: shouldReduceMotion ? 'auto' : 'smooth',
-      });
-    },
-    [sectionRef, shouldReduceMotion, startHold, endHold]
-  );
-
-  const onTouchStart = useCallback((event: React.TouchEvent) => {
-    const touch = event.touches[0];
-    if (!touch) return;
-    swipeStart.current = { x: touch.clientX, y: touch.clientY, time: Date.now() };
-  }, []);
-
-  const onTouchEnd = useCallback(
-    (event: React.TouchEvent) => {
-      const start = swipeStart.current;
-      swipeStart.current = null;
-      if (!start) return;
-
-      const touch = event.changedTouches[0];
-      if (!touch) return;
-
-      const dx = touch.clientX - start.x;
-      const dy = touch.clientY - start.y;
-      const dt = Date.now() - start.time;
-
-      if (dt > 650) return;
-      const absX = Math.abs(dx);
-      const absY = Math.abs(dy);
-      if (absX < 56 || absX < absY * 1.2) return;
-
-      const next = Math.min(
-        expertise.length - 1,
-        Math.max(0, activeIndex + (dx < 0 ? 1 : -1))
-      );
-      if (next !== activeIndex) scrollToIndex(next);
-    },
-    [activeIndex, scrollToIndex]
-  );
-
-  const onKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      const key = event.key;
-      if (key === 'ArrowRight' || key === 'ArrowDown') {
-        event.preventDefault();
-        scrollToIndex(Math.min(expertise.length - 1, activeIndex + 1));
-      } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
-        event.preventDefault();
-        scrollToIndex(Math.max(0, activeIndex - 1));
-      } else if (key === 'Home') {
-        event.preventDefault();
-        scrollToIndex(0);
-      } else if (key === 'End') {
-        event.preventDefault();
-        scrollToIndex(expertise.length - 1);
-      }
-    },
-    [activeIndex, scrollToIndex]
-  );
-
-  return (
-    <>
-      {/* Dots nav - fixed at bottom */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-black/40 backdrop-blur-xl px-5 py-3 rounded-full border border-white/[0.06]">
-        {expertise.map((item, index) => {
-          const isActive = index === activeIndex;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              className="relative group"
-              onClick={() => scrollToIndex(index)}
-              aria-label={item.title}
-              aria-current={isActive ? 'true' : undefined}
-            >
+          {/* Right illustration area - 2 cols */}
+          <div className="md:col-span-2 relative hidden md:flex items-center justify-center">
+            <div className="relative w-56 h-56 lg:w-72 lg:h-72">
+              {/* Outer glow */}
               <div
-                className="w-2 h-2 rounded-full transition-all duration-300"
+                className="absolute inset-0 rounded-full opacity-30"
                 style={{
-                  background: isActive ? (expertise[index]?.accent ?? '#ff6b35') : 'rgba(255,255,255,0.2)',
-                  transform: isActive ? 'scale(1.3)' : 'scale(1)',
-                  boxShadow: isActive ? `0 0 10px rgba(${expertise[index]?.accentRgb ?? '255,107,53'},0.4)` : 'none',
+                  background: `radial-gradient(circle, rgba(${service.accentRgb},0.25) 0%, transparent 70%)`,
                 }}
               />
-              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium tracking-wider uppercase whitespace-nowrap bg-[#1a1a1a] px-3 py-1.5 rounded border border-white/[0.08] pointer-events-none text-white/70">
-                {item.title}
+              {/* Circle border with orbiting dot */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  border: `2px solid rgba(${service.accentRgb},0.18)`,
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
+              >
+                <div
+                  className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full"
+                  style={{
+                    background: service.accent,
+                    boxShadow: `0 0 14px rgba(${service.accentRgb},0.7)`,
+                  }}
+                />
+              </motion.div>
+              {/* Inner dashed circle */}
+              <div
+                className="absolute inset-8 lg:inset-10 rounded-full"
+                style={{ border: `1px dashed rgba(${service.accentRgb},0.12)` }}
+              />
+              {/* Center icon */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div
+                  className="w-16 h-16 lg:w-20 lg:h-20 transition-transform duration-500 group-hover:scale-110"
+                  style={{
+                    color: service.accent,
+                    filter: `drop-shadow(0 0 30px rgba(${service.accentRgb},0.4))`,
+                  }}
+                >
+                  {service.icon}
+                </div>
               </div>
-            </button>
-          );
-        })}
-      </div>
+            </div>
+          </div>
+        </div>
 
-      {/* Marquee stroke text */}
-      <motion.div
-        className="absolute bottom-0 h-full leading-[100vh] flex justify-center whitespace-nowrap text-[20vw] font-black text-transparent select-none pointer-events-none left-0 opacity-30"
-        style={{
-          x: marqueeX,
-          WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.05)',
-        }}
-      >
-        CODE • CREATE • CONQUER • DEPLOY • SCALE •
+        {/* Background number watermark */}
+        <div
+          className="absolute -bottom-10 -right-4 text-[14rem] md:text-[18rem] font-black leading-none pointer-events-none select-none"
+          style={{
+            WebkitTextStroke: `1px rgba(${service.accentRgb},0.06)`,
+            color: 'transparent',
+          }}
+        >
+          {String(index + 1).padStart(2, '0')}
+        </div>
+
+        {/* Hover glow overlay */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+          style={{
+            background: `radial-gradient(ellipse at 30% 50%, rgba(${service.accentRgb},0.1) 0%, transparent 60%)`,
+          }}
+        />
       </motion.div>
-
-      {/* Cards */}
-      <div
-        className="relative w-full h-full flex items-center justify-center"
-        style={{ perspective: '1200px', transformStyle: 'preserve-3d' }}
-        tabIndex={0}
-        role="region"
-        aria-label="Expertise carousel"
-        onKeyDown={onKeyDown}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      >
-        {expertise.map((item, index) => (
-          <ExpertiseCard
-            key={item.id}
-            item={item}
-            index={index}
-            total={expertise.length}
-            progress={progress}
-            isActive={index === activeIndex}
-          />
-        ))}
-      </div>
-    </>
-  );
-}
-
-function ServicesPlaceholder() {
-  const first = expertise[0];
-  if (!first) return null;
-
-  return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div
-        className="w-[88vw] max-w-4xl h-[60vh] max-h-[550px] flex flex-col lg:flex-row overflow-hidden rounded-3xl"
-        style={{
-          background: `linear-gradient(145deg, rgba(${first.accentRgb},0.08) 0%, #0f0f0f 40%, #111 100%)`,
-          border: `1px solid rgba(${first.accentRgb},0.15)`,
-          boxShadow: `0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(${first.accentRgb},0.08)`,
-        }}
-      >
-        <div className="flex-1 p-8 lg:p-10 flex flex-col justify-center">
-          <div
-            className="inline-flex self-start items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider mb-6 border"
-            style={{
-              background: `rgba(${first.accentRgb},0.1)`,
-              borderColor: `rgba(${first.accentRgb},0.25)`,
-              color: first.accent,
-            }}
-          >
-            {first.category}
-          </div>
-          <div className="text-5xl md:text-6xl font-black tracking-[-0.02em] text-white mb-6">
-            {first.title}
-          </div>
-          <div className="text-white/45 text-lg leading-relaxed max-w-lg tracking-[0.01em]">
-            {first.description}
-          </div>
-        </div>
-        <div className="flex-1 relative hidden lg:flex items-center justify-center" style={{ background: `linear-gradient(135deg, rgba(${first.accentRgb},0.05), transparent)` }}>
-          <div style={{ color: `rgba(${first.accentRgb},0.3)` }}>{first.icon}</div>
-        </div>
-      </div>
     </div>
   );
 }
 
 export function Services() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [observeRef, inView] = useInView({
-    rootMargin: '1000px 0px',
-    triggerOnce: true,
-  });
-
-  const setRefs = useCallback(
-    (node: HTMLElement | null) => {
-      sectionRef.current = node;
-      observeRef(node);
-    },
-    [observeRef]
-  );
-
-  // Much more height - 220vh per card for very generous viewing time
-  const sectionHeightVh = useMemo(() => Math.max(900, expertise.length * 220), []);
+  const containerRef = useRef<HTMLElement>(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.02 });
 
   return (
     <section
-      ref={setRefs}
-      className="relative w-full bg-[#0a0a0a]"
+      ref={containerRef}
+      className="relative py-24 md:py-32 bg-[#0a0a0a] overflow-hidden"
       id="services"
-      style={{ height: `${sectionHeightVh}vh` }}
     >
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        {inView ? <ServicesCarousel sectionRef={sectionRef} /> : <ServicesPlaceholder />}
+      <div className="container relative z-10">
+        {/* Section header */}
+        <div className="mb-16 md:mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="text-[#ff6b35] text-xs font-semibold tracking-[0.25em] uppercase">
+              <TextScramble text="// Services" delay={0} />
+            </span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-4"
+          >
+            <TextScramble text="What I build" delay={150} />
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-white/40 text-lg tracking-wide max-w-2xl"
+          >
+            End-to-end expertise across the full stack, from pixel-perfect frontends to bulletproof infrastructure.
+          </motion.p>
+        </div>
+
+        {/* Sticky stacking cards - clou.ch style */}
+        <div className="relative">
+          {services.map((service, index) => (
+            <StickyServiceCard
+              key={service.id}
+              service={service}
+              index={index}
+              total={services.length}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

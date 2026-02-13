@@ -62,9 +62,9 @@ export function About() {
         </div>
 
         {/* Story content with glow cards */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
           <Magnetic strength={0.05}>
-            <GlowCard className="p-8 rounded-2xl">
+            <GlowCard className="p-8 rounded-2xl h-full">
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -79,14 +79,14 @@ export function About() {
           </Magnetic>
 
           <Magnetic strength={0.05}>
-            <GlowCard className="p-8 rounded-2xl">
+            <GlowCard className="p-8 rounded-2xl h-full">
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="text-lg text-[#707070] leading-relaxed mb-6"
               >
-                I stay current with modern frameworks and best practices, focusing on code that scales and 
+                I stay current with modern frameworks and best practices, focusing on code that scales and
                 performs well in production.
               </motion.p>
               <motion.p
@@ -95,7 +95,7 @@ export function About() {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 className="text-lg text-[#707070] leading-relaxed"
               >
-                Clear communication and reliable delivery matter as much as technical skill. I aim to make 
+                Clear communication and reliable delivery matter as much as technical skill. I aim to make
                 every project straightforward for my clients.
               </motion.p>
             </GlowCard>
