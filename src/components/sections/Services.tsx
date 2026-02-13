@@ -104,10 +104,10 @@ function ExpertiseCard({
   isActive: boolean;
 }) {
   const shouldReduceMotion = useReducedMotion();
-  const radius = 480;
+  const radius = 700;
   const position = useTransform(progress, (v) => v * Math.max(1, total - 1));
   const offset = useTransform(position, (p) => index - p);
-  const angle = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * 0.35));
+  const angle = useTransform(offset, (o) => (shouldReduceMotion ? 0 : o * 0.6));
 
   const x = useTransform(angle, (a) => Math.sin(a) * radius * 1.1);
   const z = useTransform([angle, offset], ([a, o]: number[]) => {
@@ -332,7 +332,7 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
   return (
     <>
       {/* Dots nav - fixed at bottom */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-black/50 backdrop-blur-md px-5 py-3 rounded-full border border-white/10">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-black/40 backdrop-blur-xl px-5 py-3 rounded-full border border-white/[0.06]">
         {expertise.map((item, index) => {
           const isActive = index === activeIndex;
           return (
@@ -345,13 +345,14 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
               aria-current={isActive ? 'true' : undefined}
             >
               <div
-                className="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                className="w-2 h-2 rounded-full transition-all duration-300"
                 style={{
-                  background: isActive ? '#ff6b35' : 'rgba(255,255,255,0.25)',
-                  transform: isActive ? 'scale(1.2)' : 'scale(1)',
+                  background: isActive ? '#ff6b35' : 'rgba(255,255,255,0.2)',
+                  transform: isActive ? 'scale(1.3)' : 'scale(1)',
+                  boxShadow: isActive ? '0 0 10px rgba(255,107,53,0.4)' : 'none',
                 }}
               />
-              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium whitespace-nowrap bg-[#1a1a1a] px-2 py-1 rounded border border-white/10 pointer-events-none">
+              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium tracking-wider uppercase whitespace-nowrap bg-[#1a1a1a] px-3 py-1.5 rounded border border-white/[0.08] pointer-events-none text-white/70">
                 {item.title}
               </div>
             </button>
@@ -402,19 +403,33 @@ function ServicesPlaceholder() {
 
   return (
     <div className="absolute inset-0 flex items-center justify-center">
-      <div className="w-[88vw] max-w-4xl h-[60vh] max-h-[550px] flex flex-col lg:flex-row overflow-hidden rounded-3xl bg-[#111] border border-white/[0.08] shadow-2xl">
+      <div 
+        className="w-[88vw] max-w-4xl h-[60vh] max-h-[550px] flex flex-col lg:flex-row overflow-hidden rounded-3xl"
+        style={{
+          background: 'linear-gradient(145deg, rgba(22,22,22,0.95) 0%, rgba(17,17,17,0.98) 100%)',
+          border: '1px solid rgba(255,107,53,0.12)',
+          boxShadow: '0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,107,53,0.08)',
+        }}
+      >
         <div className="flex-1 p-8 lg:p-10 flex flex-col justify-center">
-          <div className="text-xs font-medium tracking-widest uppercase text-white/40 mb-4">
+          <div 
+            className="inline-flex self-start items-center px-4 py-1.5 rounded text-xs font-semibold tracking-[0.15em] uppercase mb-6"
+            style={{
+              background: 'rgba(255,107,53,0.08)',
+              border: '1px solid rgba(255,107,53,0.2)',
+              color: '#ff6b35',
+            }}
+          >
             {first.category}
           </div>
-          <div className="text-5xl md:text-6xl font-black tracking-tighter text-white mb-6">
+          <div className="text-5xl md:text-6xl font-black tracking-[-0.02em] text-white mb-6">
             {first.title}
           </div>
-          <div className="text-white/50 text-lg leading-relaxed max-w-lg">
+          <div className="text-white/45 text-lg leading-relaxed max-w-lg tracking-[0.01em]">
             {first.description}
           </div>
         </div>
-        <div className="flex-1 relative hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ff6b35]/10 to-transparent">
+        <div className="flex-1 relative hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ff6b35]/5 to-transparent">
           <div className="text-[#ff6b35]/30">{first.icon}</div>
         </div>
       </div>

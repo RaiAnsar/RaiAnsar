@@ -71,9 +71,9 @@ export function About() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="text-xl md:text-2xl text-[#a0a0a0] leading-relaxed"
               >
-                Embarking on the rollercoaster ride of my freelance software development odyssey about{' '}
-                <strong className="text-white font-semibold">10 years ago</strong>, I&apos;ve been the virtuoso of remote work for esteemed agencies, 
-                the go-to consultant for ambitious startups, and the maestro of collaboration.
+                I&apos;ve been building software for{' '}
+                <strong className="text-white font-semibold">10+ years</strong>, working with agencies, startups, and established companies.
+                I specialize in turning complex requirements into clean, maintainable solutions.
               </motion.p>
             </GlowCard>
           </Magnetic>
@@ -86,8 +86,8 @@ export function About() {
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="text-lg text-[#707070] leading-relaxed mb-6"
               >
-                Beneath my seemingly calm exterior lies a quiet confidence, stirred with a natural curiosity 
-                that propels me into perpetual learning endeavors.
+                I stay current with modern frameworks and best practices, focusing on code that scales and 
+                performs well in production.
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -95,8 +95,8 @@ export function About() {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 className="text-lg text-[#707070] leading-relaxed"
               >
-                Think of me as a silent wizard, weaving code spells and conjuring up solutions, all while 
-                perfecting my craft in the ever-ticking clock of time.
+                Clear communication and reliable delivery matter as much as technical skill. I aim to make 
+                every project straightforward for my clients.
               </motion.p>
             </GlowCard>
           </Magnetic>

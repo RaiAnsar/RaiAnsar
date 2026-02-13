@@ -1,9 +1,8 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, useInView, useScroll, useSpring, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { TextScramble } from '@/components/ui/TextScramble';
-import { Magnetic } from '@/components/ui/Magnetic';
 
 const steps = [
   {
@@ -32,151 +31,209 @@ const steps = [
   },
 ];
 
-function ProcessCard({ step, index, isActive }: { step: typeof steps[0]; index: number; isActive: boolean }) {
-  const [isHovered, setIsHovered] = useState(false);
-  
+function ArrowIcon() {
   return (
-    <Magnetic strength={0.08}>
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-[#c9a962]/40">
+      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ProcessStep({ step, index, isLast }: { step: typeof steps[0]; index: number; isLast: boolean }) {
+  return (
+    <div className="flex items-start">
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
-        className="relative"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        className="flex-1 group"
       >
-        {/* Card with glow effect */}
-        <div 
-          className="relative p-8 rounded-2xl border transition-all duration-500 overflow-hidden group cursor-default"
-          style={{
-            background: isHovered ? 'rgba(255,107,53,0.05)' : 'rgba(255,255,255,0.02)',
-            borderColor: isHovered ? 'rgba(255,107,53,0.3)' : 'rgba(255,255,255,0.06)',
-          }}
-        >
-          {/* Animated background gradient on hover */}
-          <motion.div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            style={{
-              background: 'radial-gradient(400px circle at 50% 0%, rgba(255,107,53,0.15), transparent 50%)',
-            }}
-          />
-          
-          <div className="relative z-10">
-            {/* Number */}
-            <div className="text-[#ff6b35] text-sm font-bold tracking-widest mb-4">
-              <TextScramble text={`// ${step.number}`} delay={index * 100} />
-            </div>
-            
-            {/* Title */}
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-[#ff6b35] transition-colors duration-300">
-              {step.title}
-            </h3>
-            
-            {/* Subtitle */}
-            <p className="text-[#ff8555] text-sm font-medium mb-4">{step.subtitle}</p>
-            
-            {/* Description */}
-            <p className="text-[#707070] leading-relaxed">{step.description}</p>
-          </div>
-          
-          {/* Corner accent */}
+        {/* Step content */}
+        <div className="relative">
+          {/* Number badge */}
           <div 
-            className="absolute top-0 right-0 w-20 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-105"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,107,53,0.2) 0%, transparent 50%)',
+              background: 'linear-gradient(135deg, rgba(201,169,98,0.12) 0%, rgba(201,169,98,0.05) 100%)',
+              border: '1px solid rgba(201,169,98,0.2)',
             }}
-          />
+          >
+            <span 
+              className="text-lg font-bold tracking-wider"
+              style={{ color: '#c9a962' }}
+            >
+              {step.number}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-[#c9a962] transition-colors duration-300">
+            {step.title}
+          </h3>
+
+          {/* Subtitle */}
+          <p className="text-[#c9a962]/70 text-sm font-medium mb-3 tracking-wide">
+            {step.subtitle}
+          </p>
+
+          {/* Description */}
+          <p className="text-white/40 text-sm leading-relaxed max-w-[200px]">
+            {step.description}
+          </p>
         </div>
       </motion.div>
-    </Magnetic>
+
+      {/* Arrow connector */}
+      {!isLast && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.4 + index * 0.15 }}
+          className="hidden md:flex items-center justify-center px-4 pt-6"
+        >
+          <ArrowIcon />
+        </motion.div>
+      )}
+    </div>
   );
 }
 
 export function Process() {
   const containerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.1 });
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
-  
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const smoothY = useSpring(backgroundY, { stiffness: 100, damping: 30 });
+  const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
   return (
     <section
       ref={containerRef}
-      className="relative py-32 md:py-40 bg-[#0a0a0a] overflow-hidden"
+      className="relative py-24 md:py-32 bg-[#0a0a0a] overflow-hidden"
       id="process"
       role="region"
       aria-label="Process section"
     >
-      {/* Solid background */}
-      <div className="absolute inset-0 bg-[#0a0a0a]" />
-      
-      {/* Subtle animated background */}
-      <motion.div
+      {/* Subtle background gradient */}
+      <div 
         className="absolute inset-0 pointer-events-none"
-        style={{ y: smoothY }}
-        aria-hidden="true"
-      >
-        <div 
-          className="absolute w-[600px] h-[600px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, transparent 60%)',
-            left: '-10%',
-            top: '10%',
-            filter: 'blur(60px)',
-          }}
-        />
-      </motion.div>
+        style={{
+          background: 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,169,98,0.03) 0%, transparent 50%)',
+        }}
+      />
 
       <div className="container relative z-10">
         {/* Section header */}
-        <div className="text-center mb-20">
-          <motion.span
+        <div className="text-center mb-16 md:mb-20">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-block text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase mb-6"
+            transition={{ duration: 0.6 }}
           >
-            <TextScramble text="// Process" delay={0} />
-          </motion.span>
-          
+            <span className="text-[#c9a962] text-xs font-semibold tracking-[0.25em] uppercase">
+              <TextScramble text="// Process" delay={0} />
+            </span>
+          </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-4"
           >
-            <TextScramble text="How we work" delay={200} />
+            <TextScramble text="How we work" delay={150} />
           </motion.h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg text-[#606060] max-w-xl mx-auto"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-white/40 text-lg tracking-wide"
           >
             Simple. Transparent. Effective.
           </motion.p>
         </div>
 
-        {/* Process steps grid */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {steps.map((step, index) => (
-            <ProcessCard key={step.number} step={step} index={index} isActive={true} />
-          ))}
+        {/* Process flow - horizontal on desktop, vertical on mobile */}
+        <div className="max-w-5xl mx-auto">
+          {/* Desktop: Horizontal flow */}
+          <div className="hidden md:grid md:grid-cols-4 gap-2">
+            {steps.map((step, index) => (
+              <ProcessStep 
+                key={step.number} 
+                step={step} 
+                index={index} 
+                isLast={index === steps.length - 1} 
+              />
+            ))}
+          </div>
+
+          {/* Mobile: Vertical flow with connecting line */}
+          <div className="md:hidden relative">
+            {/* Vertical connecting line */}
+            <div 
+              className="absolute left-7 top-7 bottom-7 w-px"
+              style={{ background: 'linear-gradient(to bottom, rgba(201,169,98,0.3), rgba(201,169,98,0.05))' }}
+            />
+            
+            <div className="space-y-8">
+              {steps.map((step, index) => (
+                <motion.div
+                  key={step.number}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                  className="flex gap-6"
+                >
+                  {/* Number badge */}
+                  <div 
+                    className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 relative z-10"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(201,169,98,0.15) 0%, rgba(201,169,98,0.05) 100%)',
+                      border: '1px solid rgba(201,169,98,0.25)',
+                    }}
+                  >
+                    <span className="text-lg font-bold" style={{ color: '#c9a962' }}>
+                      {step.number}
+                    </span>
+                  </div>
+
+                  {/* Content */}
+                  <div className="pt-1">
+                    <h3 className="text-xl font-bold text-white mb-1">
+                      {step.title}
+                    </h3>
+                    <p className="text-[#c9a962]/70 text-sm font-medium mb-2">
+                      {step.subtitle}
+                    </p>
+                    <p className="text-white/40 text-sm leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
-        
-        {/* Animated connecting line for desktop */}
+
+        {/* CTA */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1.5, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 w-px h-[60%] bg-gradient-to-b from-transparent via-[#ff6b35]/20 to-transparent origin-top"
-        />
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="text-center mt-16"
+        >
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold tracking-[0.08em] uppercase transition-all duration-300 hover:gap-3"
+            style={{
+              background: 'rgba(201,169,98,0.1)',
+              border: '1px solid rgba(201,169,98,0.25)',
+              color: '#c9a962',
+            }}
+          >
+            Start Your Project
+            <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+        </motion.div>
       </div>
     </section>
   );
