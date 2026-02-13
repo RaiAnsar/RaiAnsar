@@ -4,103 +4,141 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { TextScramble } from '@/components/ui/TextScramble';
 
-const steps = [
+const phases = [
   {
     number: '01',
-    title: 'Contact',
+    title: 'Discovery',
     subtitle: 'Understanding Your Vision',
-    description: 'We discuss your idea, requirements, and goals to understand the vision.',
+    description: 'Deep dive into your goals, audience, and technical requirements. We map out exactly what success looks like before writing a single line of code.',
+    color: '#ff6b35',
+    gradient: 'from-[#ff6b35]/20 to-[#ff6b35]/5',
+    borderColor: 'rgba(255,107,53,0.3)',
+    items: ['Requirements Analysis', 'Technical Audit', 'Scope Definition'],
   },
   {
     number: '02',
-    title: 'Plan',
-    subtitle: 'Creating the Roadmap',
-    description: 'I create a detailed roadmap and technical architecture for your project.',
+    title: 'Strategy',
+    subtitle: 'Creating the Blueprint',
+    description: 'Architecting the perfect solution with a detailed roadmap, technology stack decisions, and milestone planning for predictable delivery.',
+    color: '#3b82f6',
+    gradient: 'from-[#3b82f6]/20 to-[#3b82f6]/5',
+    borderColor: 'rgba(59,130,246,0.3)',
+    items: ['Architecture Design', 'Tech Stack Selection', 'Milestone Planning'],
   },
   {
     number: '03',
-    title: 'Develop',
+    title: 'Development',
     subtitle: 'Building Excellence',
-    description: 'Writing clean, efficient code with regular updates and feedback loops.',
+    description: 'Clean, efficient code with regular updates and feedback loops. Every sprint moves the needle with transparent progress and quality checks.',
+    color: '#8b5cf6',
+    gradient: 'from-[#8b5cf6]/20 to-[#8b5cf6]/5',
+    borderColor: 'rgba(139,92,246,0.3)',
+    items: ['Agile Sprints', 'Code Reviews', 'Progress Updates'],
   },
   {
     number: '04',
-    title: 'Deploy',
-    subtitle: 'Launch & Beyond',
-    description: 'Launching your product to the world with proper testing and optimization.',
+    title: 'Launch',
+    subtitle: 'Deploy & Beyond',
+    description: 'Rigorous testing, performance optimization, and a smooth deployment. Plus ongoing support to keep everything running at peak performance.',
+    color: '#10b981',
+    gradient: 'from-[#10b981]/20 to-[#10b981]/5',
+    borderColor: 'rgba(16,185,129,0.3)',
+    items: ['QA Testing', 'Performance Tuning', 'Ongoing Support'],
   },
 ];
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-[#c9a962]/40">
-      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+function PhaseCard({ phase, index }: { phase: typeof phases[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
 
-function ProcessStep({ step, index, isLast }: { step: typeof steps[0]; index: number; isLast: boolean }) {
   return (
-    <div className="flex items-start">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
-        className="flex-1 group"
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+      className="group relative"
+    >
+      <div
+        className={`relative overflow-hidden rounded-3xl p-8 md:p-10 bg-gradient-to-br ${phase.gradient} border transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl`}
+        style={{ borderColor: phase.borderColor }}
       >
-        {/* Step content */}
-        <div className="relative">
-          {/* Number badge */}
-          <div 
-            className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-105"
-            style={{
-              background: 'linear-gradient(135deg, rgba(201,169,98,0.12) 0%, rgba(201,169,98,0.05) 100%)',
-              border: '1px solid rgba(201,169,98,0.2)',
-            }}
-          >
-            <span 
-              className="text-lg font-bold tracking-wider"
-              style={{ color: '#c9a962' }}
+        {/* Phase number - large watermark */}
+        <div
+          className="absolute top-4 right-6 text-[8rem] md:text-[10rem] font-black leading-none opacity-[0.04] select-none pointer-events-none"
+          style={{ color: phase.color }}
+        >
+          {phase.number}
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10">
+          {/* Phase label */}
+          <div className="flex items-center gap-3 mb-6">
+            <span
+              className="inline-flex items-center justify-center w-10 h-10 rounded-xl text-sm font-bold"
+              style={{
+                background: `${phase.color}15`,
+                color: phase.color,
+                border: `1px solid ${phase.color}30`,
+              }}
             >
-              {step.number}
+              {phase.number}
+            </span>
+            <span
+              className="text-xs font-semibold tracking-[0.2em] uppercase"
+              style={{ color: phase.color }}
+            >
+              Phase {phase.number}
             </span>
           </div>
 
           {/* Title */}
-          <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-[#c9a962] transition-colors duration-300">
-            {step.title}
+          <h3 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight">
+            {phase.title}
           </h3>
 
           {/* Subtitle */}
-          <p className="text-[#c9a962]/70 text-sm font-medium mb-3 tracking-wide">
-            {step.subtitle}
+          <p className="text-white/40 text-sm font-medium mb-4 tracking-wide">
+            {phase.subtitle}
           </p>
 
           {/* Description */}
-          <p className="text-white/40 text-sm leading-relaxed max-w-[200px]">
-            {step.description}
+          <p className="text-white/55 text-base leading-relaxed mb-6 max-w-lg">
+            {phase.description}
           </p>
-        </div>
-      </motion.div>
 
-      {/* Arrow connector */}
-      {!isLast && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, delay: 0.4 + index * 0.15 }}
-          className="hidden md:flex items-center justify-center px-4 pt-6"
-        >
-          <ArrowIcon />
-        </motion.div>
-      )}
-    </div>
+          {/* Items as pills */}
+          <div className="flex flex-wrap gap-2">
+            {phase.items.map((item) => (
+              <span
+                key={item}
+                className="px-3 py-1.5 rounded-full text-xs font-medium border"
+                style={{
+                  background: `${phase.color}08`,
+                  borderColor: `${phase.color}20`,
+                  color: `${phase.color}cc`,
+                }}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Decorative corner accent */}
+        <div
+          className="absolute bottom-0 right-0 w-32 h-32 rounded-tl-full opacity-[0.06]"
+          style={{ background: phase.color }}
+        />
+      </div>
+    </motion.div>
   );
 }
 
 export function Process() {
   const containerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.2 });
+  const isInView = useInView(containerRef, { once: true, amount: 0.1 });
 
   return (
     <section
@@ -111,10 +149,10 @@ export function Process() {
       aria-label="Process section"
     >
       {/* Subtle background gradient */}
-      <div 
+      <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,169,98,0.03) 0%, transparent 50%)',
+          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,107,53,0.03) 0%, transparent 50%)',
         }}
       />
 
@@ -126,7 +164,7 @@ export function Process() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-[#c9a962] text-xs font-semibold tracking-[0.25em] uppercase">
+            <span className="text-[#ff6b35] text-xs font-semibold tracking-[0.25em] uppercase">
               <TextScramble text="// Process" delay={0} />
             </span>
           </motion.div>
@@ -137,79 +175,24 @@ export function Process() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-4"
           >
-            <TextScramble text="How we work" delay={150} />
+            <TextScramble text="From vision to reality" delay={150} />
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-white/40 text-lg tracking-wide"
+            className="text-white/40 text-lg tracking-wide max-w-2xl mx-auto"
           >
-            Simple. Transparent. Effective.
+            A proven process refined over years of delivering exceptional digital products.
           </motion.p>
         </div>
 
-        {/* Process flow - horizontal on desktop, vertical on mobile */}
-        <div className="max-w-5xl mx-auto">
-          {/* Desktop: Horizontal flow */}
-          <div className="hidden md:grid md:grid-cols-4 gap-2">
-            {steps.map((step, index) => (
-              <ProcessStep 
-                key={step.number} 
-                step={step} 
-                index={index} 
-                isLast={index === steps.length - 1} 
-              />
-            ))}
-          </div>
-
-          {/* Mobile: Vertical flow with connecting line */}
-          <div className="md:hidden relative">
-            {/* Vertical connecting line */}
-            <div 
-              className="absolute left-7 top-7 bottom-7 w-px"
-              style={{ background: 'linear-gradient(to bottom, rgba(201,169,98,0.3), rgba(201,169,98,0.05))' }}
-            />
-            
-            <div className="space-y-8">
-              {steps.map((step, index) => (
-                <motion.div
-                  key={step.number}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  className="flex gap-6"
-                >
-                  {/* Number badge */}
-                  <div 
-                    className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 relative z-10"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(201,169,98,0.15) 0%, rgba(201,169,98,0.05) 100%)',
-                      border: '1px solid rgba(201,169,98,0.25)',
-                    }}
-                  >
-                    <span className="text-lg font-bold" style={{ color: '#c9a962' }}>
-                      {step.number}
-                    </span>
-                  </div>
-
-                  {/* Content */}
-                  <div className="pt-1">
-                    <h3 className="text-xl font-bold text-white mb-1">
-                      {step.title}
-                    </h3>
-                    <p className="text-[#c9a962]/70 text-sm font-medium mb-2">
-                      {step.subtitle}
-                    </p>
-                    <p className="text-white/40 text-sm leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+        {/* Phase cards grid - 2 columns on desktop, 1 on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {phases.map((phase, index) => (
+            <PhaseCard key={phase.number} phase={phase} index={index} />
+          ))}
         </div>
 
         {/* CTA */}
@@ -221,12 +204,7 @@ export function Process() {
         >
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold tracking-[0.08em] uppercase transition-all duration-300 hover:gap-3"
-            style={{
-              background: 'rgba(201,169,98,0.1)',
-              border: '1px solid rgba(201,169,98,0.25)',
-              color: '#c9a962',
-            }}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm font-semibold tracking-[0.08em] uppercase transition-all duration-300 hover:gap-3 bg-[#ff6b35] text-white hover:bg-[#ff8555] shadow-lg shadow-[#ff6b35]/20"
           >
             Start Your Project
             <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">

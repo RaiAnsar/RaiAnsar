@@ -1,19 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { StatusModal } from '@/components/ui/StatusModal';
+
+interface StatusData {
+  status: 'available' | 'away' | 'offline';
+  idleMinutes: number;
+}
 
 const navLinks = [
   { href: '#about', label: 'About' },
-  { href: '#process', label: 'Process' },
   { href: '#services', label: 'Services' },
-  { href: '#posts', label: 'Blog' },
+  { href: '#process', label: 'Process' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#testimonials', label: 'Reviews' },
+  { href: '#faq', label: 'FAQ' },
   { href: '#contact', label: 'Contact' },
 ];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [statusModalOpen, setStatusModalOpen] = useState(false);
+  const [liveStatus, setLiveStatus] = useState<StatusData | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +32,25 @@ export function Header() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Fetch live status
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch('/api/status.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          setLiveStatus(data);
+        }
+      } catch {
+        // Fallback - no live status
+      }
+    };
+
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   // Close mobile menu on escape key
@@ -43,13 +72,29 @@ export function Header() {
     };
   }, [mobileMenuOpen]);
 
+  const statusLabel = liveStatus?.status === 'available'
+    ? 'Available'
+    : liveStatus?.status === 'away'
+      ? 'Away'
+      : 'Available';
+
+  const statusColor = liveStatus?.status === 'available' || !liveStatus
+    ? '#22c55e'
+    : liveStatus?.status === 'away'
+      ? '#eab308'
+      : '#6b7280';
+
+  const handleStatusClick = useCallback(() => {
+    setStatusModalOpen(true);
+  }, []);
+
   return (
     <>
       <motion.header
         className={`header ${scrolled ? 'scrolled' : ''}`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] as const }}
         role="banner"
       >
         <div className="container">
@@ -68,12 +113,12 @@ export function Header() {
             </motion.a>
 
             {/* Desktop Navigation - Centered */}
-            <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2" aria-label="Main navigation">
+            <nav className="hidden lg:flex items-center gap-6 absolute left-1/2 -translate-x-1/2" aria-label="Main navigation">
               {navLinks.map((link, index) => (
                 <motion.a
                   key={link.href}
                   href={link.href}
-                  className="header-nav-link hover-line"
+                  className="header-nav-link hover-line text-sm"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 * index }}
@@ -84,16 +129,22 @@ export function Header() {
             </nav>
 
             {/* Right side - Available Badge + CTA */}
-            <div className="hidden md:flex items-center gap-4">
-              {/* Availability Badge */}
-              <motion.div
+            <div className="hidden lg:flex items-center gap-3">
+              {/* Live Availability Badge */}
+              <motion.button
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
-                className="availability-badge text-xs"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                onClick={handleStatusClick}
+                aria-label="View availability status"
               >
-                2 spots left
-              </motion.div>
+                <span
+                  className="w-2 h-2 rounded-full animate-pulse"
+                  style={{ backgroundColor: statusColor }}
+                />
+                <span className="text-white/80">{statusLabel}</span>
+              </motion.button>
 
               {/* CTA Button */}
               <motion.a
@@ -113,7 +164,7 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center bg-transparent border-none outline-none focus:outline-none rounded-lg"
+              className="lg:hidden relative z-50 w-10 h-10 flex items-center justify-center bg-transparent border-none outline-none focus:outline-none rounded-lg"
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               <div className="relative w-6 h-4">
@@ -174,13 +225,33 @@ export function Header() {
                   {link.label}
                 </motion.a>
               ))}
-              <motion.a
-                href="#contact"
-                className="mt-8 btn-primary"
+
+              {/* Mobile availability badge */}
+              <motion.button
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm border border-white/10 bg-white/5"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: 0.5 }}
+                transition={{ duration: 0.3, delay: 0.7 }}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setStatusModalOpen(true);
+                }}
+              >
+                <span
+                  className="w-2 h-2 rounded-full animate-pulse"
+                  style={{ backgroundColor: statusColor }}
+                />
+                <span className="text-white/80">{statusLabel}</span>
+              </motion.button>
+
+              <motion.a
+                href="#contact"
+                className="mt-4 btn-primary"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3, delay: 0.8 }}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span>Book a Call</span>
@@ -189,6 +260,9 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Status Modal */}
+      <StatusModal isOpen={statusModalOpen} onClose={() => setStatusModalOpen(false)} />
     </>
   );
 }

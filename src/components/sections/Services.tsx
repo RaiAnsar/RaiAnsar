@@ -10,6 +10,8 @@ type Expertise = {
   category: string;
   description: string;
   bullets: string[];
+  accent: string;
+  accentRgb: string;
   icon: React.ReactNode;
 };
 
@@ -21,8 +23,10 @@ const expertise: Expertise[] = [
     description:
       'High-performance landing pages and web apps—clean UI engineering, accessible UX, and polished interactions.',
     bullets: ['React / Next.js', 'TypeScript', 'Design Systems', 'Accessibility + UX'],
+    accent: '#ff6b35',
+    accentRgb: '255,107,53',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
         <circle cx="12" cy="12" r="10" />
         <path d="M2 12h20" />
         <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
@@ -36,8 +40,10 @@ const expertise: Expertise[] = [
     description:
       'Custom themes, plugins, migrations, and debugging—plus performance and security hardening for production sites.',
     bullets: ['Custom Themes', 'Plugin Development', 'WooCommerce', 'Speed + Security'],
+    accent: '#3b82f6',
+    accentRgb: '59,130,246',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
         <circle cx="12" cy="12" r="10" />
         <path d="M7 9l2.5 8L12 6l2.5 11L17 9" />
       </svg>
@@ -45,13 +51,15 @@ const expertise: Expertise[] = [
   },
   {
     id: 'ecommerce',
-    title: 'E‑COMMERCE',
+    title: 'E-COMMERCE',
     category: 'Conversion Systems',
     description:
       'Checkout flows, catalog logic, performance, and integrations—engineered to convert and scale smoothly.',
     bullets: ['Stripe / Payments', 'Shipping + Tax', 'Analytics', 'SEO Foundations'],
+    accent: '#10b981',
+    accentRgb: '16,185,129',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
         <path d="M6 6h15l-1.5 9h-12z" />
         <path d="M6 6l-2-3H2" />
         <circle cx="9" cy="20" r="1.5" />
@@ -66,8 +74,10 @@ const expertise: Expertise[] = [
     description:
       'Secure deployments, automation, and monitoring—so your product stays stable, fast, and easy to maintain.',
     bullets: ['Docker', 'AWS / Cloud', 'CI/CD', 'Monitoring + Backups'],
+    accent: '#8b5cf6',
+    accentRgb: '139,92,246',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
         <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" />
         <circle cx="12" cy="12" r="3" />
       </svg>
@@ -80,8 +90,10 @@ const expertise: Expertise[] = [
     description:
       'Secure APIs and scalable services with pragmatic architecture—built for reliability, performance, and maintainability.',
     bullets: ['Node.js / Python', 'PostgreSQL', 'Redis / Caching', 'Auth + Integrations'],
+    accent: '#f59e0b',
+    accentRgb: '245,158,11',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
         <ellipse cx="12" cy="6" rx="8" ry="3" />
         <path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6" />
         <path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" />
@@ -126,7 +138,7 @@ function ExpertiseCard({
 
   return (
     <motion.div
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88vw] max-w-4xl h-[60vh] max-h-[550px] flex flex-col lg:flex-row overflow-hidden rounded-3xl bg-[#111] border border-white/[0.08] shadow-2xl origin-center"
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88vw] max-w-4xl h-[60vh] max-h-[550px] flex flex-col lg:flex-row overflow-hidden rounded-3xl shadow-2xl origin-center"
       style={{
         opacity,
         scale,
@@ -139,17 +151,22 @@ function ExpertiseCard({
         willChange: 'transform, opacity',
         zIndex: isActive ? 10 : 5 - Math.abs(index),
         pointerEvents: isActive ? 'auto' : 'none',
+        background: `linear-gradient(145deg, rgba(${item.accentRgb},0.08) 0%, #0f0f0f 40%, #111 100%)`,
+        border: `1px solid rgba(${item.accentRgb},0.15)`,
       }}
       aria-hidden={!isActive}
     >
       <div className="flex-1 p-8 lg:p-10 flex flex-col justify-center relative z-10">
+        {/* Category pill - clou.ch style */}
         <div
-          className="inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full text-white text-xs font-semibold tracking-wider mb-5 border border-white/[0.08]"
+          className="inline-flex self-start items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider mb-6 border"
           style={{
-            background: 'linear-gradient(90deg, rgba(255,107,53,0.15), rgba(255,133,85,0.08))',
+            background: `rgba(${item.accentRgb},0.1)`,
+            borderColor: `rgba(${item.accentRgb},0.25)`,
+            color: item.accent,
           }}
         >
-          <span className="opacity-90">{item.category}</span>
+          {item.category}
         </div>
 
         <h3 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 tracking-tighter text-white">
@@ -165,9 +182,7 @@ function ExpertiseCard({
             <div key={bullet} className="flex items-center gap-2 text-white/60 text-sm">
               <div
                 className="w-1.5 h-1.5 rounded-full shrink-0"
-                style={{
-                  background: 'linear-gradient(90deg, #ff6b35, #ff8555)',
-                }}
+                style={{ background: item.accent }}
               />
               <span>{bullet}</span>
             </div>
@@ -178,7 +193,7 @@ function ExpertiseCard({
           <a
             className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 group w-fit hover:gap-3"
             href="#contact"
-            style={{ color: '#ff6b35' }}
+            style={{ color: item.accent }}
           >
             Start Project
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover:translate-x-1">
@@ -189,14 +204,22 @@ function ExpertiseCard({
         </div>
       </div>
 
-      {/* Right illustration */}
+      {/* Right illustration - clou.ch inspired with colored circle motif */}
       <div className="flex-1 relative hidden lg:block overflow-hidden">
         <div
-          className="absolute inset-0 opacity-10"
-          style={{ background: 'linear-gradient(135deg, #ff6b35, #ff8555)' }}
+          className="absolute inset-0 opacity-[0.07]"
+          style={{ background: `linear-gradient(135deg, ${item.accent}, transparent)` }}
         />
+        {/* Large decorative circle like clou.ch */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative w-56 h-56 xl:w-64 xl:h-64">
+          <div className="relative w-64 h-64 xl:w-72 xl:h-72">
+            {/* Outer circle */}
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: `radial-gradient(circle, rgba(${item.accentRgb},0.06) 0%, transparent 70%)`,
+              }}
+            />
             <motion.div
               className="absolute inset-0"
               animate={shouldReduceMotion || !isActive ? undefined : { rotate: 360 }}
@@ -206,18 +229,27 @@ function ExpertiseCard({
                   : { duration: 40, repeat: Infinity, ease: 'linear' }
               }
             >
-              <div className="absolute inset-0 border-2 border-dashed border-white/20 rounded-full" />
-              <div className="absolute inset-6 border border-white/10 rounded-full" />
+              <div
+                className="absolute inset-0 border-2 border-dashed rounded-full"
+                style={{ borderColor: `rgba(${item.accentRgb},0.2)` }}
+              />
+              <div
+                className="absolute inset-6 border rounded-full"
+                style={{ borderColor: `rgba(${item.accentRgb},0.1)` }}
+              />
             </motion.div>
 
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-[#ff6b35] drop-shadow-[0_0_30px_rgba(255,107,53,0.3)]">
+              <div style={{ color: item.accent, filter: `drop-shadow(0 0 30px rgba(${item.accentRgb},0.3))` }}>
                 {item.icon}
               </div>
             </div>
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-[#111]" />
+        <div
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(to left, transparent, transparent 30%, #111)' }}
+        />
       </div>
     </motion.div>
   );
@@ -347,9 +379,9 @@ function ServicesCarousel({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
               <div
                 className="w-2 h-2 rounded-full transition-all duration-300"
                 style={{
-                  background: isActive ? '#ff6b35' : 'rgba(255,255,255,0.2)',
+                  background: isActive ? (expertise[index]?.accent ?? '#ff6b35') : 'rgba(255,255,255,0.2)',
                   transform: isActive ? 'scale(1.3)' : 'scale(1)',
-                  boxShadow: isActive ? '0 0 10px rgba(255,107,53,0.4)' : 'none',
+                  boxShadow: isActive ? `0 0 10px rgba(${expertise[index]?.accentRgb ?? '255,107,53'},0.4)` : 'none',
                 }}
               />
               <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium tracking-wider uppercase whitespace-nowrap bg-[#1a1a1a] px-3 py-1.5 rounded border border-white/[0.08] pointer-events-none text-white/70">
@@ -403,21 +435,21 @@ function ServicesPlaceholder() {
 
   return (
     <div className="absolute inset-0 flex items-center justify-center">
-      <div 
+      <div
         className="w-[88vw] max-w-4xl h-[60vh] max-h-[550px] flex flex-col lg:flex-row overflow-hidden rounded-3xl"
         style={{
-          background: 'linear-gradient(145deg, rgba(22,22,22,0.95) 0%, rgba(17,17,17,0.98) 100%)',
-          border: '1px solid rgba(255,107,53,0.12)',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,107,53,0.08)',
+          background: `linear-gradient(145deg, rgba(${first.accentRgb},0.08) 0%, #0f0f0f 40%, #111 100%)`,
+          border: `1px solid rgba(${first.accentRgb},0.15)`,
+          boxShadow: `0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(${first.accentRgb},0.08)`,
         }}
       >
         <div className="flex-1 p-8 lg:p-10 flex flex-col justify-center">
-          <div 
-            className="inline-flex self-start items-center px-4 py-1.5 rounded text-xs font-semibold tracking-[0.15em] uppercase mb-6"
+          <div
+            className="inline-flex self-start items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider mb-6 border"
             style={{
-              background: 'rgba(255,107,53,0.08)',
-              border: '1px solid rgba(255,107,53,0.2)',
-              color: '#ff6b35',
+              background: `rgba(${first.accentRgb},0.1)`,
+              borderColor: `rgba(${first.accentRgb},0.25)`,
+              color: first.accent,
             }}
           >
             {first.category}
@@ -429,8 +461,8 @@ function ServicesPlaceholder() {
             {first.description}
           </div>
         </div>
-        <div className="flex-1 relative hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ff6b35]/5 to-transparent">
-          <div className="text-[#ff6b35]/30">{first.icon}</div>
+        <div className="flex-1 relative hidden lg:flex items-center justify-center" style={{ background: `linear-gradient(135deg, rgba(${first.accentRgb},0.05), transparent)` }}>
+          <div style={{ color: `rgba(${first.accentRgb},0.3)` }}>{first.icon}</div>
         </div>
       </div>
     </div>
