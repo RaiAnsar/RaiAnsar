@@ -45,9 +45,9 @@ const socialLinks = [
 
 const navLinks = [
   { href: '#about', label: 'About' },
-  { href: '#process', label: 'Process' },
   { href: '#services', label: 'Services' },
-  { href: '#posts', label: 'Blog' },
+  { href: '#process', label: 'Process' },
+  { href: '#skills', label: 'Skills' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -76,12 +76,12 @@ export function Footer() {
               </a>
             </Magnetic>
             <p className="text-[#505050] leading-relaxed max-w-md mb-6">
-              DevOps, infrastructure & speed experts. We turn slow, crashing sites into 
-              sub-2-second machines that convert.
+              Full-stack developer specializing in high-performance web apps, WordPress solutions,
+              and scalable infrastructure. 10+ years turning ideas into production-ready products.
             </p>
             <Magnetic strength={0.2}>
               <motion.a
-                href="mailto:hi@raiansar.com"
+                href="mailto:hello@raiansar.com"
                 className="inline-flex items-center gap-2 text-[#ff6b35] hover:text-[#ff8555] transition-colors"
                 whileHover={{ x: 5 }}
               >
@@ -89,7 +89,7 @@ export function Footer() {
                   <rect x="2" y="4" width="20" height="16" rx="2" />
                   <path d="m22 7-10 5L2 7" />
                 </svg>
-                <span className="font-medium">hi@raiansar.com</span>
+                <span className="font-medium">hello@raiansar.com</span>
               </motion.a>
             </Magnetic>
           </motion.div>

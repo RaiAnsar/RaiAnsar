@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { TextScramble } from '@/components/ui/TextScramble';
 
 type Service = {
@@ -102,157 +102,188 @@ const services: Service[] = [
   },
 ];
 
-function StickyServiceCard({ service, index, total }: { service: Service; index: number; total: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+/**
+ * Clou.ch-style sticky stacking card.
+ * Structure: 200vh frame (relative) → sticky card (top: 10vh, 80vh tall).
+ * Each card sticks at the same top. The next card (higher z-index) slides up
+ * from below and covers the current card. As the current card gets covered,
+ * it scales down to 0.85 for a depth/parallax effect.
+ * Background is fully opaque so covered cards are completely hidden.
+ */
+function ClouCard({ service, index, isLast }: { service: Service; index: number; isLast: boolean }) {
+  const frameRef = useRef<HTMLDivElement>(null);
 
-  // Each card sticks a bit lower so they stack visually
-  const stickyTop = 80 + index * 20;
+  const { scrollYProgress } = useScroll({
+    target: frameRef,
+    offset: ['start start', 'end start'],
+  });
+
+  // Scale down + fade during second half of scroll (when next card is covering this one)
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.8]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
 
   return (
     <div
-      ref={ref}
-      className="sticky"
+      ref={frameRef}
+      className="relative"
       style={{
-        top: `${stickyTop}px`,
-        zIndex: index + 1,
-        paddingBottom: index < total - 1 ? '2rem' : '0',
+        height: isLast ? '90vh' : '200vh',
+        marginBottom: isLast ? undefined : '-100vh',
       }}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 80 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
-        className="relative overflow-hidden rounded-[2rem] group cursor-default shadow-2xl"
+      <div
+        className="sticky"
         style={{
-          background: `linear-gradient(160deg, rgba(${service.accentRgb},0.14) 0%, rgba(${service.accentRgb},0.04) 35%, #0c0c0c 100%)`,
-          border: `1px solid rgba(${service.accentRgb},0.18)`,
-          boxShadow: `0 30px 60px -15px rgba(0,0,0,0.7), 0 0 0 1px rgba(${service.accentRgb},0.08)`,
+          top: '10vh',
+          height: '90vh',
+          zIndex: index + 1,
         }}
       >
-        <div className="relative z-10 grid md:grid-cols-5 gap-6 p-8 md:p-12 lg:p-16 min-h-[380px] md:min-h-[440px]">
-          {/* Left content - 3 cols */}
-          <div className="md:col-span-3 flex flex-col justify-between">
-            <div>
-              {/* Pills row */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {service.pills.map((pill) => (
-                  <span
-                    key={pill}
-                    className="px-3.5 py-1.5 rounded-full text-xs font-medium border"
-                    style={{
-                      color: `rgba(${service.accentRgb},0.9)`,
-                      borderColor: `rgba(${service.accentRgb},0.25)`,
-                      background: `rgba(${service.accentRgb},0.08)`,
-                    }}
-                  >
-                    {pill}
-                  </span>
-                ))}
+        {/* Scale + fade wrapper — inner card shrinks while sticky container stays full-size */}
+        <motion.div
+          className="relative overflow-hidden rounded-2xl h-full group cursor-default"
+          style={{
+            background: '#0c0c0c',
+            border: `1px solid rgba(${service.accentRgb},0.2)`,
+            boxShadow: `0 30px 80px -20px rgba(0,0,0,0.9), inset 0 1px 0 rgba(${service.accentRgb},0.1)`,
+            scale: isLast ? undefined : scale,
+            opacity: isLast ? undefined : opacity,
+            transformOrigin: 'center center',
+            willChange: 'transform, opacity',
+          }}
+        >
+          {/* Accent gradient overlay on top of solid bg */}
+          <div
+            className="absolute inset-0 rounded-2xl pointer-events-none"
+            style={{
+              background: `linear-gradient(160deg, rgba(${service.accentRgb},0.15) 0%, transparent 35%)`,
+            }}
+          />
+
+          <div className="relative z-10 grid md:grid-cols-5 gap-6 p-8 md:p-12 lg:p-16 h-full">
+            {/* Left content - 3 cols */}
+            <div className="md:col-span-3 flex flex-col justify-between">
+              <div>
+                {/* Pills row */}
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {service.pills.map((pill) => (
+                    <span
+                      key={pill}
+                      className="px-3.5 py-1.5 rounded-full text-xs font-medium border"
+                      style={{
+                        color: `rgba(${service.accentRgb},0.9)`,
+                        borderColor: `rgba(${service.accentRgb},0.25)`,
+                        background: `rgba(${service.accentRgb},0.08)`,
+                      }}
+                    >
+                      {pill}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Title */}
+                <h3 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-3 tracking-tight">
+                  {service.title}
+                </h3>
+
+                {/* Category */}
+                <p
+                  className="text-sm font-semibold tracking-[0.15em] uppercase mb-6"
+                  style={{ color: service.accent }}
+                >
+                  {service.category}
+                </p>
+
+                {/* Description */}
+                <p className="text-base md:text-lg text-white/45 leading-relaxed max-w-xl">
+                  {service.description}
+                </p>
               </div>
 
-              {/* Title */}
-              <h3 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-3 tracking-tight">
-                {service.title}
-              </h3>
-
-              {/* Category */}
-              <p
-                className="text-sm font-semibold tracking-[0.15em] uppercase mb-6"
-                style={{ color: service.accent }}
-              >
-                {service.category}
-              </p>
-
-              {/* Description */}
-              <p className="text-base md:text-lg text-white/45 leading-relaxed max-w-xl">
-                {service.description}
-              </p>
+              {/* CTA */}
+              <div className="mt-8">
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 group/link hover:gap-3"
+                  style={{ color: service.accent }}
+                >
+                  Start Project
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover/link:translate-x-1">
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
             </div>
 
-            {/* CTA */}
-            <div className="mt-8">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 group/link hover:gap-3"
-                style={{ color: service.accent }}
-              >
-                Start Project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover/link:translate-x-1">
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          {/* Right illustration area - 2 cols */}
-          <div className="md:col-span-2 relative hidden md:flex items-center justify-center">
-            <div className="relative w-56 h-56 lg:w-72 lg:h-72">
-              {/* Outer glow */}
-              <div
-                className="absolute inset-0 rounded-full opacity-30"
-                style={{
-                  background: `radial-gradient(circle, rgba(${service.accentRgb},0.25) 0%, transparent 70%)`,
-                }}
-              />
-              {/* Circle border with orbiting dot */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  border: `2px solid rgba(${service.accentRgb},0.18)`,
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
-              >
+            {/* Right illustration area - 2 cols */}
+            <div className="md:col-span-2 relative hidden md:flex items-center justify-center">
+              <div className="relative w-56 h-56 lg:w-72 lg:h-72">
+                {/* Outer glow */}
                 <div
-                  className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full"
+                  className="absolute inset-0 rounded-full opacity-30"
                   style={{
-                    background: service.accent,
-                    boxShadow: `0 0 14px rgba(${service.accentRgb},0.7)`,
+                    background: `radial-gradient(circle, rgba(${service.accentRgb},0.25) 0%, transparent 70%)`,
                   }}
                 />
-              </motion.div>
-              {/* Inner dashed circle */}
-              <div
-                className="absolute inset-8 lg:inset-10 rounded-full"
-                style={{ border: `1px dashed rgba(${service.accentRgb},0.12)` }}
-              />
-              {/* Center icon */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div
-                  className="w-16 h-16 lg:w-20 lg:h-20 transition-transform duration-500 group-hover:scale-110"
+                {/* Circle border with orbiting dot */}
+                <motion.div
+                  className="absolute inset-0 rounded-full"
                   style={{
-                    color: service.accent,
-                    filter: `drop-shadow(0 0 30px rgba(${service.accentRgb},0.4))`,
+                    border: `2px solid rgba(${service.accentRgb},0.18)`,
                   }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
                 >
-                  {service.icon}
+                  <div
+                    className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full"
+                    style={{
+                      background: service.accent,
+                      boxShadow: `0 0 14px rgba(${service.accentRgb},0.7)`,
+                    }}
+                  />
+                </motion.div>
+                {/* Inner dashed circle */}
+                <div
+                  className="absolute inset-8 lg:inset-10 rounded-full"
+                  style={{ border: `1px dashed rgba(${service.accentRgb},0.12)` }}
+                />
+                {/* Center icon */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div
+                    className="w-16 h-16 lg:w-20 lg:h-20 transition-transform duration-500 group-hover:scale-110"
+                    style={{
+                      color: service.accent,
+                      filter: `drop-shadow(0 0 30px rgba(${service.accentRgb},0.4))`,
+                    }}
+                  >
+                    {service.icon}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Background number watermark */}
-        <div
-          className="absolute -bottom-10 -right-4 text-[14rem] md:text-[18rem] font-black leading-none pointer-events-none select-none"
-          style={{
-            WebkitTextStroke: `1px rgba(${service.accentRgb},0.06)`,
-            color: 'transparent',
-          }}
-        >
-          {String(index + 1).padStart(2, '0')}
-        </div>
+          {/* Background number watermark */}
+          <div
+            className="absolute -bottom-10 -right-4 text-[14rem] md:text-[18rem] font-black leading-none pointer-events-none select-none"
+            style={{
+              WebkitTextStroke: `1px rgba(${service.accentRgb},0.06)`,
+              color: 'transparent',
+            }}
+          >
+            {String(index + 1).padStart(2, '0')}
+          </div>
 
-        {/* Hover glow overlay */}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-          style={{
-            background: `radial-gradient(ellipse at 30% 50%, rgba(${service.accentRgb},0.1) 0%, transparent 60%)`,
-          }}
-        />
-      </motion.div>
+          {/* Hover glow overlay */}
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+            style={{
+              background: `radial-gradient(ellipse at 30% 50%, rgba(${service.accentRgb},0.1) 0%, transparent 60%)`,
+            }}
+          />
+        </motion.div>
+      </div>
     </div>
   );
 }
@@ -264,10 +295,10 @@ export function Services() {
   return (
     <section
       ref={containerRef}
-      className="relative py-24 md:py-32 bg-[#0a0a0a] overflow-hidden"
+      className="relative bg-[#0a0a0a]"
       id="services"
     >
-      <div className="container relative z-10">
+      <div className="container relative z-10 pt-24 md:pt-32">
         {/* Section header */}
         <div className="mb-16 md:mb-20">
           <motion.div
@@ -298,18 +329,18 @@ export function Services() {
             End-to-end expertise across the full stack, from pixel-perfect frontends to bulletproof infrastructure.
           </motion.p>
         </div>
+      </div>
 
-        {/* Sticky stacking cards - clou.ch style */}
-        <div className="relative">
-          {services.map((service, index) => (
-            <StickyServiceCard
-              key={service.id}
-              service={service}
-              index={index}
-              total={services.length}
-            />
-          ))}
-        </div>
+      {/* Full-width stacking cards area */}
+      <div className="relative px-4 md:px-8 lg:px-12">
+        {services.map((service, index) => (
+          <ClouCard
+            key={service.id}
+            service={service}
+            index={index}
+            isLast={index === services.length - 1}
+          />
+        ))}
       </div>
     </section>
   );

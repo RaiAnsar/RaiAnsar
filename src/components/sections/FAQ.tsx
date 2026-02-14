@@ -117,7 +117,7 @@ export function FAQ() {
   const containerRef = useRef<HTMLElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
 
-  const [activeCategory, setActiveCategory] = useState('wordpress');
+  const [activeCategory, setActiveCategory] = useState('frontend');
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState('');
 

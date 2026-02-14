@@ -8,83 +8,102 @@ export interface FAQData {
 }
 
 export const faqData: FAQData = {
+  frontend: [
+    {
+      question: "What frontend technologies do you work with?",
+      answer: "I primarily work with React and Next.js using TypeScript. For styling I use Tailwind CSS, and for animations, Framer Motion. I also build design systems and component libraries that keep codebases consistent and maintainable."
+    },
+    {
+      question: "Do you build landing pages or full web applications?",
+      answer: "Both. I build high-converting landing pages optimized for performance and SEO, as well as full-featured web applications with complex state management, authentication, and API integrations. Every project gets the same attention to UI polish and code quality."
+    },
+    {
+      question: "How do you handle responsive design and accessibility?",
+      answer: "Responsive design is built in from the start, not bolted on later. I follow mobile-first principles and test across real devices. For accessibility, I follow WCAG guidelines — proper semantic HTML, keyboard navigation, screen reader support, and sufficient color contrast."
+    },
+    {
+      question: "Can you work with an existing design or do I need one?",
+      answer: "I can work with Figma files, rough wireframes, or even just a written brief. If you have an existing design system, I'll follow it precisely. If you need design direction, I can handle the UI/UX as well based on your goals and brand."
+    }
+  ],
   wordpress: [
     {
       question: "What WordPress services do you offer?",
-      answer: "I offer a comprehensive range of WordPress services including custom theme development, plugin development, website optimization, security hardening, malware removal, WooCommerce development, and general troubleshooting. Whether you need a new website built from scratch or help fixing and optimizing your existing WordPress site, I can help."
-    },
-    {
-      question: "How long does it take to build a WordPress website?",
-      answer: "The timeline for building a WordPress website depends on the complexity of the project. A basic WordPress website can be completed in 1-2 weeks, while more complex sites with custom functionality may take 4-8 weeks. I'll provide you with a detailed timeline during our initial consultation based on your specific requirements."
+      answer: "Custom theme development, plugin development, WooCommerce stores, performance optimization, security hardening, malware removal, and migrations. Whether it's a new build or fixing an existing site, I handle the full lifecycle."
     },
     {
       question: "Can you fix issues with my existing WordPress site?",
-      answer: "Yes, fixing WordPress issues is one of my specialties. Whether you're experiencing plugin conflicts, performance problems, security vulnerabilities, or any other WordPress-related issues, I can diagnose and resolve them. I'll first perform a thorough site analysis to identify the root causes before implementing appropriate solutions."
+      answer: "Yes — debugging WordPress is one of my strongest skills. Plugin conflicts, white screens, slow load times, security breaches, broken updates — I diagnose the root cause first, then fix it properly rather than applying band-aid solutions."
     },
     {
-      question: "Do you offer WordPress maintenance services?",
-      answer: "Yes, I offer comprehensive WordPress maintenance services to keep your site secure, updated, and performing optimally. My maintenance packages typically include regular updates (WordPress core, themes, and plugins), security monitoring, malware scanning, performance optimization, database cleanup, and emergency support. I can customize a maintenance plan based on your specific needs."
+      question: "Do you build custom WordPress plugins?",
+      answer: "Yes. When off-the-shelf plugins don't fit your needs or add unnecessary bloat, I build custom plugins tailored to your exact requirements. Clean code, proper WordPress coding standards, and built to work reliably with future updates."
+    },
+    {
+      question: "How do you handle WordPress performance?",
+      answer: "I optimize at every layer: database queries, caching (object cache + page cache), image optimization, lazy loading, code minification, and server-level tuning. Most sites I optimize see 2-4x speed improvements and significantly better Core Web Vitals."
     }
   ],
-  woocommerce: [
+  ecommerce: [
     {
-      question: "Can you set up a WooCommerce store for my business?",
-      answer: "Absolutely! I specialize in creating custom WooCommerce stores that are tailored to your specific business needs. I can help with everything from initial setup and configuration to complex customizations including product display, checkout process, payment gateways, shipping options, and more. I ensure your store is not only visually appealing but also optimized for conversions."
+      question: "What e-commerce platforms do you work with?",
+      answer: "WooCommerce is my primary platform, but I also build custom e-commerce solutions with Next.js and Stripe. I handle everything from product catalog setup to checkout optimization, payment integration, shipping configuration, and tax compliance."
     },
     {
-      question: "How do you optimize WooCommerce stores for performance?",
-      answer: "WooCommerce optimization is crucial for both user experience and conversions. My approach includes database optimization, image optimization, implementing proper caching solutions, minifying CSS/JS files, optimizing product queries, reducing server response times, and configuring CDN integration. For high-traffic stores, I also implement advanced solutions like object caching and server-level optimizations."
+      question: "Can you optimize my store's conversion rate?",
+      answer: "Yes. I focus on reducing checkout friction, improving page speed, streamlining the purchase flow, and ensuring mobile checkout works flawlessly. I also set up proper analytics tracking so you can measure what's actually driving sales."
     },
     {
-      question: "Can you integrate payment gateways with my WooCommerce store?",
-      answer: "Yes, I can integrate virtually any payment gateway with your WooCommerce store. I have experience with popular payment processors like PayPal, Stripe, Square, Authorize.net, Amazon Pay, and many others. I ensure that the checkout process is secure, seamless, and optimized for conversions. I can also set up multiple payment options to give your customers flexibility in how they pay."
+      question: "Do you integrate payment gateways?",
+      answer: "I've integrated Stripe, PayPal, Square, and other major payment processors. I ensure PCI compliance, handle webhook configuration, and set up proper error handling so failed payments are caught and communicated clearly to customers."
     },
     {
-      question: "Do you develop custom WooCommerce extensions?",
-      answer: "Yes, I develop custom WooCommerce extensions and plugins to add specific functionality to your online store. Whether you need custom product types, specialized checkout processes, unique shipping calculators, or integration with external systems and APIs, I can create tailored solutions that meet your exact business requirements while maintaining compatibility with the WooCommerce core."
+      question: "Can you migrate my store to a new platform?",
+      answer: "Yes. I handle full store migrations — products, customers, orders, and SEO redirects. I plan migrations carefully to minimize downtime and ensure nothing gets lost. Post-migration testing covers every critical flow before going live."
     }
   ],
-  server: [
+  devops: [
     {
-      question: "What server management services do you provide?",
-      answer: "I offer comprehensive server management services including server setup and configuration, performance optimization, security hardening, backup solutions, server monitoring, troubleshooting, and migration services. I specialize in managing Linux servers, particularly those running cPanel, WHM, and WHMCS. My goal is to ensure your server environment is secure, stable, and optimized for your specific workload."
+      question: "What DevOps services do you provide?",
+      answer: "Server setup and management, Docker containerization, CI/CD pipelines, cloud deployments (AWS, DigitalOcean, Hostinger), SSL configuration, automated backups, monitoring, and security hardening. I make sure your infrastructure is reliable and easy to maintain."
     },
     {
-      question: "Can you migrate my website to a new server?",
-      answer: "Yes, I specialize in seamless server migrations with zero or minimal downtime. My migration process includes comprehensive planning, full data backup, thorough testing in a staging environment, and careful execution during low-traffic periods. I handle all aspects including files, databases, email accounts, DNS configuration, and post-migration verification to ensure everything works correctly on the new server."
+      question: "Can you set up CI/CD for my project?",
+      answer: "Yes. I set up automated pipelines using GitHub Actions or similar tools — automated testing, linting, building, and deployment on every push. This catches bugs early and makes deployments predictable instead of stressful."
     },
     {
-      question: "How do you secure servers against potential threats?",
-      answer: "My server security approach is multi-layered and includes implementing a robust firewall (like CSF), intrusion detection systems, regular security updates, secure SSH configuration, brute force protection, malware scanning, and file integrity monitoring. I also implement proper user permissions, disable unnecessary services, secure PHP configurations, and provide detailed security reports with recommendations for ongoing protection."
+      question: "Do you manage servers?",
+      answer: "I manage Linux servers, including configuration, security updates, performance tuning, and monitoring. I work with cPanel/WHM environments as well as bare-metal setups. Proactive monitoring means issues get caught before they affect your users."
     },
     {
-      question: "Do you offer cPanel/WHM/WHMCS configuration services?",
-      answer: "Yes, I provide expert configuration and optimization services for cPanel, WHM, and WHMCS. This includes initial setup, interface customization, user management, resource allocation, email configuration, backup setup, security hardening, and integration between these systems. I can also troubleshoot issues, upgrade systems, and implement best practices to ensure optimal performance and security."
+      question: "How do you handle security?",
+      answer: "Multi-layered approach: firewall configuration, SSH hardening, regular updates, intrusion detection, malware scanning, proper file permissions, and automated backups. I also conduct security audits on existing setups to identify and close vulnerabilities."
     }
   ],
-  support: [
+  general: [
     {
-      question: "What are your service rates?",
-      answer: "My service rates vary depending on project complexity, scope, and urgency. I offer both hourly rates and fixed project quotes. For ongoing support, I provide monthly retainer packages at discounted rates. I'll provide a detailed quote after understanding your specific requirements during an initial consultation. Rest assured that my rates are competitive for the level of expertise and quality of service I provide."
+      question: "What are your rates?",
+      answer: "Rates depend on project scope and complexity. I offer both fixed-price quotes for well-defined projects and hourly rates for ongoing work. After understanding your requirements, I'll provide a clear quote with no hidden costs."
     },
     {
-      question: "How quickly do you respond to support requests?",
-      answer: "I prioritize responsive communication and typically respond to initial inquiries within 2-4 hours during business days. For existing clients with urgent issues, my response time is usually under 1 hour. For emergency situations (like site down or security breaches), I provide priority support with immediate attention. My goal is to not only respond quickly but to begin working on solutions as promptly as possible."
+      question: "How quickly can you start a project?",
+      answer: "Typically within a few days for smaller projects. For larger builds, I'll need a brief discovery phase first to scope things properly. I respond to all inquiries within 24 hours."
     },
     {
-      question: "Do you offer ongoing support after project completion?",
-      answer: "Yes, I provide ongoing support for all completed projects. I offer various support options including pay-as-you-go hourly support, monthly support retainers with guaranteed response times, and comprehensive maintenance packages. I believe in building long-term relationships with clients and ensuring your digital assets continue to perform optimally long after the initial project is complete."
+      question: "How do you communicate during a project?",
+      answer: "Clear and frequent communication. I provide regular progress updates, am available for calls when needed, and keep you informed about any decisions or blockers. No disappearing acts — you'll always know where things stand."
     },
     {
-      question: "What information do you need to provide a quote?",
-      answer: "To provide an accurate quote, I typically need information about: 1) The scope and specific requirements of your project, 2) Current state of your website/server (if applicable), 3) Your timeline expectations, 4) Any special technical requirements or constraints, 5) Access to review your current setup (if applicable). The more details you can provide, the more accurate my quote will be. I'm happy to sign an NDA before you share sensitive information."
+      question: "Do you offer ongoing support after launch?",
+      answer: "Yes. I offer maintenance packages that cover updates, security monitoring, performance checks, and priority support. Most clients continue working with me long-term because I know their systems inside out."
     }
   ]
 };
 
 export const faqCategories = [
+  { key: 'frontend', label: 'Frontend' },
   { key: 'wordpress', label: 'WordPress' },
-  { key: 'woocommerce', label: 'WooCommerce' },
-  { key: 'server', label: 'Server' },
-  { key: 'support', label: 'Support & Pricing' }
+  { key: 'ecommerce', label: 'E-Commerce' },
+  { key: 'devops', label: 'DevOps' },
+  { key: 'general', label: 'General' }
 ];

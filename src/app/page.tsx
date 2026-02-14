@@ -37,10 +37,6 @@ const FAQ = dynamic(() => import('@/components/sections/FAQ').then(mod => ({ def
   loading: () => <div className="min-h-[400px]" />,
 });
 
-const CTA = dynamic(() => import('@/components/sections/CTA').then(mod => ({ default: mod.CTA })), {
-  loading: () => <div className="min-h-[300px]" />,
-});
-
 const Contact = dynamic(() => import('@/components/sections/Contact').then(mod => ({ default: mod.Contact })), {
   loading: () => <div className="min-h-[600px]" />,
 });
@@ -83,7 +79,6 @@ export default function Home() {
         <CodeMarquee />
         <Testimonials />
         <FAQ />
-        <CTA />
         <Contact />
       </main>
       <Footer />
