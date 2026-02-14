@@ -3,10 +3,20 @@
 @config "../../tailwind.config.js";
 @source "../**/*.{ts,tsx,js,jsx,mdx}";
 
-/* Minimal preflight - just box-sizing, no padding/margin reset */
+/* Minimal preflight */
 @layer base {
   *, *::before, *::after {
     box-sizing: border-box;
+  }
+
+  /* Reset button/input UA defaults that clash with dark theme */
+  button, input, textarea, select {
+    background-color: transparent;
+    color: inherit;
+    border: none;
+    font: inherit;
+    padding: 0;
+    margin: 0;
   }
 }
 

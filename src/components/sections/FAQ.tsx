@@ -127,7 +127,7 @@ export function FAQ() {
       style={{ background: '#0a0a0a' }}
     >
       <div className="container relative z-10">
-        <div className="grid lg:grid-cols-[1fr,1.4fr] gap-16 lg:gap-20">
+        <div className="grid lg:grid-cols-[1fr_1.4fr] gap-16 lg:gap-20">
           {/* Left column — header + categories */}
           <div>
             <motion.div
