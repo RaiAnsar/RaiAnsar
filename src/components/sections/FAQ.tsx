@@ -27,6 +27,7 @@ function AccordionItem({
         type="button"
         onClick={onToggle}
         className="w-full flex items-center gap-5 py-5 md:py-6 text-left cursor-pointer"
+        aria-expanded={isOpen}
       >
         {/* Number */}
         <span
@@ -66,6 +67,7 @@ function AccordionItem({
             style={{ color: isOpen ? '#ff6b35' : '#505050' }}
             animate={{ rotate: isOpen ? 45 : 0 }}
             transition={{ duration: 0.2 }}
+            aria-hidden="true"
           >
             <path d="M12 5v14" />
             <path d="M5 12h14" />
@@ -262,7 +264,7 @@ export function FAQ() {
             style={{ color: '#ff6b35' }}
           >
             Let&apos;s talk
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover/link:translate-x-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover/link:translate-x-1" aria-hidden="true">
               <path d="M5 12h14" />
               <path d="m12 5 7 7-7 7" />
             </svg>

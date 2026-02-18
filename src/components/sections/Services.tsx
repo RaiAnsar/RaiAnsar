@@ -26,7 +26,7 @@ const services: Service[] = [
     accent: '#ff6b35',
     accentRgb: '255,107,53',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full" aria-hidden="true">
         <circle cx="12" cy="12" r="10" />
         <path d="M2 12h20" />
         <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
@@ -43,7 +43,7 @@ const services: Service[] = [
     accent: '#3b82f6',
     accentRgb: '59,130,246',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full" aria-hidden="true">
         <circle cx="12" cy="12" r="10" />
         <path d="M7 9l2.5 8L12 6l2.5 11L17 9" />
       </svg>
@@ -59,7 +59,7 @@ const services: Service[] = [
     accent: '#10b981',
     accentRgb: '16,185,129',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full" aria-hidden="true">
         <path d="M6 6h15l-1.5 9h-12z" />
         <path d="M6 6l-2-3H2" />
         <circle cx="9" cy="20" r="1.5" />
@@ -77,7 +77,7 @@ const services: Service[] = [
     accent: '#8b5cf6',
     accentRgb: '139,92,246',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full" aria-hidden="true">
         <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" />
         <circle cx="12" cy="12" r="3" />
       </svg>
@@ -93,7 +93,7 @@ const services: Service[] = [
     accent: '#f59e0b',
     accentRgb: '245,158,11',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full" aria-hidden="true">
         <ellipse cx="12" cy="6" rx="8" ry="3" />
         <path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6" />
         <path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" />
