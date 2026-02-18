@@ -44,7 +44,7 @@ function AccordionItem({
         {/* Question */}
         <span
           className="flex-1 text-[15px] md:text-[17px] font-medium leading-snug transition-colors duration-300"
-          style={{ color: isOpen ? '#ffffff' : '#808080' }}
+          style={{ color: isOpen ? '#ffffff' : '#a0a0a0' }}
         >
           {item.question}
         </span>
@@ -86,7 +86,7 @@ function AccordionItem({
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="pl-12 pb-6 pr-12">
+            <div className="pl-8 sm:pl-12 pb-6 pr-4 sm:pr-12">
               <p className="text-[#606060] text-sm md:text-[15px] leading-[1.85]">
                 {item.answer}
               </p>
