@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
   // Clean URLs
   trailingSlash: true,
 
+  // Tree-shake framer-motion to reduce initial bundle size
+  experimental: {
+    optimizePackageImports: ['framer-motion'],
+  },
+
   // Turbopack configuration - set correct project root
   turbopack: {
     root: path.resolve(__dirname),

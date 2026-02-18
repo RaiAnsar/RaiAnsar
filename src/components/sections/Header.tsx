@@ -1,8 +1,13 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { StatusModal } from '@/components/ui/StatusModal';
+import dynamic from 'next/dynamic';
+
+// Lazy-load StatusModal — only needed when user clicks status badge
+const StatusModal = dynamic(
+  () => import('@/components/ui/StatusModal').then((mod) => ({ default: mod.StatusModal })),
+  { ssr: false }
+);
 
 interface StatusData {
   status: 'available' | 'away' | 'offline';
@@ -94,51 +99,40 @@ export function Header() {
 
   return (
     <>
-      <motion.header
-        className={`header ${scrolled ? 'scrolled' : ''}`}
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] as const }}
+      <header
+        className={`header header-anim-slidedown ${scrolled ? 'scrolled' : ''}`}
         role="banner"
       >
         <div className="container">
           <div className="relative flex items-center justify-between">
             {/* Logo */}
-            <motion.a
+            <a
               href="#home"
-              className="relative z-10 group"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 400 }}
+              className="relative z-10 group hover:scale-[1.02] transition-transform duration-200"
               aria-label="Rai Ansar - Home"
             >
               <span className="text-xl font-bold tracking-tight text-white">
                 Rai<span className="text-[#ff6b35]">.</span>
               </span>
-            </motion.a>
+            </a>
 
             {/* Desktop Navigation - Centered */}
             <nav className="hidden lg:flex items-center gap-6 absolute left-1/2 -translate-x-1/2" aria-label="Main navigation">
-              {navLinks.map((link, index) => (
-                <motion.a
+              {navLinks.map((link) => (
+                <a
                   key={link.href}
                   href={link.href}
                   className="header-nav-link hover-line text-sm"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 * index }}
                 >
                   {link.label}
-                </motion.a>
+                </a>
               ))}
             </nav>
 
             {/* Right side - Available Badge + CTA */}
             <div className="hidden lg:flex items-center gap-3">
               {/* Live Availability Badge */}
-              <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
+              <button
                 className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
                 onClick={handleStatusClick}
                 aria-label="View availability status"
@@ -148,21 +142,16 @@ export function Header() {
                   style={{ backgroundColor: statusColor }}
                 />
                 <span className="text-white/80">{statusLabel}</span>
-              </motion.button>
+              </button>
 
               {/* CTA Button */}
-              <motion.a
+              <a
                 href="#contact"
-                className="btn-primary text-sm py-2.5 px-5"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="btn-primary text-sm py-2.5 px-5 hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200"
                 aria-label="Book a call"
               >
                 <span>Book a Call</span>
-              </motion.a>
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -172,100 +161,99 @@ export function Header() {
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               <div className="relative w-6 h-4">
-                <motion.span
-                  className="absolute left-0 w-full h-0.5 bg-white rounded-full"
-                  animate={{
+                <span
+                  className="absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300"
+                  style={{
                     top: mobileMenuOpen ? '50%' : '0%',
-                    rotate: mobileMenuOpen ? 45 : 0,
-                    translateY: mobileMenuOpen ? '-50%' : '0%',
+                    transform: mobileMenuOpen ? 'translateY(-50%) rotate(45deg)' : 'none',
                   }}
-                  transition={{ duration: 0.3 }}
                 />
-                <motion.span
-                  className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-white rounded-full"
-                  animate={{ opacity: mobileMenuOpen ? 0 : 1 }}
-                  transition={{ duration: 0.3 }}
+                <span
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-white rounded-full transition-opacity duration-300"
+                  style={{ opacity: mobileMenuOpen ? 0 : 1 }}
                 />
-                <motion.span
-                  className="absolute left-0 w-full h-0.5 bg-white rounded-full"
-                  animate={{
+                <span
+                  className="absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300"
+                  style={{
                     bottom: mobileMenuOpen ? '50%' : '0%',
-                    rotate: mobileMenuOpen ? -45 : 0,
-                    translateY: mobileMenuOpen ? '50%' : '0%',
+                    transform: mobileMenuOpen ? 'translateY(50%) rotate(-45deg)' : 'none',
                   }}
-                  transition={{ duration: 0.3 }}
                 />
               </div>
             </button>
           </div>
         </div>
-      </motion.header>
+      </header>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            className="fixed inset-0 z-40 bg-[#0a0a0a]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation menu"
+      <div
+        className={`fixed inset-0 z-40 bg-[#0a0a0a] transition-opacity duration-300 ${
+          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        role={mobileMenuOpen ? 'dialog' : undefined}
+        aria-modal={mobileMenuOpen ? 'true' : undefined}
+        aria-hidden={!mobileMenuOpen}
+        aria-label="Mobile navigation menu"
+      >
+        <div className="flex flex-col items-center justify-center min-h-screen gap-6">
+          {navLinks.map((link, index) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-3xl font-semibold text-white hover:text-[#ff6b35] transition-colors"
+              style={{
+                transitionProperty: 'opacity, transform, color',
+                transitionDuration: '0.3s',
+                transitionDelay: mobileMenuOpen ? `${0.1 * index}s` : '0s',
+                opacity: mobileMenuOpen ? 1 : 0,
+                transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+              }}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+
+          {/* Mobile availability badge */}
+          <button
+            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm border border-white/10 bg-white/5"
+            style={{
+              transitionProperty: 'opacity, transform',
+              transitionDuration: '0.3s',
+              transitionDelay: mobileMenuOpen ? '0.7s' : '0s',
+              opacity: mobileMenuOpen ? 1 : 0,
+              transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+            }}
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setStatusModalOpen(true);
+            }}
           >
-            <div className="flex flex-col items-center justify-center min-h-screen gap-6">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  className="text-3xl font-semibold text-white hover:text-[#ff6b35] transition-colors"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3, delay: 0.1 * index }}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </motion.a>
-              ))}
+            <span
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: statusColor }}
+            />
+            <span className="text-white/80">{statusLabel}</span>
+          </button>
 
-              {/* Mobile availability badge */}
-              <motion.button
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm border border-white/10 bg-white/5"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: 0.7 }}
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setStatusModalOpen(true);
-                }}
-              >
-                <span
-                  className="w-2 h-2 rounded-full animate-pulse"
-                  style={{ backgroundColor: statusColor }}
-                />
-                <span className="text-white/80">{statusLabel}</span>
-              </motion.button>
+          <a
+            href="#contact"
+            className="mt-4 btn-primary"
+            style={{
+              transitionProperty: 'opacity, transform',
+              transitionDuration: '0.3s',
+              transitionDelay: mobileMenuOpen ? '0.8s' : '0s',
+              opacity: mobileMenuOpen ? 1 : 0,
+              transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+            }}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span>Book a Call</span>
+          </a>
+        </div>
+      </div>
 
-              <motion.a
-                href="#contact"
-                className="mt-4 btn-primary"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: 0.8 }}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span>Book a Call</span>
-              </motion.a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Status Modal */}
+      {/* Status Modal — lazy loaded */}
       <StatusModal isOpen={statusModalOpen} onClose={() => setStatusModalOpen(false)} />
     </>
   );

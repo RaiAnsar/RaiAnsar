@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, FormEvent } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useInView } from '@/hooks/useInView';
 import Image from 'next/image';
 import emailjs from '@emailjs/browser';
 import { TextScramble } from '@/components/ui/TextScramble';
@@ -24,9 +24,8 @@ function formatBudget(value: number): string {
 }
 
 export function Contact() {
-  const containerRef = useRef<HTMLElement>(null);
+  const [containerRef, isInView] = useInView<HTMLElement>({ threshold: 0.15, once: true });
   const formRef = useRef<HTMLFormElement>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.15 });
 
   const [formData, setFormData] = useState({
     name: '',
@@ -49,9 +48,7 @@ export function Contact() {
     return newErrors;
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -95,7 +92,6 @@ export function Contact() {
 
       setStatus('success');
       setFormData({ name: '', email: '', message: '', budget: 5000 });
-
       setTimeout(() => setStatus('idle'), 5000);
     } catch {
       setStatus('error');
@@ -103,25 +99,14 @@ export function Contact() {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
-    },
-  };
-
   const getInputClasses = (hasError: boolean) =>
     `w-full bg-[#161616] border ${hasError ? 'border-red-500/60' : 'border-[#2a2a2a]'} rounded-xl px-5 py-4 text-white placeholder-[#6b6b6b] text-sm outline-none transition-all duration-300 focus:border-[#ff6b35] focus:ring-1 focus:ring-[#ff6b35]/30`;
+
+  const anim = (delay = 0, y = 20): React.CSSProperties => ({
+    opacity: isInView ? 1 : 0,
+    transform: isInView ? 'none' : `translateY(${y}px)`,
+    transition: `opacity 0.6s ${delay}s ease, transform 0.6s ${delay}s ease`,
+  });
 
   return (
     <section
@@ -131,17 +116,11 @@ export function Contact() {
       role="region"
       aria-label="Contact section"
     >
-      {/* Subtle gradient accent */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#ff6b35]/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
+        <div className="text-center mb-20" style={anim(0, 40)}>
           <span className="inline-block text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase mb-6">
             <TextScramble text="// Contact" delay={0} />
           </span>
@@ -154,38 +133,19 @@ export function Contact() {
             </span>
           </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-lg text-[#a0a0a0] max-w-xl mx-auto"
-          >
-            Have a project in mind? Let&apos;s discuss how I can help bring your
-            vision to life.
-          </motion.p>
-        </motion.div>
+          <p className="text-lg text-[#a0a0a0] max-w-xl mx-auto" style={anim(0.6, 20)}>
+            Have a project in mind? Let&apos;s discuss how I can help bring your vision to life.
+          </p>
+        </div>
 
         {/* Two-column layout */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 max-w-5xl mx-auto"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 max-w-5xl mx-auto">
           {/* Left Column: Form */}
-          <motion.div variants={itemVariants} className="lg:col-span-3">
-            <form
-              ref={formRef}
-              onSubmit={handleSubmit}
-              className="space-y-6"
-              noValidate
-            >
+          <div className="lg:col-span-3" style={anim(0.2, 30)}>
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6" noValidate>
               {/* Name */}
               <div>
-                <label
-                  htmlFor="contact-name"
-                  className="block text-sm text-[#a0a0a0] mb-2 tracking-wide"
-                >
+                <label htmlFor="contact-name" className="block text-sm text-[#a0a0a0] mb-2 tracking-wide">
                   Name
                 </label>
                 <input
@@ -209,10 +169,7 @@ export function Contact() {
 
               {/* Email */}
               <div>
-                <label
-                  htmlFor="contact-email"
-                  className="block text-sm text-[#a0a0a0] mb-2 tracking-wide"
-                >
+                <label htmlFor="contact-email" className="block text-sm text-[#a0a0a0] mb-2 tracking-wide">
                   Email
                 </label>
                 <input
@@ -236,10 +193,7 @@ export function Contact() {
 
               {/* Message */}
               <div>
-                <label
-                  htmlFor="contact-message"
-                  className="block text-sm text-[#a0a0a0] mb-2 tracking-wide"
-                >
+                <label htmlFor="contact-message" className="block text-sm text-[#a0a0a0] mb-2 tracking-wide">
                   Message
                 </label>
                 <textarea
@@ -264,10 +218,7 @@ export function Contact() {
               {/* Budget Range */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label
-                    htmlFor="contact-budget"
-                    className="block text-sm text-[#a0a0a0] tracking-wide"
-                  >
+                  <label htmlFor="contact-budget" className="block text-sm text-[#a0a0a0] tracking-wide">
                     Budget Range
                   </label>
                   <span className="text-sm font-semibold text-[#ff6b35]">
@@ -296,109 +247,61 @@ export function Contact() {
               </div>
 
               {/* Submit Button */}
-              <motion.button
+              <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="w-full bg-[#ff6b35] hover:bg-[#e55a28] disabled:bg-[#ff6b35]/60 text-white font-semibold py-4 px-8 rounded-xl transition-colors duration-300 flex items-center justify-center gap-3 text-sm tracking-wide uppercase cursor-pointer disabled:cursor-not-allowed"
-                whileHover={{ scale: status === 'submitting' ? 1 : 1.02 }}
-                whileTap={{ scale: status === 'submitting' ? 1 : 0.98 }}
+                className="w-full bg-[#ff6b35] hover:bg-[#e55a28] hover:scale-[1.02] active:scale-[0.98] disabled:bg-[#ff6b35]/60 disabled:scale-100 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 text-sm tracking-wide uppercase cursor-pointer disabled:cursor-not-allowed"
               >
                 {status === 'submitting' && (
-                  <svg
-                    className="animate-spin h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    />
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
                 )}
                 {status === 'idle' && 'Send Message'}
                 {status === 'submitting' && 'Sending...'}
                 {status === 'success' && 'Message Sent!'}
                 {status === 'error' && 'Failed — Try Again'}
-              </motion.button>
+              </button>
 
               {/* Status Messages */}
-              {status === 'success' && (
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center text-sm text-green-400"
+              {(status === 'success' || status === 'error') && (
+                <p
+                  className="text-center text-sm"
+                  style={{
+                    color: status === 'success' ? '#4ade80' : '#f87171',
+                    animation: 'fadeInUp 0.3s ease',
+                  }}
                 >
-                  Thanks for reaching out! I&apos;ll get back to you within 24
-                  hours.
-                </motion.p>
-              )}
-              {status === 'error' && (
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center text-sm text-red-400"
-                >
-                  Something went wrong. Please try again or reach out directly
-                  via email.
-                </motion.p>
+                  {status === 'success'
+                    ? "Thanks for reaching out! I'll get back to you within 24 hours."
+                    : 'Something went wrong. Please try again or reach out directly via email.'}
+                </p>
               )}
             </form>
-          </motion.div>
+          </div>
 
           {/* Right Column: Info + Social */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-2 flex flex-col gap-10"
-          >
-            {/* Quick Info */}
+          <div className="lg:col-span-2 flex flex-col gap-10" style={anim(0.3, 30)}>
             <div className="space-y-6">
               <div>
-                <h3 className="text-white font-semibold text-lg mb-2">
-                  Get in touch
-                </h3>
+                <h3 className="text-white font-semibold text-lg mb-2">Get in touch</h3>
                 <p className="text-[#a0a0a0] text-sm leading-relaxed">
-                  Whether you need a full website, a landing page, or technical
-                  consulting, I&apos;m here to help. Drop me a message and
-                  I&apos;ll respond within 24 hours.
+                  Whether you need a full website, a landing page, or technical consulting, I&apos;m here to help.
+                  Drop me a message and I&apos;ll respond within 24 hours.
                 </p>
               </div>
 
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-[#161616] border border-[#2a2a2a] flex items-center justify-center shrink-0">
-                    <svg
-                      className="w-4 h-4 text-[#ff6b35]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
+                    <svg className="w-4 h-4 text-[#ff6b35]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-[#6b6b6b] uppercase tracking-wider">
-                      Email
-                    </p>
-                    <a
-                      href="mailto:hello@raiansar.com"
-                      className="text-sm text-white hover:text-[#ff6b35] transition-colors"
-                    >
+                    <p className="text-xs text-[#6b6b6b] uppercase tracking-wider">Email</p>
+                    <a href="mailto:hello@raiansar.com" className="text-sm text-white hover:text-[#ff6b35] transition-colors">
                       hello@raiansar.com
                     </a>
                   </div>
@@ -406,64 +309,31 @@ export function Contact() {
 
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-[#161616] border border-[#2a2a2a] flex items-center justify-center shrink-0">
-                    <svg
-                      className="w-4 h-4 text-[#ff6b35]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
+                    <svg className="w-4 h-4 text-[#ff6b35]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-[#6b6b6b] uppercase tracking-wider">
-                      Based in
-                    </p>
+                    <p className="text-xs text-[#6b6b6b] uppercase tracking-wider">Based in</p>
                     <p className="text-sm text-white">Pakistan</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-[#161616] border border-[#2a2a2a] flex items-center justify-center shrink-0">
-                    <svg
-                      className="w-4 h-4 text-[#ff6b35]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
+                    <svg className="w-4 h-4 text-[#ff6b35]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-[#6b6b6b] uppercase tracking-wider">
-                      Availability
-                    </p>
-                    <p className="text-sm text-green-400">
-                      Open for projects
-                    </p>
+                    <p className="text-xs text-[#6b6b6b] uppercase tracking-wider">Availability</p>
+                    <p className="text-sm text-green-400">Open for projects</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Divider */}
             <div className="h-px bg-[#2a2a2a]" />
 
             {/* Social Links */}
@@ -473,16 +343,13 @@ export function Contact() {
               </h3>
               <div className="flex flex-wrap gap-3">
                 {socialLinks.map((link, index) => (
-                  <motion.a
+                  <a
                     key={link.name}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl px-4 py-3 hover:border-[#ff6b35]/40 transition-all duration-300"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.4, delay: 0.8 + index * 0.08 }}
-                    whileHover={{ y: -2 }}
+                    className="group flex items-center gap-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl px-4 py-3 hover:border-[#ff6b35]/40 hover:-translate-y-0.5 transition-all duration-300"
+                    style={anim(0.8 + index * 0.08)}
                   >
                     <Image
                       src={link.icon}
@@ -494,12 +361,12 @@ export function Contact() {
                     <span className="text-sm text-[#a0a0a0] group-hover:text-white transition-colors duration-300">
                       {link.name}
                     </span>
-                  </motion.a>
+                  </a>
                 ))}
               </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

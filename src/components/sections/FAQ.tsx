@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { useInView } from '@/hooks/useInView';
 import { TextScramble } from '@/components/ui/TextScramble';
 import { faqData, faqCategories, type FAQItem } from '@/data/faq';
 
@@ -17,11 +17,13 @@ function AccordionItem({
   onToggle: () => void;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.05 * index }}
+    <div
       className="group"
+      style={{
+        opacity: 1,
+        transform: 'none',
+        transition: `opacity 0.4s ${0.05 * index}s ease, transform 0.4s ${0.05 * index}s ease`,
+      }}
     >
       <button
         type="button"
@@ -57,43 +59,42 @@ function AccordionItem({
             background: isOpen ? 'rgba(255,107,53,0.1)' : 'rgba(255,255,255,0.02)',
           }}
         >
-          <motion.svg
+          <svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
-            className="w-4 h-4 transition-colors duration-300"
-            style={{ color: isOpen ? '#ff6b35' : '#505050' }}
-            animate={{ rotate: isOpen ? 45 : 0 }}
-            transition={{ duration: 0.2 }}
+            className="w-4 h-4 transition-all duration-200"
+            style={{
+              color: isOpen ? '#ff6b35' : '#505050',
+              transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
+            }}
             aria-hidden="true"
           >
             <path d="M12 5v14" />
             <path d="M5 12h14" />
-          </motion.svg>
+          </svg>
         </span>
       </button>
 
-      {/* Answer */}
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            key="answer"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="pl-8 sm:pl-12 pb-6 pr-4 sm:pr-12">
-              <p className="text-[#606060] text-sm md:text-[15px] leading-[1.85]">
-                {item.answer}
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Answer — CSS grid-template-rows accordion (no framer-motion needed) */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateRows: isOpen ? '1fr' : '0fr',
+          transition: 'grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+          overflow: 'hidden',
+        }}
+      >
+        <div style={{ overflow: 'hidden' }}>
+          <div className="pl-8 sm:pl-12 pb-6 pr-4 sm:pr-12">
+            <p className="text-[#606060] text-sm md:text-[15px] leading-[1.85]">
+              {item.answer}
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Divider line */}
       <div
@@ -104,16 +105,16 @@ function AccordionItem({
             : 'rgba(255,255,255,0.05)',
         }}
       />
-    </motion.div>
+    </div>
   );
 }
 
 export function FAQ() {
-  const containerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.15 });
+  const [containerRef, isInView] = useInView<HTMLElement>({ threshold: 0.15, once: true });
 
   const [activeCategory, setActiveCategory] = useState('frontend');
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+  const [catKey, setCatKey] = useState('frontend');
 
   const toggleItem = useCallback((key: string) => {
     setOpenItems((prev) => {
@@ -128,6 +129,12 @@ export function FAQ() {
   }, []);
 
   const currentFAQs = faqData[activeCategory] || [];
+
+  const anim = (delay = 0): React.CSSProperties => ({
+    opacity: isInView ? 1 : 0,
+    transform: isInView ? 'none' : 'translateY(20px)',
+    transition: `opacity 0.6s ${delay}s ease, transform 0.6s ${delay}s ease`,
+  });
 
   return (
     <section
@@ -150,35 +157,23 @@ export function FAQ() {
         {/* Header row */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12">
           <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="mb-6"
-            >
+            <div className="mb-6" style={anim(0)}>
               <span className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase">
                 <TextScramble text="// FAQ" delay={0} />
               </span>
-            </motion.div>
+            </div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.1 }}
+            <h2
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-[1.1]"
+              style={anim(0.1)}
             >
               Got questions?{' '}
               <span className="gradient-text">Good.</span>
-            </motion.h2>
+            </h2>
           </div>
 
           {/* Category pills — horizontal */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap gap-2"
-          >
+          <div className="flex flex-wrap gap-2" style={anim(0.3)}>
             {faqCategories.map((category) => {
               const isActive = activeCategory === category.key;
               const count = (faqData[category.key] || []).length;
@@ -188,6 +183,7 @@ export function FAQ() {
                   type="button"
                   onClick={() => {
                     setActiveCategory(category.key);
+                    setCatKey(category.key);
                     setOpenItems(new Set());
                   }}
                   className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border cursor-pointer"
@@ -211,49 +207,43 @@ export function FAQ() {
                 </button>
               );
             })}
-          </motion.div>
+          </div>
         </div>
 
         {/* Accordion area */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
+        <div
           className="rounded-2xl border border-white/[0.06] bg-[#0d0d0d] p-6 md:p-10"
+          style={anim(0.4)}
         >
           {/* Top border accent */}
           <div className="h-px mb-0" style={{ background: 'rgba(255,255,255,0.04)' }} />
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCategory}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-            >
-              {currentFAQs.map((item, index) => {
-                const itemKey = `${activeCategory}-${index}`;
-                return (
-                  <AccordionItem
-                    key={itemKey}
-                    item={item}
-                    index={index}
-                    isOpen={openItems.has(itemKey)}
-                    onToggle={() => toggleItem(itemKey)}
-                  />
-                );
-              })}
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
+          {/* Category switch — CSS opacity transition instead of AnimatePresence */}
+          <div
+            key={catKey}
+            style={{
+              animation: 'faqFadeIn 0.2s ease forwards',
+            }}
+          >
+            {currentFAQs.map((item, index) => {
+              const itemKey = `${activeCategory}-${index}`;
+              return (
+                <AccordionItem
+                  key={itemKey}
+                  item={item}
+                  index={index}
+                  isOpen={openItems.has(itemKey)}
+                  onToggle={() => toggleItem(itemKey)}
+                />
+              );
+            })}
+          </div>
+        </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
+        <div
           className="mt-8 flex items-center justify-center gap-4"
+          style={anim(0.6)}
         >
           <p className="text-[#404040] text-sm">
             Can&apos;t find what you&apos;re looking for?
@@ -269,7 +259,7 @@ export function FAQ() {
               <path d="m12 5 7 7-7 7" />
             </svg>
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

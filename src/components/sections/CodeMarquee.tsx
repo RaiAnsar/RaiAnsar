@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
 const roles = ['DEVELOPER', 'ENGINEER', 'CREATIVE', 'PROBLEM SOLVER', 'ARCHITECT'];
 
 export function CodeMarquee() {
@@ -11,10 +9,9 @@ export function CodeMarquee() {
   return (
     <section className="relative bg-[#0a0a0a] overflow-hidden" aria-hidden="true">
       <div className="py-16 md:py-24">
-        <motion.div
+        <div
           className="flex whitespace-nowrap"
-          animate={{ x: ['0%', '-33.333%'] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          style={{ animation: 'marqueeScroll 20s linear infinite' }}
         >
           <span
             className="text-[12vw] md:text-[10vw] font-black tracking-tight leading-none select-none"
@@ -25,7 +22,7 @@ export function CodeMarquee() {
           >
             {tripled}
           </span>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

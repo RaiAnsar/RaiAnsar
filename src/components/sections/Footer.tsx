@@ -1,7 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useInView } from '@/hooks/useInView';
 import { Magnetic } from '@/components/ui/Magnetic';
 
 const socialLinks = [
@@ -52,9 +51,14 @@ const navLinks = [
 ];
 
 export function Footer() {
-  const footerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(footerRef, { once: true, amount: 0.3 });
+  const [footerRef, isInView] = useInView<HTMLElement>({ threshold: 0.3, once: true });
   const currentYear = new Date().getFullYear();
+
+  const anim = (delay = 0, y = 30): React.CSSProperties => ({
+    opacity: isInView ? 1 : 0,
+    transform: isInView ? 'none' : `translateY(${y}px)`,
+    transition: `opacity 0.6s ${delay}s ease, transform 0.6s ${delay}s ease`,
+  });
 
   return (
     <footer ref={footerRef} className="relative py-16 bg-[#0a0a0a] border-t border-white/[0.06]" role="contentinfo" aria-label="Footer">
@@ -62,12 +66,7 @@ export function Footer() {
         {/* Main footer content */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand column */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-2"
-          >
+          <div className="lg:col-span-2" style={anim(0)}>
             <Magnetic strength={0.1}>
               <a href="#home" className="inline-block mb-6">
                 <span className="text-2xl font-bold tracking-tight text-white">
@@ -80,36 +79,29 @@ export function Footer() {
               and scalable infrastructure. 10+ years turning ideas into production-ready products.
             </p>
             <Magnetic strength={0.2}>
-              <motion.a
+              <a
                 href="mailto:hello@raiansar.com"
-                className="inline-flex items-center gap-2 text-[#ff6b35] hover:text-[#ff8555] transition-colors"
-                whileHover={{ x: 5 }}
+                className="inline-flex items-center gap-2 text-[#ff6b35] hover:text-[#ff8555] hover:translate-x-1 transition-all duration-300"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="2" y="4" width="20" height="16" rx="2" />
                   <path d="m22 7-10 5L2 7" />
                 </svg>
                 <span className="font-medium">hello@raiansar.com</span>
-              </motion.a>
+              </a>
             </Magnetic>
-          </motion.div>
+          </div>
 
           {/* Navigation column */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
+          <div style={anim(0.1)}>
             <h4 className="text-xs font-semibold tracking-widest uppercase text-[#404040] mb-6">
               Navigation
             </h4>
             <ul className="space-y-4">
               {navLinks.map((link, index) => (
-                <motion.li
+                <li
                   key={link.href}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.2 + index * 0.05 }}
+                  style={anim(0.2 + index * 0.05, 10)}
                 >
                   <Magnetic strength={0.15}>
                     <a
@@ -120,27 +112,21 @@ export function Footer() {
                       {link.label}
                     </a>
                   </Magnetic>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Connect column */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <div style={anim(0.2)}>
             <h4 className="text-xs font-semibold tracking-widest uppercase text-[#404040] mb-6">
               Connect
             </h4>
             <div className="flex gap-3">
               {socialLinks.map((link, index) => (
-                <motion.div
+                <div
                   key={link.name}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                  style={anim(0.3 + index * 0.1)}
                 >
                   <Magnetic strength={0.3}>
                     <a
@@ -153,16 +139,14 @@ export function Footer() {
                       {link.icon}
                     </a>
                   </Magnetic>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             {/* Status indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.5 }}
+            <div
               className="mt-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#ff6b35]/10 border border-[#ff6b35]/20"
+              style={anim(0.5)}
             >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff6b35] opacity-75" />
@@ -171,16 +155,14 @@ export function Footer() {
               <span className="text-xs font-medium text-[#ff6b35]">
                 Available for hire
               </span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
 
         {/* Bottom bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
+        <div
           className="pt-8 border-t border-white/[0.06]"
+          style={anim(0.4)}
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-[#404040]">
@@ -190,7 +172,7 @@ export function Footer() {
               Crafted with precision & passion
             </p>
           </div>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
 
 const chars = '!<>-_\\/[]{}—=+*^?#________';
 
@@ -13,17 +12,35 @@ interface TextScrambleProps {
 
 export function TextScramble({ text, className = '', delay = 0 }: TextScrambleProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [displayText, setDisplayText] = useState(text);
+  const [visible, setVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    if (!isInView || hasAnimated) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!visible || hasAnimated) return;
 
     const timeout = setTimeout(() => {
       let iteration = 0;
       const maxIterations = text.length * 3;
-      
+
       const interval = setInterval(() => {
         setDisplayText(
           text
@@ -51,17 +68,14 @@ export function TextScramble({ text, className = '', delay = 0 }: TextScramblePr
     }, delay);
 
     return () => clearTimeout(timeout);
-  }, [isInView, text, delay, hasAnimated]);
+  }, [visible, text, delay, hasAnimated]);
 
   return (
-    <motion.span
+    <span
       ref={ref}
-      className={`inline-block ${className}`}
-      initial={{ opacity: 0.5 }}
-      animate={isInView ? { opacity: 1 } : {}}
-      transition={{ duration: 0.3 }}
+      className={`inline-block transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-50'} ${className}`}
     >
       {displayText}
-    </motion.span>
+    </span>
   );
 }

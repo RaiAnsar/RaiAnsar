@@ -1,7 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
+import { useInView } from '@/hooks/useInView';
 import { TextScramble } from '@/components/ui/TextScramble';
 
 const steps = [
@@ -57,32 +56,19 @@ const icons = [
 ];
 
 export function Process() {
-  const containerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.1 });
-  const [activeStep, setActiveStep] = useState(0);
+  const [containerRef, isInView] = useInView<HTMLElement>({ threshold: 0.1, once: true });
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start 0.2', 'end 0.8'],
+  const anim = (delay = 0, y = 50): React.CSSProperties => ({
+    opacity: isInView ? 1 : 0,
+    transform: isInView ? 'none' : `translateY(${y}px)`,
+    transition: `opacity 0.8s ${delay}s ease, transform 0.8s ${delay}s cubic-bezier(0.22, 1, 0.36, 1)`,
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
+  const animX = (delay = 0, x = -30): React.CSSProperties => ({
+    opacity: isInView ? 1 : 0,
+    transform: isInView ? 'none' : `translateX(${x}px)`,
+    transition: `opacity 0.8s ${delay}s ease, transform 0.8s ${delay}s cubic-bezier(0.22, 1, 0.36, 1)`,
   });
-
-  const lineHeight = useTransform(smoothProgress, [0, 1], ['0%', '100%']);
-
-  useEffect(() => {
-    const unsubscribe = smoothProgress.on('change', (latest) => {
-      const newStep = Math.min(Math.floor(latest * steps.length), steps.length - 1);
-      setActiveStep(Math.max(0, newStep));
-    });
-    return () => unsubscribe();
-  }, [smoothProgress]);
-
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -150]);
 
   return (
     <section
@@ -93,147 +79,116 @@ export function Process() {
       aria-label="Process section"
       style={{ background: '#0a0a0a' }}
     >
-      {/* Animated ambient background */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ y: backgroundY }}
-        aria-hidden="true"
-      >
-        <motion.div
+      {/* Animated ambient background — CSS float animations */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div
           className="absolute w-[500px] h-[500px] rounded-full"
           style={{
             background: 'radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, transparent 60%)',
             left: '5%',
             top: '20%',
+            animation: 'floatA 20s ease-in-out infinite',
           }}
-          animate={{ y: [0, -40, 0], x: [0, 30, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
         />
-        <motion.div
+        <div
           className="absolute w-[400px] h-[400px] rounded-full"
           style={{
             background: 'radial-gradient(circle, rgba(255, 133, 85, 0.05) 0%, transparent 60%)',
             right: '10%',
             top: '50%',
+            animation: 'floatB 25s ease-in-out infinite',
           }}
-          animate={{ y: [0, 50, 0], x: [0, -20, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
         />
-      </motion.div>
+      </div>
 
       <div className="container relative z-10">
         {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
-          className="mb-24 md:mb-32"
-        >
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+        <div className="mb-24 md:mb-32" style={anim(0, 60)}>
+          <span
             className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase"
+            style={anim(0.2, 20)}
           >
             <TextScramble text="// Process" delay={0} />
-          </motion.span>
+          </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-4">
             From vision to{' '}
-            <span className="gradient-text">
-              reality.
-            </span>
+            <span className="gradient-text">reality.</span>
           </h2>
           <p className="text-lg md:text-xl text-white/40 max-w-2xl leading-relaxed tracking-wide">
             A proven process refined over years of delivering exceptional digital products.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Timeline with alternating layout */}
+        {/* Timeline */}
         <div className="relative max-w-6xl mx-auto">
-          {/* CENTER TIMELINE - Glowing orange line */}
+          {/* CENTER TIMELINE — grows on inView */}
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 md:w-1.5 hidden md:block" aria-hidden="true">
             <div
               className="absolute inset-0 rounded-full"
               style={{ background: 'rgba(255, 255, 255, 0.08)' }}
             />
-            <motion.div
+            <div
               className="absolute top-0 left-0 right-0 rounded-full"
               style={{
-                height: lineHeight,
+                height: isInView ? '100%' : '0%',
                 background: '#ff6b35',
                 boxShadow: `
                   0 0 20px rgba(255, 107, 53, 0.8),
                   0 0 40px rgba(255, 107, 53, 0.5),
-                  0 0 60px rgba(255, 107, 53, 0.3),
-                  0 0 80px rgba(255, 107, 53, 0.2)
+                  0 0 60px rgba(255, 107, 53, 0.3)
                 `,
-              }}
-            />
-            <motion.div
-              className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full z-10"
-              style={{
-                background: '#ff6b35',
-                boxShadow: `
-                  0 0 20px #ff6b35,
-                  0 0 40px #ff6b35,
-                  0 0 60px rgba(255, 107, 53, 0.8)
-                `,
-                top: lineHeight,
+                transition: 'height 1.8s 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
               }}
             />
           </div>
 
-          {/* Mobile timeline - Left side */}
+          {/* Mobile timeline — Left side */}
           <div className="absolute left-4 top-0 bottom-0 w-1 md:hidden" aria-hidden="true">
             <div className="absolute inset-0 rounded-full" style={{ background: 'rgba(255, 255, 255, 0.08)' }} />
-            <motion.div
+            <div
               className="absolute top-0 left-0 right-0 rounded-full"
               style={{
-                height: lineHeight,
+                height: isInView ? '100%' : '0%',
                 background: '#ff6b35',
-                boxShadow: '0 0 20px rgba(255, 107, 53, 0.8), 0 0 40px rgba(255, 107, 53, 0.5)',
+                boxShadow: '0 0 20px rgba(255, 107, 53, 0.8)',
+                transition: 'height 1.8s 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
               }}
             />
           </div>
 
-          {/* Process steps - Alternating left/right */}
+          {/* Process steps */}
           <div className="relative space-y-24 md:space-y-40">
             {steps.map((step, index) => {
-              const isActive = index <= activeStep;
-              const isCurrent = index === activeStep;
               const isLeft = index % 2 === 0;
 
               return (
-                <motion.div
+                <div
                   key={step.number}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: 0.2 + index * 0.15 }}
                   className={`relative grid md:grid-cols-2 gap-8 md:gap-16 items-center ${
                     isLeft ? '' : 'md:text-right'
                   }`}
+                  style={anim(0.2 + index * 0.15, 50)}
                   role="listitem"
                   aria-label={`${step.title}: ${step.subtitle}`}
                 >
                   {/* Content card */}
-                  <motion.div
+                  <div
                     className={`relative ${isLeft ? 'md:order-1 pl-12 md:pl-0' : 'md:order-2 pl-12 md:pl-0'}`}
-                    initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.8, delay: 0.3 + index * 0.15 }}
+                    style={animX(0.3 + index * 0.15, isLeft ? -30 : 30)}
                   >
                     <div
                       className={`relative p-6 md:p-8 rounded-2xl md:rounded-3xl overflow-hidden group transition-all duration-500 ${
                         isLeft ? 'md:mr-8' : 'md:ml-8'
                       }`}
                       style={{
-                        background: isActive
+                        background: isInView
                           ? 'linear-gradient(135deg, rgba(255, 107, 53, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)'
                           : 'linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%)',
-                        border: `1px solid ${isActive ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.05)'}`,
-                        boxShadow: isActive
+                        border: `1px solid ${isInView ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.05)'}`,
+                        boxShadow: isInView
                           ? '0 20px 60px -20px rgba(255, 107, 53, 0.2), 0 0 80px -40px rgba(255, 107, 53, 0.3)'
                           : '0 10px 40px -20px rgba(0, 0, 0, 0.5)',
+                        transition: 'background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease',
                       }}
                     >
                       {/* Hover glow */}
@@ -246,10 +201,11 @@ export function Process() {
 
                       {/* Large background number */}
                       <span
-                        className={`absolute -top-2 ${isLeft ? '-right-2 md:-right-4' : '-left-2 md:-left-4'} text-[5rem] md:text-[8rem] font-black leading-none pointer-events-none select-none transition-all duration-500`}
+                        className={`absolute -top-2 ${isLeft ? '-right-2 md:-right-4' : '-left-2 md:-left-4'} text-[5rem] md:text-[8rem] font-black leading-none pointer-events-none select-none`}
                         style={{
-                          WebkitTextStroke: `1px ${isActive ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.05)'}`,
+                          WebkitTextStroke: `1px ${isInView ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.05)'}`,
                           color: 'transparent',
+                          transition: 'all 0.5s ease',
                         }}
                         aria-hidden="true"
                       >
@@ -263,38 +219,19 @@ export function Process() {
                           <span
                             className="px-3 py-1 text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase rounded-full transition-all duration-500"
                             style={{
-                              color: isActive ? '#ff6b35' : 'rgba(255, 255, 255, 0.4)',
-                              background: isActive ? 'rgba(255, 107, 53, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                              border: `1px solid ${isActive ? 'rgba(255, 107, 53, 0.3)' : 'rgba(255, 255, 255, 0.1)'}`,
+                              color: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.4)',
+                              background: isInView ? 'rgba(255, 107, 53, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                              border: `1px solid ${isInView ? 'rgba(255, 107, 53, 0.3)' : 'rgba(255, 255, 255, 0.1)'}`,
                             }}
                           >
                             Phase {step.number}
                           </span>
-                          {isCurrent && (
-                            <motion.span
-                              initial={{ opacity: 0, scale: 0.8 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              className="flex items-center gap-1.5 px-2 py-0.5 text-[10px] font-semibold rounded-full"
-                              style={{
-                                background: 'rgba(255, 107, 53, 0.15)',
-                                color: '#ff6b35',
-                              }}
-                              aria-label="Current phase"
-                            >
-                              <span
-                                className="w-1.5 h-1.5 rounded-full animate-pulse"
-                                style={{ background: '#ff6b35', boxShadow: '0 0 6px #ff6b35' }}
-                                aria-hidden="true"
-                              />
-                              Current
-                            </motion.span>
-                          )}
                         </div>
 
                         {/* Title */}
                         <h3
                           className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 transition-colors duration-500"
-                          style={{ color: isActive ? 'white' : 'rgba(255, 255, 255, 0.6)' }}
+                          style={{ color: isInView ? 'white' : 'rgba(255, 255, 255, 0.6)' }}
                         >
                           {step.title}
                         </h3>
@@ -302,7 +239,7 @@ export function Process() {
                         {/* Subtitle */}
                         <p
                           className="text-base md:text-lg mb-4 transition-colors duration-500"
-                          style={{ color: isActive ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)' }}
+                          style={{ color: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)' }}
                         >
                           {step.subtitle}
                         </p>
@@ -313,114 +250,105 @@ export function Process() {
                         </p>
 
                         {/* Details */}
-                        <div className={`flex flex-wrap gap-2 ${!isLeft ? 'md:justify-end' : ''}`} aria-label={`${step.title} details`}>
+                        <div
+                          className={`flex flex-wrap gap-2 ${!isLeft ? 'md:justify-end' : ''}`}
+                          aria-label={`${step.title} details`}
+                        >
                           {step.details.map((detail, i) => (
-                            <motion.span
+                            <span
                               key={detail}
-                              initial={{ opacity: 0, y: 10 }}
-                              animate={isInView ? { opacity: 1, y: 0 } : {}}
-                              transition={{ duration: 0.5, delay: 0.5 + index * 0.1 + i * 0.05 }}
                               className="flex items-center gap-1.5 text-xs text-white/50 px-2 py-1 rounded-md transition-colors hover:text-white/70"
                               style={{
-                                background: isActive ? 'rgba(255, 107, 53, 0.05)' : 'rgba(255, 255, 255, 0.03)',
+                                background: isInView ? 'rgba(255, 107, 53, 0.05)' : 'rgba(255, 255, 255, 0.03)',
+                                opacity: isInView ? 1 : 0,
+                                transform: isInView ? 'none' : 'translateY(10px)',
+                                transition: `opacity 0.5s ${0.5 + index * 0.1 + i * 0.05}s ease, transform 0.5s ${0.5 + index * 0.1 + i * 0.05}s ease`,
                               }}
                               role="listitem"
                             >
                               <span
                                 className="w-1 h-1 rounded-full"
                                 style={{
-                                  background: isActive ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)',
-                                  boxShadow: isActive ? '0 0 4px #ff6b35' : 'none',
+                                  background: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)',
+                                  boxShadow: isInView ? '0 0 4px #ff6b35' : 'none',
                                 }}
                                 aria-hidden="true"
                               />
                               {detail}
-                            </motion.span>
+                            </span>
                           ))}
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
 
-                  {/* CENTER NODE - On timeline */}
+                  {/* CENTER NODE — on timeline */}
                   <div
-                    className={`absolute left-4 md:left-1/2 md:-translate-x-1/2 top-6 w-8 h-8 md:w-16 md:h-16 flex items-center justify-center z-20`}
+                    className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-6 w-8 h-8 md:w-16 md:h-16 flex items-center justify-center z-20"
                     aria-hidden="true"
                   >
-                    <motion.div
-                      className="absolute inset-0 md:-inset-2 rounded-full"
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={isActive ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
-                      transition={{ duration: 0.5 }}
+                    {/* Glow halo */}
+                    <div
+                      className="absolute inset-0 md:-inset-2 rounded-full transition-all duration-500"
                       style={{
-                        background: 'radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%)',
+                        background: isInView ? 'radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%)' : 'transparent',
+                        opacity: isInView ? 1 : 0,
                       }}
                     />
-                    {isCurrent && (
-                      <motion.div
+                    {/* Pulsing ring — CSS animation */}
+                    {isInView && index === 0 && (
+                      <div
                         className="absolute inset-0 md:-inset-1 rounded-full"
-                        animate={{ scale: [1, 1.6, 1], opacity: [0.6, 0, 0.6] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        style={{ border: '2px solid #ff6b35' }}
+                        style={{
+                          border: '2px solid #ff6b35',
+                          animation: 'processPulse 2s ease-in-out infinite',
+                        }}
                       />
                     )}
-                    <motion.div
-                      className="relative w-8 h-8 md:w-14 md:h-14 rounded-full flex items-center justify-center z-10"
-                      animate={{
-                        background: isActive
+                    {/* Node circle */}
+                    <div
+                      className="relative w-8 h-8 md:w-14 md:h-14 rounded-full flex items-center justify-center z-10 transition-all duration-500"
+                      style={{
+                        background: isInView
                           ? 'linear-gradient(135deg, rgba(255, 107, 53, 0.25) 0%, rgba(255, 107, 53, 0.08) 100%)'
                           : 'rgba(20, 20, 20, 1)',
-                        borderColor: isActive ? '#ff6b35' : 'rgba(255, 255, 255, 0.1)',
-                        boxShadow: isActive
+                        border: `3px solid ${isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.1)'}`,
+                        boxShadow: isInView
                           ? '0 0 30px rgba(255, 107, 53, 0.5), 0 0 60px rgba(255, 107, 53, 0.3), inset 0 0 20px rgba(255, 107, 53, 0.1)'
-                          : '0 0 0 rgba(0, 0, 0, 0)',
+                          : 'none',
                       }}
-                      transition={{ duration: 0.5 }}
-                      style={{ border: '3px solid' }}
                     >
-                      <motion.span
-                        className="hidden md:block"
-                        animate={{
-                          color: isActive ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)',
-                          scale: isCurrent ? [1, 1.15, 1] : 1,
-                        }}
-                        transition={{ color: { duration: 0.3 }, scale: { duration: 2, repeat: Infinity } }}
+                      <span
+                        className="hidden md:block transition-colors duration-300"
+                        style={{ color: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)' }}
                       >
                         {icons[index]}
-                      </motion.span>
+                      </span>
                       <span
                         className="md:hidden text-xs font-bold"
-                        style={{ color: isActive ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)' }}
+                        style={{ color: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)' }}
                       >
                         {step.number}
                       </span>
-                    </motion.div>
+                    </div>
                   </div>
 
                   {/* Empty space for other side */}
                   <div className={`hidden md:block ${isLeft ? 'md:order-2' : 'md:order-1'}`} />
-                </motion.div>
+                </div>
               );
             })}
           </div>
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="mt-24 md:mt-32 text-center"
-        >
-          <motion.div
-            className="relative inline-block px-10 md:px-16 py-10 md:py-12 rounded-3xl overflow-hidden"
+        <div className="mt-24 md:mt-32 text-center" style={anim(1, 50)}>
+          <div
+            className="relative inline-block px-10 md:px-16 py-10 md:py-12 rounded-3xl overflow-hidden hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6),0_0_120px_-40px_rgba(255,107,53,0.3)] transition-shadow duration-500"
             style={{
               background: 'linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
               border: '1px solid rgba(255, 107, 53, 0.15)',
               boxShadow: '0 30px 60px -20px rgba(0, 0, 0, 0.5), 0 0 100px -50px rgba(255, 107, 53, 0.2)',
-            }}
-            whileHover={{
-              boxShadow: '0 30px 80px -20px rgba(0, 0, 0, 0.6), 0 0 120px -40px rgba(255, 107, 53, 0.3)',
             }}
           >
             <div className="absolute top-0 left-0 w-20 h-20 pointer-events-none" aria-hidden="true">
@@ -444,20 +372,15 @@ export function Process() {
               <p className="text-sm md:text-base text-white/50 mb-8 max-w-md mx-auto">
                 Let&apos;s discuss your requirements and build something great together.
               </p>
-              <motion.a
+              <a
                 href="#contact"
-                className="group relative inline-flex items-center gap-3 px-8 py-4 text-sm md:text-base font-bold rounded-full overflow-hidden"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
+                className="group relative inline-flex items-center gap-3 px-8 py-4 text-sm md:text-base font-bold rounded-full overflow-hidden hover:scale-105 active:scale-[0.98] transition-transform duration-300"
                 style={{
                   background: '#ff6b35',
                   boxShadow: '0 0 30px rgba(255, 107, 53, 0.5), 0 0 60px rgba(255, 107, 53, 0.3)',
                 }}
               >
-                <motion.div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: 'linear-gradient(135deg, #ff6b35 0%, #ff8555 100%)' }}
-                />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, #ff6b35 0%, #ff8555 100%)' }} />
                 <span className="relative z-10 text-white">Start a Conversation</span>
                 <svg
                   className="relative z-10 transition-transform group-hover:translate-x-1"
@@ -467,13 +390,14 @@ export function Process() {
                   fill="none"
                   stroke="white"
                   strokeWidth="2.5"
+                  aria-hidden="true"
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </motion.a>
+              </a>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

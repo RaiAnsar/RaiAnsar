@@ -1,22 +1,26 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useInView } from '@/hooks/useInView';
 import { TextScramble } from '@/components/ui/TextScramble';
 import { skills, skillsDescription } from '@/data/skills';
 
 export function Skills() {
-  const containerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.2 });
+  const [containerRef, isInView] = useInView<HTMLElement>({ threshold: 0.2, once: true });
   const [animateBars, setAnimateBars] = useState(false);
 
   useEffect(() => {
     if (isInView) {
-      // Small delay so bars animate after the section fades in
       const timeout = setTimeout(() => setAnimateBars(true), 600);
       return () => clearTimeout(timeout);
     }
   }, [isInView]);
+
+  const anim = (delay = 0, y = 20): React.CSSProperties => ({
+    opacity: isInView ? 1 : 0,
+    transform: isInView ? 'none' : `translateY(${y}px)`,
+    transition: `opacity 0.6s ${delay}s ease, transform 0.6s ${delay}s ease`,
+  });
 
   return (
     <section
@@ -37,24 +41,17 @@ export function Skills() {
 
       <div className="container relative z-10">
         {/* Section label */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
-        >
+        <div className="mb-16" style={anim(0)}>
           <span className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase">
             <TextScramble text="// Skills" delay={0} />
           </span>
-        </motion.div>
+        </div>
 
         {/* Main heading */}
         <div className="max-w-5xl mb-20">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+          <h2
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.15]"
+            style={anim(0.2)}
           >
             <span className="block mb-2">
               <TextScramble text="My" delay={100} />
@@ -64,69 +61,59 @@ export function Skills() {
                 <TextScramble text="Skills" delay={300} />
               </span>
             </span>
-          </motion.h2>
+          </h2>
         </div>
 
         {/* 2-column layout: description left, progress bars right */}
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
           {/* Left column - description */}
           <div>
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
+            <h3
               className="text-xl md:text-2xl text-white font-semibold leading-relaxed mb-8"
+              style={anim(0.3)}
             >
               {skillsDescription.title}
-            </motion.h3>
+            </h3>
 
             {skillsDescription.paragraphs.map((paragraph, index) => (
-              <motion.p
+              <p
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                 className="text-[#6b6b6b] text-base md:text-lg leading-relaxed mb-6 last:mb-0"
+                style={anim(0.4 + index * 0.1)}
               >
                 {paragraph}
-              </motion.p>
+              </p>
             ))}
 
             {/* Divider accent */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10 h-px bg-gradient-to-r from-[#ff6b35]/40 to-transparent origin-left"
+            <div
+              className="mt-10 h-px bg-gradient-to-r from-[#ff6b35]/40 to-transparent"
+              style={{
+                transformOrigin: 'left',
+                transform: isInView ? 'scaleX(1)' : 'scaleX(0)',
+                transition: `transform 1s 0.7s cubic-bezier(0.22, 1, 0.36, 1)`,
+              }}
             />
           </div>
 
           {/* Right column - progress bars */}
           <div className="space-y-6">
             {skills.map((skill, index) => (
-              <motion.div
+              <div
                 key={skill.name}
-                initial={{ opacity: 0, x: 30 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.3 + index * 0.08,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+                style={anim(0.3 + index * 0.08, 30)}
               >
                 {/* Skill label and percentage */}
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-white text-sm font-medium tracking-wide">
                     {skill.name}
                   </span>
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={isInView ? { opacity: 1 } : {}}
-                    transition={{ duration: 0.4, delay: 0.6 + index * 0.08 }}
+                  <span
                     className="text-[#a0a0a0] text-xs font-mono tabular-nums"
+                    style={anim(0.6 + index * 0.08)}
                   >
                     {skill.percentage}%
-                  </motion.span>
+                  </span>
                 </div>
 
                 {/* Progress bar track */}
@@ -144,7 +131,7 @@ export function Skills() {
                     }}
                   />
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

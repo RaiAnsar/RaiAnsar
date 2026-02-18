@@ -278,6 +278,64 @@
   background: radial-gradient(circle, rgba(201,169,98,0.12) 0%, transparent 70%);
 }
 
+/* ── Hero & Header CSS entry animations (replaces framer-motion initial load) ── */
+@keyframes heroFadeInLeft {
+  from { transform: translateX(-20px); }
+  to   { transform: translateX(0); }
+}
+@keyframes heroFadeInUp {
+  from { transform: translateY(20px); }
+  to   { transform: translateY(0); }
+}
+@keyframes heroFadeInRight {
+  from { transform: translateX(40px); }
+  to   { transform: translateX(0); }
+}
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes heroPulseY {
+  0%, 100% { transform: scaleY(1); }
+  50%      { transform: scaleY(0.5); }
+}
+@keyframes headerSlideDown {
+  from { transform: translateY(-100px); }
+  to   { transform: translateY(0); }
+}
+@keyframes navLinkSlideDown {
+  from { transform: translateY(-20px); }
+  to   { transform: translateY(0); }
+}
+@keyframes scaleInFade {
+  from { transform: scale(0.8); }
+  to   { transform: scale(1); }
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+@keyframes floatA {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50%      { transform: translateY(-40px) translateX(30px); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50%      { transform: translateY(50px) translateX(-20px); }
+}
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.hero-anim-fadeinleft  { animation: heroFadeInLeft  0.6s var(--ease-out-expo) both; }
+.hero-anim-fadeinup    { animation: heroFadeInUp    0.6s var(--ease-out-expo) both; }
+.hero-anim-fadeinright { animation: heroFadeInRight 1s   var(--ease-out-expo) both; }
+.hero-anim-fadein      { animation: heroFadeIn      1s   ease                both; }
+.header-anim-slidedown { animation: headerSlideDown 0.8s var(--ease-out-expo) both; }
+.header-nav-anim       { animation: navLinkSlideDown 0.5s var(--ease-out-expo) both; }
+.header-anim-scalein   { animation: scaleInFade     0.5s var(--ease-out-expo) both; }
+
 /* ── Liquid Blob CSS animations (GPU compositor, zero JS/TBT cost) ── */
 .blob-pulse-primary {
   animation: blob-pulse-primary 20s linear infinite;
@@ -986,14 +1044,35 @@
 }
 
 @keyframes pulse-gold {
-  0%, 100% { 
-    opacity: 1; 
+  0%, 100% {
+    opacity: 1;
     box-shadow: 0 0 8px rgba(201,169,98,0.5);
   }
-  50% { 
-    opacity: 0.6; 
+  50% {
+    opacity: 0.6;
     box-shadow: 0 0 4px rgba(201,169,98,0.3);
   }
+}
+
+/* ── Section keyframes (replaces framer-motion) ── */
+@keyframes faqFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes testimonialCardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes processPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%       { transform: scale(1.6); opacity: 0; }
 }
 
 }

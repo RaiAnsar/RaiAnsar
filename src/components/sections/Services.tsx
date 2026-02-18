@@ -1,7 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { useInView } from '@/hooks/useInView';
 import { TextScramble } from '@/components/ui/TextScramble';
 
 type Service = {
@@ -104,27 +103,11 @@ const services: Service[] = [
 
 /**
  * Clou.ch-style sticky stacking card.
- * Structure: 200vh frame (relative) → sticky card (top: 10vh, 80vh tall).
- * Each card sticks at the same top. The next card (higher z-index) slides up
- * from below and covers the current card. As the current card gets covered,
- * it scales down to 0.85 for a depth/parallax effect.
- * Background is fully opaque so covered cards are completely hidden.
+ * Pure CSS sticky positioning + z-index — no scroll-based JS needed.
  */
 function ClouCard({ service, index, isLast }: { service: Service; index: number; isLast: boolean }) {
-  const frameRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: frameRef,
-    offset: ['start start', 'end start'],
-  });
-
-  // Subtle scale down during second half of scroll (when next card is covering this one)
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.95]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.3]);
-
   return (
     <div
-      ref={frameRef}
       className="relative"
       style={{
         height: isLast ? '90vh' : '200vh',
@@ -133,26 +116,17 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
     >
       <div
         className="sticky"
-        style={{
-          top: '10vh',
-          height: '90vh',
-          zIndex: index + 1,
-        }}
+        style={{ top: '10vh', height: '90vh', zIndex: index + 1 }}
       >
-        {/* Scale + fade wrapper — inner card shrinks while sticky container stays full-size */}
-        <motion.div
+        <div
           className="relative overflow-hidden rounded-2xl h-full group cursor-default"
           style={{
             background: '#0c0c0c',
             border: `1px solid rgba(${service.accentRgb},0.2)`,
             boxShadow: `0 30px 80px -20px rgba(0,0,0,0.9), inset 0 1px 0 rgba(${service.accentRgb},0.1)`,
-            scale: isLast ? undefined : scale,
-            opacity: isLast ? undefined : opacity,
-            transformOrigin: 'center center',
-            willChange: 'transform, opacity',
           }}
         >
-          {/* Accent gradient overlay on top of solid bg */}
+          {/* Accent gradient overlay */}
           <div
             className="absolute inset-0 rounded-2xl pointer-events-none"
             style={{
@@ -208,7 +182,7 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
                   style={{ color: service.accent }}
                 >
                   Start Project
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover/link:translate-x-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover/link:translate-x-1" aria-hidden="true">
                     <path d="M5 12h14" />
                     <path d="m12 5 7 7-7 7" />
                   </svg>
@@ -226,14 +200,13 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
                     background: `radial-gradient(circle, rgba(${service.accentRgb},0.25) 0%, transparent 70%)`,
                   }}
                 />
-                {/* Circle border with orbiting dot */}
-                <motion.div
+                {/* Orbiting circle border — CSS rotateSlow animation */}
+                <div
                   className="absolute inset-0 rounded-full"
                   style={{
                     border: `2px solid rgba(${service.accentRgb},0.18)`,
+                    animation: 'rotateSlow 50s linear infinite',
                   }}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
                 >
                   <div
                     className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full"
@@ -242,7 +215,7 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
                       boxShadow: `0 0 14px rgba(${service.accentRgb},0.7)`,
                     }}
                   />
-                </motion.div>
+                </div>
                 {/* Inner dashed circle */}
                 <div
                   className="absolute inset-8 lg:inset-10 rounded-full"
@@ -271,6 +244,7 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
               WebkitTextStroke: `1px rgba(${service.accentRgb},0.06)`,
               color: 'transparent',
             }}
+            aria-hidden="true"
           >
             {String(index + 1).padStart(2, '0')}
           </div>
@@ -282,52 +256,42 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
               background: `radial-gradient(ellipse at 30% 50%, rgba(${service.accentRgb},0.1) 0%, transparent 60%)`,
             }}
           />
-        </motion.div>
+        </div>
       </div>
     </div>
   );
 }
 
 export function Services() {
-  const containerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.02 });
+  const [containerRef, isInView] = useInView<HTMLElement>({ threshold: 0.02, once: true });
+
+  const anim = (delay = 0, y = 20): React.CSSProperties => ({
+    opacity: isInView ? 1 : 0,
+    transform: isInView ? 'none' : `translateY(${y}px)`,
+    transition: `opacity 0.6s ${delay}s ease, transform 0.6s ${delay}s ease`,
+  });
 
   return (
-    <section
-      ref={containerRef}
-      className="relative bg-[#0a0a0a]"
-      id="services"
-    >
+    <section ref={containerRef} className="relative bg-[#0a0a0a]" id="services">
       <div className="container relative z-10 pt-24 md:pt-32">
         {/* Section header */}
         <div className="mb-16 md:mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
+          <div style={anim(0)}>
             <span className="text-[#ff6b35] text-xs font-semibold tracking-[0.25em] uppercase">
               <TextScramble text="// Services" delay={0} />
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
+          <h2
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-4"
+            style={anim(0.1, 30)}
           >
             <TextScramble text="What I build" delay={150} />
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-white/40 text-lg tracking-wide max-w-2xl"
-          >
+          <p className="text-white/40 text-lg tracking-wide max-w-2xl" style={anim(0.2)}>
             End-to-end expertise across the full stack, from pixel-perfect frontends to bulletproof infrastructure.
-          </motion.p>
+          </p>
         </div>
       </div>
 
