@@ -7,6 +7,7 @@ import { StatusModal } from '@/components/ui/StatusModal';
 interface StatusData {
   status: 'available' | 'away' | 'offline';
   idleMinutes: number;
+  updatedAt?: number;
 }
 
 const navLinks = [
@@ -72,17 +73,20 @@ export function Header() {
     };
   }, [mobileMenuOpen]);
 
-  const statusLabel = liveStatus?.status === 'available'
-    ? 'Available'
-    : liveStatus?.status === 'away'
-      ? 'Away'
-      : 'Available';
+  const isStale = liveStatus?.updatedAt
+    ? Date.now() - liveStatus.updatedAt > 5 * 60 * 1000
+    : false;
 
-  const statusColor = liveStatus?.status === 'available' || !liveStatus
-    ? '#22c55e'
-    : liveStatus?.status === 'away'
-      ? '#eab308'
-      : '#6b7280';
+  const effectiveStatus = isStale ? 'offline' : (liveStatus?.status ?? 'available');
+
+  const statusLabel = effectiveStatus === 'available' ? 'Available'
+    : effectiveStatus === 'away' ? 'Away'
+    : effectiveStatus === 'offline' ? 'Offline'
+    : 'Available';
+
+  const statusColor = effectiveStatus === 'available' ? '#22c55e'
+    : effectiveStatus === 'away' ? '#eab308'
+    : '#6b7280';
 
   const handleStatusClick = useCallback(() => {
     setStatusModalOpen(true);
