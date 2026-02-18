@@ -219,7 +219,7 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                       </svg>
                       <span className="text-[10px] uppercase tracking-wider text-white/40">Location</span>
                     </div>
-                    <p className="text-sm font-medium text-white/80">Lahore, PK</p>
+                    <p className="text-sm font-medium text-white/80">Islamabad, PK</p>
                   </div>
 
                   <div
