@@ -35,6 +35,19 @@ export function Contact() {
     budget: 5000,
   });
   const [status, setStatus] = useState<FormStatus>('idle');
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+
+  const validate = () => {
+    const newErrors: { name?: string; email?: string; message?: string } = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    return newErrors;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -44,26 +57,41 @@ export function Contact() {
       ...prev,
       [name]: name === 'budget' ? Number(value) : value,
     }));
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (status === 'submitting') return;
 
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
     setStatus('submitting');
 
     try {
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-          budget: formatBudget(formData.budget),
-        },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-      );
+      await Promise.race([
+        emailjs.send(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+          {
+            from_name: formData.name,
+            from_email: formData.email,
+            message: formData.message,
+            budget: formatBudget(formData.budget),
+          },
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        ),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('Request timed out')), 10000)
+        ),
+      ]);
 
       setStatus('success');
       setFormData({ name: '', email: '', message: '', budget: 5000 });
@@ -92,8 +120,8 @@ export function Contact() {
     },
   };
 
-  const inputClasses =
-    'w-full bg-[#161616] border border-[#2a2a2a] rounded-xl px-5 py-4 text-white placeholder-[#6b6b6b] text-sm outline-none transition-all duration-300 focus:border-[#ff6b35] focus:ring-1 focus:ring-[#ff6b35]/30';
+  const getInputClasses = (hasError: boolean) =>
+    `w-full bg-[#161616] border ${hasError ? 'border-red-500/60' : 'border-[#2a2a2a]'} rounded-xl px-5 py-4 text-white placeholder-[#6b6b6b] text-sm outline-none transition-all duration-300 focus:border-[#ff6b35] focus:ring-1 focus:ring-[#ff6b35]/30`;
 
   return (
     <section
@@ -168,8 +196,15 @@ export function Contact() {
                   onChange={handleChange}
                   placeholder="Your full name"
                   required
-                  className={inputClasses}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? 'contact-name-error' : undefined}
+                  className={getInputClasses(!!errors.name)}
                 />
+                {errors.name && (
+                  <p id="contact-name-error" role="alert" className="mt-1.5 text-xs text-red-400">
+                    {errors.name}
+                  </p>
+                )}
               </div>
 
               {/* Email */}
@@ -188,8 +223,15 @@ export function Contact() {
                   onChange={handleChange}
                   placeholder="you@example.com"
                   required
-                  className={inputClasses}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? 'contact-email-error' : undefined}
+                  className={getInputClasses(!!errors.email)}
                 />
+                {errors.email && (
+                  <p id="contact-email-error" role="alert" className="mt-1.5 text-xs text-red-400">
+                    {errors.email}
+                  </p>
+                )}
               </div>
 
               {/* Message */}
@@ -208,8 +250,15 @@ export function Contact() {
                   placeholder="Tell me about your project..."
                   required
                   rows={5}
-                  className={`${inputClasses} resize-none`}
+                  aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? 'contact-message-error' : undefined}
+                  className={`${getInputClasses(!!errors.message)} resize-none`}
                 />
+                {errors.message && (
+                  <p id="contact-message-error" role="alert" className="mt-1.5 text-xs text-red-400">
+                    {errors.message}
+                  </p>
+                )}
               </div>
 
               {/* Budget Range */}
@@ -234,6 +283,10 @@ export function Contact() {
                   step={500}
                   value={formData.budget}
                   onChange={handleChange}
+                  aria-valuemin={500}
+                  aria-valuemax={25000}
+                  aria-valuenow={formData.budget}
+                  aria-valuetext={formatBudget(formData.budget)}
                   className="w-full h-2 bg-[#2a2a2a] rounded-full appearance-none cursor-pointer accent-[#ff6b35] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#ff6b35] [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(255,107,53,0.4)] [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#ff6b35] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
                 />
                 <div className="flex justify-between mt-1.5">
