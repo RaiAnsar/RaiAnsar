@@ -70,9 +70,44 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Rai Ansar',
+    url: 'https://raiansar.com',
+    image: 'https://raiansar.com/images/hero-rai.jpg',
+    jobTitle: 'Full-Stack Developer & DevOps Expert',
+    description: 'Full-stack developer and DevOps expert based in Islamabad, Pakistan with 6+ years of experience and 300+ projects delivered.',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Islamabad',
+      addressCountry: 'PK',
+    },
+    sameAs: [
+      'https://github.com/RaiAnsar',
+      'https://www.linkedin.com/in/raiansar/',
+      'https://x.com/raiansar',
+      'https://www.upwork.com/freelancers/iraiansar',
+    ],
+    knowsAbout: [
+      'Full-Stack Development',
+      'DevOps',
+      'React',
+      'Next.js',
+      'WordPress',
+      'Node.js',
+      'TypeScript',
+      'Cloud Infrastructure',
+    ],
+  };
+
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`} style={{ fontFamily: 'var(--font-geist-sans), system-ui, -apple-system, sans-serif' }}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
       </body>
     </html>
