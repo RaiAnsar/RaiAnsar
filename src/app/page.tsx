@@ -26,7 +26,7 @@ const Skills = dynamic(() => import('@/components/sections/Skills').then(mod => 
 });
 
 const CodeMarquee = dynamic(() => import('@/components/sections/CodeMarquee').then(mod => ({ default: mod.CodeMarquee })), {
-  loading: () => <div className="min-h-[300px]" />,
+  loading: () => <div className="min-h-[200px]" />,
 });
 
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials').then(mod => ({ default: mod.Testimonials })), {

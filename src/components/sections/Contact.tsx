@@ -98,7 +98,7 @@ export function Contact() {
   return (
     <section
       ref={containerRef}
-      className="relative py-32 md:py-40 bg-[#0a0a0a] overflow-hidden"
+      className="relative py-20 md:py-28 bg-[#0a0a0a] overflow-hidden"
       id="contact"
       role="region"
       aria-label="Contact section"

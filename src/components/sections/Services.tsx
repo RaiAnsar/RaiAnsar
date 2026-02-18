@@ -118,9 +118,9 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
     offset: ['start start', 'end start'],
   });
 
-  // Scale down + fade during second half of scroll (when next card is covering this one)
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.8]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
+  // Subtle scale down during second half of scroll (when next card is covering this one)
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.95]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.3]);
 
   return (
     <div

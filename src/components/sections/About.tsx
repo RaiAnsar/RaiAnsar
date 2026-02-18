@@ -4,7 +4,27 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { TextScramble } from '@/components/ui/TextScramble';
 import { Magnetic } from '@/components/ui/Magnetic';
-import { GlowCard } from '@/components/ui/GlowCard';
+
+const highlights = [
+  {
+    number: '01',
+    title: 'Full-Stack Mastery',
+    description:
+      'React, Next.js, Node.js, WordPress — I build across the entire stack, choosing the right tool for each job.',
+  },
+  {
+    number: '02',
+    title: 'DevOps & Infrastructure',
+    description:
+      'Docker, AWS, CI/CD pipelines, server hardening. Your app runs fast, stays secure, and scales on demand.',
+  },
+  {
+    number: '03',
+    title: 'Reliable Delivery',
+    description:
+      'Clear communication, honest timelines, zero ghosting. I treat every project like a partnership, not a transaction.',
+  },
+];
 
 export function About() {
   const containerRef = useRef<HTMLElement>(null);
@@ -13,127 +33,114 @@ export function About() {
   return (
     <section
       ref={containerRef}
-      className="relative py-32 md:py-40 bg-[#0a0a0a] overflow-hidden"
+      className="relative py-28 md:py-36 bg-[#0a0a0a] overflow-hidden"
       id="about"
       role="region"
       aria-label="About section"
     >
-      {/* Solid background */}
-      <div className="absolute inset-0 bg-[#0a0a0a]" />
-
       <div className="container relative z-10">
-        {/* Section label with scramble */}
+        {/* Section label */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="mb-8"
         >
           <span className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase">
             <TextScramble text="// About" delay={0} />
           </span>
         </motion.div>
 
-        {/* Big story heading with staggered reveal */}
-        <div className="max-w-5xl mb-20">
+        {/* Two-column: Big statement + paragraph */}
+        <div className="grid lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-20 mb-20">
           <motion.h2
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.15]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-[1.15]"
           >
-            <span className="block mb-2">
-              <TextScramble text="Every great" delay={100} />
-            </span>
-            <span className="block mb-2">
-              <span className="gradient-text">
-                <TextScramble text="developer" delay={300} />
-              </span>
-            </span>
-            <span className="block mb-2">
-              <TextScramble text="begins with" delay={500} />
-            </span>
-            <span className="block">
-              <span className="gradient-text">
-                <TextScramble text="an even better story." delay={700} />
-              </span>
-            </span>
+            A decade of turning{' '}
+            <span className="gradient-text">complexity</span> into clean,
+            maintainable software.
           </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex items-end"
+          >
+            <p className="text-lg text-[#707070] leading-relaxed">
+              I&apos;ve worked with agencies, startups, and established
+              companies — building everything from landing pages to full SaaS
+              platforms. I write code that other developers can actually
+              maintain, and I ship on time.
+            </p>
+          </motion.div>
         </div>
 
-        {/* Story content with glow cards */}
-        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
-          <Magnetic strength={0.05}>
-            <GlowCard className="p-8 rounded-2xl h-full">
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
+        {/* Highlight cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {highlights.map((item, index) => (
+            <Magnetic key={item.number} strength={0.05}>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-xl md:text-2xl text-[#a0a0a0] leading-relaxed"
+                transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                className="group relative p-8 rounded-2xl border border-white/[0.05] bg-[#111] hover:border-[#ff6b35]/20 transition-all duration-500"
               >
-                I&apos;ve been building software for{' '}
-                <strong className="text-white font-semibold">10+ years</strong>, working with agencies, startups, and established companies.
-                I specialize in turning complex requirements into clean, maintainable solutions.
-              </motion.p>
-            </GlowCard>
-          </Magnetic>
+                {/* Number */}
+                <span className="text-[#ff6b35] text-xs font-mono tracking-widest mb-4 block">
+                  {item.number}
+                </span>
 
-          <Magnetic strength={0.05}>
-            <GlowCard className="p-8 rounded-2xl h-full">
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="text-lg text-[#707070] leading-relaxed mb-6"
-              >
-                I stay current with modern frameworks and best practices, focusing on code that scales and
-                performs well in production.
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="text-lg text-[#707070] leading-relaxed"
-              >
-                Clear communication and reliable delivery matter as much as technical skill. I aim to make
-                every project straightforward for my clients.
-              </motion.p>
-            </GlowCard>
-          </Magnetic>
+                <h3 className="text-white text-lg font-semibold mb-3">
+                  {item.title}
+                </h3>
+
+                <p className="text-[#606060] text-sm leading-relaxed">
+                  {item.description}
+                </p>
+
+                {/* Hover glow */}
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    background:
+                      'radial-gradient(400px circle at 50% 0%, rgba(255,107,53,0.04), transparent 70%)',
+                  }}
+                />
+              </motion.div>
+            </Magnetic>
+          ))}
         </div>
 
-        {/* Animated divider */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="my-20 h-px bg-gradient-to-r from-transparent via-[#ff6b35]/30 to-transparent origin-left"
-        />
-
-        {/* Stats row with magnetic effect */}
+        {/* Stats row */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8"
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-20 pt-10 border-t border-white/[0.06] grid grid-cols-2 md:grid-cols-4 gap-8"
         >
           {[
             { value: '10+', label: 'Years Experience' },
-            { value: '60+', label: 'Projects Delivered' },
-            { value: '< 24h', label: 'Response Time' },
-            { value: '100%', label: 'Client Satisfaction' },
-          ].map((stat, index) => (
-            <Magnetic key={stat.label} strength={0.2}>
+            { value: '60+', label: 'Projects Shipped' },
+            { value: '15+', label: 'Technologies' },
+            { value: '100%', label: 'Satisfaction' },
+          ].map((stat, i) => (
+            <Magnetic key={stat.label} strength={0.15}>
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.9 + i * 0.08 }}
                 className="text-center group cursor-default"
               >
-                <div className="text-4xl md:text-5xl font-black text-white mb-2 group-hover:text-[#ff6b35] transition-colors duration-300">
+                <div className="text-3xl md:text-4xl font-black text-white mb-1 group-hover:text-[#ff6b35] transition-colors duration-300">
                   {stat.value}
                 </div>
-                <div className="text-sm text-[#505050]">{stat.label}</div>
+                <div className="text-xs text-[#505050] uppercase tracking-wider">
+                  {stat.label}
+                </div>
               </motion.div>
             </Magnetic>
           ))}

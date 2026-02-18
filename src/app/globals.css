@@ -1,3 +1,5 @@
+@layer base, theme, components, utilities;
+
 @import "tailwindcss/theme" layer(theme);
 @import "tailwindcss/utilities" layer(utilities);
 @config "../../tailwind.config.js";
@@ -9,7 +11,7 @@
     box-sizing: border-box;
   }
 
-  /* Reset button/input UA defaults that clash with dark theme */
+  /* Reset UA defaults — layer order ensures Tailwind utilities override these */
   button, input, textarea, select {
     background-color: transparent;
     color: inherit;
