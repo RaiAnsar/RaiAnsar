@@ -1,12 +1,8 @@
 import dynamic from 'next/dynamic';
 import { Header } from '@/components/sections/Header';
 import { Hero } from '@/components/sections/Hero';
-import { DeferredEffects } from '@/components/ui/DeferredEffects';
-import { ScrollProgress } from '@/components/ui/ScrollProgress';
-import { BackToTop } from '@/components/ui/BackToTop';
 import { SkipLink } from '@/components/ui/SkipLink';
-import { LiquidBlob } from '@/components/ui/LiquidBlob';
-import { CustomCursor } from '@/components/ui/CustomCursor';
+import { ClientEffects } from '@/components/ui/ClientEffects';
 
 // Lazy load below-fold components for better LCP
 const About = dynamic(() => import('@/components/sections/About').then(mod => ({ default: mod.About })), {
@@ -51,20 +47,8 @@ export default function Home() {
       {/* Skip to main content link for accessibility */}
       <SkipLink />
 
-      {/* Custom cursor */}
-      <CustomCursor />
-
-      {/* Liquid blob backgrounds */}
-      <LiquidBlob />
-
-      {/* Scroll progress indicator */}
-      <ScrollProgress />
-
-      {/* Back to top button */}
-      <BackToTop />
-
-      {/* Defer non-essential effects until the browser is idle */}
-      <DeferredEffects />
+      {/* All non-critical visual effects — deferred, excluded from initial bundle */}
+      <ClientEffects />
 
       {/* Noise overlay for texture */}
       <div className="noise" aria-hidden="true" />

@@ -1,108 +1,80 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export function LiquidBlob() {
-  const blobRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const [visible, setVisible] = useState(false);
 
-  const springConfig = { damping: 25, stiffness: 150 };
-  const x = useSpring(mouseX, springConfig);
-  const y = useSpring(mouseY, springConfig);
+  const mouseX = useMotionValue(-300);
+  const mouseY = useMotionValue(-300);
+
+  // Two spring configs for the two mouse-following blobs
+  const x1 = useSpring(mouseX, { damping: 25, stiffness: 150 });
+  const y1 = useSpring(mouseY, { damping: 25, stiffness: 150 });
+  const x2 = useSpring(mouseX, { damping: 30, stiffness: 100 });
+  const y2 = useSpring(mouseY, { damping: 30, stiffness: 100 });
 
   useEffect(() => {
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isTouchDevice || prefersReducedMotion) return;
+
+    setVisible(true);
+
     const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      mouseX.set(clientX - 250);
-      mouseY.set(clientY - 250);
+      mouseX.set(e.clientX - 250);
+      mouseY.set(e.clientY - 250);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
+  if (!visible) return null;
+
   return (
     <>
-      {/* Primary blob - follows mouse */}
+      {/* Primary blob — follows mouse, CSS handles pulsing (GPU-only) */}
       <motion.div
-        ref={blobRef}
-        className="fixed w-[500px] h-[500px] pointer-events-none z-0 opacity-40"
+        className="fixed w-[500px] h-[500px] pointer-events-none z-0 opacity-40 blob-pulse-primary"
         style={{
-          x,
-          y,
+          x: x1,
+          y: y1,
           background: 'radial-gradient(circle, rgba(255,107,53,0.4) 0%, rgba(255,133,85,0.2) 40%, transparent 70%)',
           filter: 'blur(60px)',
         }}
-        animate={{
-          scale: [1, 1.2, 1],
-          rotate: [0, 90, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
       />
-      
-      {/* Secondary blob - offset */}
+
+      {/* Secondary blob — offset spring, CSS scale animation */}
       <motion.div
-        className="fixed w-[400px] h-[400px] pointer-events-none z-0 opacity-30"
+        className="fixed w-[400px] h-[400px] pointer-events-none z-0 opacity-30 blob-pulse-secondary"
         style={{
-          x: useSpring(mouseX, { damping: 30, stiffness: 100 }),
-          y: useSpring(mouseY, { damping: 30, stiffness: 100 }),
+          x: x2,
+          y: y2,
           background: 'radial-gradient(circle, rgba(255,133,85,0.3) 0%, transparent 60%)',
           filter: 'blur(80px)',
         }}
-        animate={{
-          scale: [1.2, 1, 1.2],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
       />
 
-      {/* Static accent blobs */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <motion.div
-          className="absolute w-[600px] h-[600px] rounded-full"
+      {/* Static accent blobs — pure CSS, zero JS cost */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+        <div
+          className="absolute w-[600px] h-[600px] rounded-full blob-accent-left"
           style={{
             background: 'radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 60%)',
             left: '-10%',
             top: '20%',
             filter: 'blur(80px)',
           }}
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
         />
-        <motion.div
-          className="absolute w-[500px] h-[500px] rounded-full"
+        <div
+          className="absolute w-[500px] h-[500px] rounded-full blob-accent-right"
           style={{
             background: 'radial-gradient(circle, rgba(255,133,85,0.08) 0%, transparent 60%)',
             right: '-5%',
             bottom: '10%',
             filter: 'blur(70px)',
-          }}
-          animate={{
-            x: [0, -80, 0],
-            y: [0, 60, 0],
-            scale: [1, 1.15, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'easeInOut',
           }}
         />
       </div>

@@ -69,10 +69,10 @@ export function Hero() {
               </span>
             </motion.div>
 
-            {/* Name — the hero moment */}
+            {/* Name — the hero moment. No opacity:0 so LCP text is visible in static HTML */}
             <motion.h1
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ y: 50 }}
+              animate={{ y: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               className="font-black tracking-[-0.04em] leading-[0.85] mb-8"
               style={{ fontSize: 'clamp(3rem, 7vw, 7rem)' }}

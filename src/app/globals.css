@@ -278,6 +278,42 @@
   background: radial-gradient(circle, rgba(201,169,98,0.12) 0%, transparent 70%);
 }
 
+/* ── Liquid Blob CSS animations (GPU compositor, zero JS/TBT cost) ── */
+.blob-pulse-primary {
+  animation: blob-pulse-primary 20s linear infinite;
+  will-change: transform;
+}
+.blob-pulse-secondary {
+  animation: blob-pulse-secondary 15s ease-in-out infinite;
+  will-change: transform;
+}
+.blob-accent-left {
+  animation: blob-float-left 25s ease-in-out infinite;
+  will-change: transform;
+}
+.blob-accent-right {
+  animation: blob-float-right 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes blob-pulse-primary {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  33%       { transform: scale(1.2) rotate(45deg); }
+  66%       { transform: scale(0.95) rotate(90deg); }
+}
+@keyframes blob-pulse-secondary {
+  0%, 100% { transform: scale(1.2); }
+  50%      { transform: scale(1); }
+}
+@keyframes blob-float-left {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(100px, -50px, 0) scale(1.1); }
+}
+@keyframes blob-float-right {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-80px, 60px, 0) scale(1.15); }
+}
+
 @keyframes orb-float {
   0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
   25% { transform: translate3d(30px, -20px, 0) scale(1.05); }
