@@ -75,7 +75,7 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               className="font-black tracking-[-0.04em] leading-[0.85] mb-8"
-              style={{ fontSize: 'clamp(3.5rem, 10vw, 8rem)' }}
+              style={{ fontSize: 'clamp(3rem, 7vw, 7rem)' }}
             >
               <span className="text-white block">
                 <TextScramble text="Rai" delay={0} />
