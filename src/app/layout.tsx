@@ -14,6 +14,7 @@ const GeistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
   display: "optional",
+  preload: false, // Only used for code elements below the fold — don't compete with critical path
 });
 
 export const viewport: Viewport = {

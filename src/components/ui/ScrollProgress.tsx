@@ -1,20 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
 
+/**
+ * Scroll progress bar — pure CSS, no framer-motion.
+ * Eliminates framer-motion from mobile-critical code path.
+ */
 export function ScrollProgress() {
-  const [isVisible, setIsVisible] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  const [progress, setProgress] = useState(0);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 100);
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      const total = scrollHeight - clientHeight;
+      setProgress(total > 0 ? scrollTop / total : 0);
+      setVisible(scrollTop > 100);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -22,13 +23,16 @@ export function ScrollProgress() {
   }, []);
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 right-0 h-1 z-[9999] origin-left"
-      initial={{ scaleX: 0 }}
-      style={{ scaleX }}
+    <div
+      className="fixed top-0 left-0 right-0 h-[3px] z-[9999] origin-left"
+      style={{
+        background: 'linear-gradient(to right, #F2D0A4, #9945ff, #ff2d92)',
+        transform: `scaleX(${progress})`,
+        transformOrigin: 'left',
+        opacity: visible ? 1 : 0,
+        transition: 'transform 0.05s linear, opacity 0.3s ease',
+      }}
       aria-hidden="true"
-    >
-      <div className="h-full w-full bg-gradient-to-r from-[#F2D0A4] via-[#9945ff] to-[#ff2d92]" />
-    </motion.div>
+    />
   );
 }
