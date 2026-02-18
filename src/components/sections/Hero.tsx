@@ -95,7 +95,7 @@ export function Hero() {
               I build fast websites, fix broken servers, and turn technical debt
               into clean, scalable systems.{' '}
               <span className="text-[#a0a0a0]">
-                10+ years of shipping code that works.
+                6+ years of shipping code that works.
               </span>
             </motion.p>
 
@@ -151,8 +151,8 @@ export function Hero() {
               aria-label="Statistics"
             >
               {[
-                { value: '10+', label: 'Years' },
-                { value: '60+', label: 'Projects' },
+                { value: '6+', label: 'Years' },
+                { value: '300+', label: 'Projects' },
                 { value: '<24h', label: 'Response' },
               ].map((stat, i) => (
                 <Magnetic key={stat.label} strength={0.15}>
