@@ -12,7 +12,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://raiansar.com"),
   title: "Rai Ansar | Full-Stack Developer & DevOps Expert",
-  description: "DevOps, infrastructure & speed experts. We turn slow, crashing sites into sub-2-second machines that convert. 10+ years of experience in full-stack development.",
+  description: "Full-stack developer & DevOps expert based in Islamabad, Pakistan. I build fast websites, fix broken servers, and turn technical debt into clean, scalable systems. 6+ years, 300+ projects delivered.",
   keywords: [
     "full-stack developer",
     "DevOps engineer",
