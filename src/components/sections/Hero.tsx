@@ -17,8 +17,8 @@ export function Hero() {
 
         const el = contentRef.current;
         if (el) {
-          el.style.transform = `translateY(${progress * 80}px) scale(${1 - progress * 0.03})`;
-          el.style.opacity = String(Math.max(0, 1 - progress * 2.5));
+          el.style.transform = `translateY(${progress * 60}px) scale(${1 - progress * 0.03})`;
+          el.style.opacity = String(Math.max(0, 1 - progress * 1.2));
         }
 
         const photoEl = photoRef.current;
