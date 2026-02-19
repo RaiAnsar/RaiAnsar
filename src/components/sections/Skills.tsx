@@ -63,7 +63,7 @@ export function Skills() {
         </h2>
 
         {/* 2-column layout: description left, progress bars right */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-end">
           {/* Left column - description */}
           <div>
             <h3
@@ -95,7 +95,7 @@ export function Skills() {
           </div>
 
           {/* Right column - progress bars */}
-          <div className="space-y-4 lg:pt-14">
+          <div className="space-y-4">
             {skills.map((skill, index) => (
               <div
                 key={skill.name}
