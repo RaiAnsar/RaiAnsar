@@ -61,116 +61,73 @@ export function Footer() {
   });
 
   return (
-    <footer ref={footerRef} className="relative py-16 bg-[#0a0a0a] border-t border-white/[0.06]" role="contentinfo" aria-label="Footer">
+    <footer ref={footerRef} className="relative py-10 bg-[#0a0a0a] border-t border-white/[0.06]" role="contentinfo" aria-label="Footer">
       <div className="container relative z-10">
-        {/* Main footer content */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand column */}
-          <div className="lg:col-span-2" style={anim(0)}>
+        {/* Main footer — single compact row */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8" style={anim(0)}>
+          {/* Brand */}
+          <div className="flex items-center gap-4">
             <Magnetic strength={0.1}>
-              <a href="#home" className="inline-block mb-6">
-                <span className="text-2xl font-bold tracking-tight text-white">
+              <a href="#home" className="inline-block">
+                <span className="text-xl font-bold tracking-tight text-white">
                   Rai<span className="text-[#ff6b35]">.</span>
                 </span>
               </a>
             </Magnetic>
-            <p className="text-[#505050] leading-relaxed max-w-md mb-6">
-              Full-stack developer specializing in high-performance web apps, WordPress solutions,
-              and scalable infrastructure. 10+ years turning ideas into production-ready products.
-            </p>
-            <Magnetic strength={0.2}>
+            <span className="hidden md:inline text-[#303030]">|</span>
+            <span className="hidden md:inline text-sm text-[#505050]">Full-Stack Developer & DevOps Expert</span>
+          </div>
+
+          {/* Navigation links — horizontal */}
+          <nav className="flex flex-wrap items-center gap-5" style={anim(0.1)} aria-label="Footer navigation">
+            {navLinks.map((link) => (
               <a
-                href="mailto:hello@raiansar.com"
-                className="inline-flex items-center gap-2 text-[#ff6b35] hover:text-[#ff8555] hover:translate-x-1 transition-all duration-300"
+                key={link.href}
+                href={link.href}
+                className="text-sm text-[#606060] hover:text-[#ff6b35] transition-colors"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <rect x="2" y="4" width="20" height="16" rx="2" />
-                  <path d="m22 7-10 5L2 7" />
-                </svg>
-                <span className="font-medium">hello@raiansar.com</span>
+                {link.label}
               </a>
-            </Magnetic>
-          </div>
+            ))}
+          </nav>
 
-          {/* Navigation column */}
-          <div style={anim(0.1)}>
-            <h4 className="text-xs font-semibold tracking-widest uppercase text-[#404040] mb-6">
-              Navigation
-            </h4>
-            <ul className="space-y-4">
-              {navLinks.map((link, index) => (
-                <li
-                  key={link.href}
-                  style={anim(0.2 + index * 0.05, 10)}
+          {/* Social + status */}
+          <div className="flex items-center gap-3" style={anim(0.2)}>
+            {socialLinks.map((link) => (
+              <Magnetic key={link.name} strength={0.3}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${link.name} profile`}
+                  className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#161616] border border-white/[0.06] text-[#606060] hover:text-white hover:border-[#ff6b35]/30 transition-all duration-300"
                 >
-                  <Magnetic strength={0.15}>
-                    <a
-                      href={link.href}
-                      className="text-[#707070] hover:text-[#ff6b35] transition-colors inline-flex items-center gap-2 group cursor-pointer"
-                    >
-                      <span className="w-0 h-px bg-[#ff6b35] group-hover:w-4 transition-all duration-300" />
-                      {link.label}
-                    </a>
-                  </Magnetic>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Connect column */}
-          <div style={anim(0.2)}>
-            <h4 className="text-xs font-semibold tracking-widest uppercase text-[#404040] mb-6">
-              Connect
-            </h4>
-            <div className="flex gap-3">
-              {socialLinks.map((link, index) => (
-                <div
-                  key={link.name}
-                  style={anim(0.3 + index * 0.1)}
-                >
-                  <Magnetic strength={0.3}>
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Visit ${link.name} profile`}
-                      className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#161616] border border-white/[0.06] text-[#707070] hover:text-white hover:border-[#ff6b35]/30 hover:-translate-y-0.5 transition-all duration-300"
-                    >
-                      {link.icon}
-                    </a>
-                  </Magnetic>
-                </div>
-              ))}
-            </div>
-
-            {/* Status indicator */}
-            <div
-              className="mt-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#ff6b35]/10 border border-[#ff6b35]/20"
-              style={anim(0.5)}
-            >
+                  {link.icon}
+                </a>
+              </Magnetic>
+            ))}
+            <div className="ml-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#ff6b35]/10 border border-[#ff6b35]/20">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff6b35] opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff6b35]" />
               </span>
-              <span className="text-xs font-medium text-[#ff6b35]">
-                Available for hire
-              </span>
+              <span className="text-xs font-medium text-[#ff6b35]">Available</span>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div
-          className="pt-8 border-t border-white/[0.06]"
-          style={anim(0.4)}
-        >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-[#404040]">
+        <div className="pt-6 border-t border-white/[0.06]" style={anim(0.3)}>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-[#404040]">
               &copy; {currentYear} Rai Ansar. All rights reserved.
             </p>
-            <p className="text-sm text-[#404040]">
-              Crafted with precision & passion
-            </p>
+            <a
+              href="mailto:hello@raiansar.com"
+              className="text-xs text-[#505050] hover:text-[#ff6b35] transition-colors"
+            >
+              hello@raiansar.com
+            </a>
           </div>
         </div>
       </div>

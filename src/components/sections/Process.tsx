@@ -73,7 +73,7 @@ export function Process() {
   return (
     <section
       ref={containerRef}
-      className="relative py-32 md:py-48 overflow-hidden"
+      className="relative py-20 md:py-28 overflow-hidden"
       id="process"
       role="region"
       aria-label="Process section"
@@ -103,7 +103,7 @@ export function Process() {
 
       <div className="container relative z-10">
         {/* Section header */}
-        <div className="mb-24 md:mb-32" style={anim(0, 60)}>
+        <div className="mb-16 md:mb-20" style={anim(0, 60)}>
           <span
             className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase"
             style={anim(0.2, 20)}
@@ -157,7 +157,7 @@ export function Process() {
           </div>
 
           {/* Process steps */}
-          <div className="relative space-y-24 md:space-y-40">
+          <div className="relative space-y-16 md:space-y-24">
             {steps.map((step, index) => {
               const isLeft = index % 2 === 0;
 
@@ -342,9 +342,9 @@ export function Process() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-24 md:mt-32 text-center" style={anim(1, 50)}>
+        <div className="mt-16 md:mt-20 text-center" style={anim(1, 50)}>
           <div
-            className="relative inline-block px-10 md:px-16 py-10 md:py-12 rounded-3xl overflow-hidden hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6),0_0_120px_-40px_rgba(255,107,53,0.3)] transition-shadow duration-500"
+            className="relative inline-block px-8 md:px-12 py-8 md:py-10 rounded-3xl overflow-hidden hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6),0_0_120px_-40px_rgba(255,107,53,0.3)] transition-shadow duration-500"
             style={{
               background: 'linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
               border: '1px solid rgba(255, 107, 53, 0.15)',

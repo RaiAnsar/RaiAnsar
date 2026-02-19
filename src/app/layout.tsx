@@ -2,10 +2,10 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const GeistSans = localFont({
-  src: "../../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const GeneralSans = localFont({
+  src: "../../public/fonts/GeneralSans-Variable.woff2",
+  variable: "--font-general-sans",
+  weight: "200 700",
   display: "optional",
 });
 
@@ -117,7 +117,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`} style={{ fontFamily: 'var(--font-geist-sans), system-ui, -apple-system, sans-serif' }}>
+      <body className={`${GeneralSans.variable} ${GeistMono.variable} antialiased`} style={{ fontFamily: 'var(--font-general-sans), system-ui, -apple-system, sans-serif' }}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -25,7 +25,7 @@ export function Skills() {
   return (
     <section
       ref={containerRef}
-      className="relative py-32 md:py-40 bg-[#0a0a0a] overflow-hidden"
+      className="relative py-20 md:py-28 bg-[#0a0a0a] overflow-hidden"
       id="skills"
       role="region"
       aria-label="Skills section"
@@ -48,7 +48,7 @@ export function Skills() {
         </div>
 
         {/* Main heading */}
-        <div className="max-w-5xl mb-20">
+        <div className="max-w-5xl mb-12">
           <h2
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.15]"
             style={anim(0.2)}
@@ -65,7 +65,7 @@ export function Skills() {
         </div>
 
         {/* 2-column layout: description left, progress bars right */}
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* Left column - description */}
           <div>
             <h3
@@ -97,7 +97,7 @@ export function Skills() {
           </div>
 
           {/* Right column - progress bars */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             {skills.map((skill, index) => (
               <div
                 key={skill.name}
