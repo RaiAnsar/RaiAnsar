@@ -40,32 +40,32 @@ export function Skills() {
       />
 
       <div className="container relative z-10">
-        {/* 2-column layout: heading + description left, progress bars right */}
+        {/* Section label */}
+        <div className="mb-4" style={anim(0)}>
+          <span className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase">
+            <TextScramble text="// Skills" delay={0} />
+          </span>
+        </div>
+
+        {/* Main heading */}
+        <h2
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.15] mb-10"
+          style={anim(0.2)}
+        >
+          <span className="block mb-2">
+            <TextScramble text="My" delay={100} />
+          </span>
+          <span className="block">
+            <span className="gradient-text">
+              <TextScramble text="Skills" delay={300} />
+            </span>
+          </span>
+        </h2>
+
+        {/* 2-column layout: description left, progress bars right */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left column - heading + description */}
+          {/* Left column - description */}
           <div>
-            {/* Section label */}
-            <div className="mb-6" style={anim(0)}>
-              <span className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase">
-                <TextScramble text="// Skills" delay={0} />
-              </span>
-            </div>
-
-            {/* Main heading */}
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.15] mb-8"
-              style={anim(0.2)}
-            >
-              <span className="block mb-2">
-                <TextScramble text="My" delay={100} />
-              </span>
-              <span className="block">
-                <span className="gradient-text">
-                  <TextScramble text="Skills" delay={300} />
-                </span>
-              </span>
-            </h2>
-
             <h3
               className="text-xl md:text-2xl text-white font-semibold leading-relaxed mb-8"
               style={anim(0.3)}
