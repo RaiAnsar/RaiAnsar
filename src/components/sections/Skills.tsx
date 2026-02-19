@@ -95,7 +95,7 @@ export function Skills() {
           </div>
 
           {/* Right column - progress bars */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:pt-14">
             {skills.map((skill, index) => (
               <div
                 key={skill.name}
