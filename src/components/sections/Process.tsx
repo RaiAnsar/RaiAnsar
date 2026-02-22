@@ -77,14 +77,14 @@ export function Process() {
       id="process"
       role="region"
       aria-label="Process section"
-      style={{ background: '#0a0a0a' }}
+      style={{ background: '#030712' }}
     >
       {/* Animated ambient background — CSS float animations */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div
           className="absolute w-[500px] h-[500px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(56, 189, 248, 0.06) 0%, transparent 60%)',
             left: '5%',
             top: '20%',
             animation: 'floatA 20s ease-in-out infinite',
@@ -93,7 +93,7 @@ export function Process() {
         <div
           className="absolute w-[400px] h-[400px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(255, 133, 85, 0.05) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(125, 211, 252, 0.05) 0%, transparent 60%)',
             right: '10%',
             top: '50%',
             animation: 'floatB 25s ease-in-out infinite',
@@ -105,12 +105,12 @@ export function Process() {
         {/* Section header */}
         <div className="mb-16 md:mb-20" style={anim(0, 60)}>
           <span
-            className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase"
+            className="text-[#38bdf8] text-sm font-semibold tracking-[0.2em] uppercase"
             style={anim(0.2, 20)}
           >
             <TextScramble text="// Process" delay={0} />
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mt-6 mb-4">
             From vision to{' '}
             <span className="gradient-text">reality.</span>
           </h2>
@@ -131,11 +131,11 @@ export function Process() {
               className="absolute top-0 left-0 right-0 rounded-full"
               style={{
                 height: isInView ? '100%' : '0%',
-                background: '#ff6b35',
+                background: '#38bdf8',
                 boxShadow: `
-                  0 0 20px rgba(255, 107, 53, 0.8),
-                  0 0 40px rgba(255, 107, 53, 0.5),
-                  0 0 60px rgba(255, 107, 53, 0.3)
+                  0 0 20px rgba(56, 189, 248, 0.8),
+                  0 0 40px rgba(56, 189, 248, 0.5),
+                  0 0 60px rgba(56, 189, 248, 0.3)
                 `,
                 transition: 'height 1.8s 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
               }}
@@ -149,8 +149,8 @@ export function Process() {
               className="absolute top-0 left-0 right-0 rounded-full"
               style={{
                 height: isInView ? '100%' : '0%',
-                background: '#ff6b35',
-                boxShadow: '0 0 20px rgba(255, 107, 53, 0.8)',
+                background: '#38bdf8',
+                boxShadow: '0 0 20px rgba(56, 189, 248, 0.8)',
                 transition: 'height 1.8s 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
               }}
             />
@@ -182,11 +182,11 @@ export function Process() {
                       }`}
                       style={{
                         background: isInView
-                          ? 'linear-gradient(135deg, rgba(255, 107, 53, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)'
+                          ? 'linear-gradient(135deg, rgba(56, 189, 248, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)'
                           : 'linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%)',
-                        border: `1px solid ${isInView ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.05)'}`,
+                        border: `1px solid ${isInView ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255, 255, 255, 0.05)'}`,
                         boxShadow: isInView
-                          ? '0 20px 60px -20px rgba(255, 107, 53, 0.2), 0 0 80px -40px rgba(255, 107, 53, 0.3)'
+                          ? '0 20px 60px -20px rgba(56, 189, 248, 0.2), 0 0 80px -40px rgba(56, 189, 248, 0.3)'
                           : '0 10px 40px -20px rgba(0, 0, 0, 0.5)',
                         transition: 'background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease',
                       }}
@@ -195,7 +195,7 @@ export function Process() {
                       <div
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                         style={{
-                          background: `radial-gradient(ellipse at ${isLeft ? '70%' : '30%'} 0%, rgba(255, 107, 53, 0.1) 0%, transparent 50%)`,
+                          background: `radial-gradient(ellipse at ${isLeft ? '70%' : '30%'} 0%, rgba(56, 189, 248, 0.1) 0%, transparent 50%)`,
                         }}
                       />
 
@@ -203,7 +203,7 @@ export function Process() {
                       <span
                         className={`absolute -top-2 ${isLeft ? '-right-2 md:-right-4' : '-left-2 md:-left-4'} text-[5rem] md:text-[8rem] font-black leading-none pointer-events-none select-none`}
                         style={{
-                          WebkitTextStroke: `1px ${isInView ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.05)'}`,
+                          WebkitTextStroke: `1px ${isInView ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255, 255, 255, 0.05)'}`,
                           color: 'transparent',
                           transition: 'all 0.5s ease',
                         }}
@@ -219,9 +219,9 @@ export function Process() {
                           <span
                             className="px-3 py-1 text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase rounded-full transition-all duration-500"
                             style={{
-                              color: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.4)',
-                              background: isInView ? 'rgba(255, 107, 53, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                              border: `1px solid ${isInView ? 'rgba(255, 107, 53, 0.3)' : 'rgba(255, 255, 255, 0.1)'}`,
+                              color: isInView ? '#38bdf8' : 'rgba(255, 255, 255, 0.4)',
+                              background: isInView ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                              border: `1px solid ${isInView ? 'rgba(56, 189, 248, 0.3)' : 'rgba(255, 255, 255, 0.1)'}`,
                             }}
                           >
                             Phase {step.number}
@@ -230,7 +230,7 @@ export function Process() {
 
                         {/* Title */}
                         <h3
-                          className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 transition-colors duration-500"
+                          className="text-2xl md:text-3xl lg:text-4xl font-medium mb-2 transition-colors duration-500"
                           style={{ color: isInView ? 'white' : 'rgba(255, 255, 255, 0.6)' }}
                         >
                           {step.title}
@@ -239,7 +239,7 @@ export function Process() {
                         {/* Subtitle */}
                         <p
                           className="text-base md:text-lg mb-4 transition-colors duration-500"
-                          style={{ color: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)' }}
+                          style={{ color: isInView ? '#38bdf8' : 'rgba(255, 255, 255, 0.3)' }}
                         >
                           {step.subtitle}
                         </p>
@@ -259,7 +259,7 @@ export function Process() {
                               key={detail}
                               className="flex items-center gap-1.5 text-xs text-white/50 px-2 py-1 rounded-md transition-colors hover:text-white/70"
                               style={{
-                                background: isInView ? 'rgba(255, 107, 53, 0.05)' : 'rgba(255, 255, 255, 0.03)',
+                                background: isInView ? 'rgba(56, 189, 248, 0.05)' : 'rgba(255, 255, 255, 0.03)',
                                 opacity: isInView ? 1 : 0,
                                 transform: isInView ? 'none' : 'translateY(10px)',
                                 transition: `opacity 0.5s ${0.5 + index * 0.1 + i * 0.05}s ease, transform 0.5s ${0.5 + index * 0.1 + i * 0.05}s ease`,
@@ -269,8 +269,8 @@ export function Process() {
                               <span
                                 className="w-1 h-1 rounded-full"
                                 style={{
-                                  background: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)',
-                                  boxShadow: isInView ? '0 0 4px #ff6b35' : 'none',
+                                  background: isInView ? '#38bdf8' : 'rgba(255, 255, 255, 0.3)',
+                                  boxShadow: isInView ? '0 0 4px #38bdf8' : 'none',
                                 }}
                                 aria-hidden="true"
                               />
@@ -291,7 +291,7 @@ export function Process() {
                     <div
                       className="absolute inset-0 md:-inset-2 rounded-full transition-all duration-500"
                       style={{
-                        background: isInView ? 'radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%)' : 'transparent',
+                        background: isInView ? 'radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, transparent 70%)' : 'transparent',
                         opacity: isInView ? 1 : 0,
                       }}
                     />
@@ -300,7 +300,7 @@ export function Process() {
                       <div
                         className="absolute inset-0 md:-inset-1 rounded-full"
                         style={{
-                          border: '2px solid #ff6b35',
+                          border: '2px solid #38bdf8',
                           animation: 'processPulse 2s ease-in-out infinite',
                         }}
                       />
@@ -310,23 +310,23 @@ export function Process() {
                       className="relative w-8 h-8 md:w-14 md:h-14 rounded-full flex items-center justify-center z-10 transition-all duration-500"
                       style={{
                         background: isInView
-                          ? 'linear-gradient(135deg, rgba(255, 107, 53, 0.25) 0%, rgba(255, 107, 53, 0.08) 100%)'
+                          ? 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(56, 189, 248, 0.08) 100%)'
                           : 'rgba(20, 20, 20, 1)',
-                        border: `3px solid ${isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.1)'}`,
+                        border: `3px solid ${isInView ? '#38bdf8' : 'rgba(255, 255, 255, 0.1)'}`,
                         boxShadow: isInView
-                          ? '0 0 30px rgba(255, 107, 53, 0.5), 0 0 60px rgba(255, 107, 53, 0.3), inset 0 0 20px rgba(255, 107, 53, 0.1)'
+                          ? '0 0 30px rgba(56, 189, 248, 0.5), 0 0 60px rgba(56, 189, 248, 0.3), inset 0 0 20px rgba(56, 189, 248, 0.1)'
                           : 'none',
                       }}
                     >
                       <span
                         className="hidden md:block transition-colors duration-300"
-                        style={{ color: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)' }}
+                        style={{ color: isInView ? '#38bdf8' : 'rgba(255, 255, 255, 0.3)' }}
                       >
                         {icons[index]}
                       </span>
                       <span
                         className="md:hidden text-xs font-bold"
-                        style={{ color: isInView ? '#ff6b35' : 'rgba(255, 255, 255, 0.3)' }}
+                        style={{ color: isInView ? '#38bdf8' : 'rgba(255, 255, 255, 0.3)' }}
                       >
                         {step.number}
                       </span>
@@ -344,29 +344,29 @@ export function Process() {
         {/* Bottom CTA */}
         <div className="mt-16 md:mt-20 text-center" style={anim(1, 50)}>
           <div
-            className="relative inline-block px-8 md:px-12 py-8 md:py-10 rounded-3xl overflow-hidden hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6),0_0_120px_-40px_rgba(255,107,53,0.3)] transition-shadow duration-500"
+            className="relative inline-block px-8 md:px-12 py-8 md:py-10 rounded-3xl overflow-hidden hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6),0_0_120px_-40px_rgba(56,189,248,0.3)] transition-shadow duration-500"
             style={{
-              background: 'linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
-              border: '1px solid rgba(255, 107, 53, 0.15)',
-              boxShadow: '0 30px 60px -20px rgba(0, 0, 0, 0.5), 0 0 100px -50px rgba(255, 107, 53, 0.2)',
+              background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
+              border: '1px solid rgba(56, 189, 248, 0.15)',
+              boxShadow: '0 30px 60px -20px rgba(0, 0, 0, 0.5), 0 0 100px -50px rgba(56, 189, 248, 0.2)',
             }}
           >
             <div className="absolute top-0 left-0 w-20 h-20 pointer-events-none" aria-hidden="true">
-              <div className="absolute top-4 left-4 w-12 h-px bg-gradient-to-r from-[#ff6b35] to-transparent" />
-              <div className="absolute top-4 left-4 w-px h-12 bg-gradient-to-b from-[#ff6b35] to-transparent" />
+              <div className="absolute top-4 left-4 w-12 h-px bg-gradient-to-r from-[#38bdf8] to-transparent" />
+              <div className="absolute top-4 left-4 w-px h-12 bg-gradient-to-b from-[#38bdf8] to-transparent" />
             </div>
             <div className="absolute bottom-0 right-0 w-20 h-20 pointer-events-none" aria-hidden="true">
-              <div className="absolute bottom-4 right-4 w-12 h-px bg-gradient-to-l from-[#ff6b35] to-transparent" />
-              <div className="absolute bottom-4 right-4 w-px h-12 bg-gradient-to-t from-[#ff6b35] to-transparent" />
+              <div className="absolute bottom-4 right-4 w-12 h-px bg-gradient-to-l from-[#38bdf8] to-transparent" />
+              <div className="absolute bottom-4 right-4 w-px h-12 bg-gradient-to-t from-[#38bdf8] to-transparent" />
             </div>
             <div
               className="absolute inset-0 pointer-events-none opacity-40"
               style={{
-                background: 'radial-gradient(ellipse at 50% 0%, rgba(255, 107, 53, 0.15) 0%, transparent 60%)',
+                background: 'radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 60%)',
               }}
             />
             <div className="relative z-10">
-              <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+              <p className="text-2xl md:text-3xl lg:text-4xl font-medium text-white mb-4">
                 Ready to start your project?
               </p>
               <p className="text-sm md:text-base text-white/50 mb-8 max-w-md mx-auto">
@@ -374,13 +374,13 @@ export function Process() {
               </p>
               <a
                 href="#contact"
-                className="group relative inline-flex items-center gap-3 px-8 py-4 text-sm md:text-base font-bold rounded-full overflow-hidden hover:scale-105 active:scale-[0.98] transition-transform duration-300"
+                className="group relative inline-flex items-center gap-3 px-8 py-4 text-sm md:text-base font-semibold rounded-full overflow-hidden hover:scale-105 active:scale-[0.98] transition-transform duration-300"
                 style={{
-                  background: '#ff6b35',
-                  boxShadow: '0 0 30px rgba(255, 107, 53, 0.5), 0 0 60px rgba(255, 107, 53, 0.3)',
+                  background: '#38bdf8',
+                  boxShadow: '0 0 30px rgba(56, 189, 248, 0.5), 0 0 60px rgba(56, 189, 248, 0.3)',
                 }}
               >
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, #ff6b35 0%, #ff8555 100%)' }} />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, #38bdf8 0%, #7dd3fc 100%)' }} />
                 <span className="relative z-10 text-white">Start a Conversation</span>
                 <svg
                   className="relative z-10 transition-transform group-hover:translate-x-1"

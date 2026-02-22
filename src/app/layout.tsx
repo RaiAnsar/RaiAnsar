@@ -1,26 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
+import { Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const GeneralSans = localFont({
-  src: "../../public/fonts/GeneralSans-Variable.woff2",
-  variable: "--font-general-sans",
-  weight: "200 700",
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
   display: "optional",
 });
 
-const GeistMono = localFont({
-  src: "../../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "optional",
-  preload: false, // Only used for code elements below the fold — don't compete with critical path
+  preload: false,
 });
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0a0a0a",
+  themeColor: "#030712",
 };
 
 export const metadata: Metadata = {
@@ -117,7 +116,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${GeneralSans.variable} ${GeistMono.variable} antialiased`} style={{ fontFamily: 'var(--font-general-sans), system-ui, -apple-system, sans-serif' }}>
+      <body className={`${inter.variable} ${ibmPlexMono.variable} antialiased`} style={{ fontFamily: 'var(--font-inter), system-ui, -apple-system, sans-serif' }}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

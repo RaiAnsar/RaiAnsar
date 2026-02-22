@@ -21,7 +21,7 @@ export function BackToTop() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-[#030303] border border-white/10 flex items-center justify-center text-white/60 hover:text-[#F2D0A4] hover:border-[#F2D0A4]/30 hover:shadow-[0_0_20px_rgba(0,255,240,0.2)] transition-all duration-300"
+      className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-[#030712] border border-white/10 flex items-center justify-center text-white/60 hover:text-[#38bdf8] hover:border-[#38bdf8]/30 hover:shadow-[0_0_20px_rgba(56,189,248,0.2)] transition-all duration-300"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'scale(1) translateY(0)' : 'scale(0.8) translateY(20px)',

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useInView } from '@/hooks/useInView';
 import { TextScramble } from '@/components/ui/TextScramble';
 import { faqData, faqCategories, type FAQItem } from '@/data/faq';
@@ -35,9 +35,9 @@ function AccordionItem({
         <span
           className="text-[11px] font-mono tabular-nums w-7 h-7 rounded-md flex items-center justify-center shrink-0 transition-all duration-300 border"
           style={{
-            color: isOpen ? '#ff6b35' : '#505050',
-            borderColor: isOpen ? 'rgba(255,107,53,0.3)' : 'rgba(255,255,255,0.06)',
-            background: isOpen ? 'rgba(255,107,53,0.08)' : 'transparent',
+            color: isOpen ? '#38bdf8' : '#374151',
+            borderColor: isOpen ? 'rgba(56,189,248,0.3)' : 'rgba(255,255,255,0.06)',
+            background: isOpen ? 'rgba(56,189,248,0.08)' : 'transparent',
           }}
         >
           {String(index + 1).padStart(2, '0')}
@@ -46,7 +46,7 @@ function AccordionItem({
         {/* Question */}
         <span
           className="flex-1 text-[15px] md:text-[17px] font-medium leading-snug transition-colors duration-300"
-          style={{ color: isOpen ? '#ffffff' : '#a0a0a0' }}
+          style={{ color: isOpen ? '#ffffff' : '#9ca3af' }}
         >
           {item.question}
         </span>
@@ -55,8 +55,8 @@ function AccordionItem({
         <span
           className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 border"
           style={{
-            borderColor: isOpen ? 'rgba(255,107,53,0.3)' : 'rgba(255,255,255,0.06)',
-            background: isOpen ? 'rgba(255,107,53,0.1)' : 'rgba(255,255,255,0.02)',
+            borderColor: isOpen ? 'rgba(56,189,248,0.3)' : 'rgba(255,255,255,0.06)',
+            background: isOpen ? 'rgba(56,189,248,0.1)' : 'rgba(255,255,255,0.02)',
           }}
         >
           <svg
@@ -67,7 +67,7 @@ function AccordionItem({
             strokeLinecap="round"
             className="w-4 h-4 transition-all duration-200"
             style={{
-              color: isOpen ? '#ff6b35' : '#505050',
+              color: isOpen ? '#38bdf8' : '#374151',
               transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
             }}
             aria-hidden="true"
@@ -89,7 +89,7 @@ function AccordionItem({
       >
         <div style={{ overflow: 'hidden' }}>
           <div className="pl-8 sm:pl-12 pb-6 pr-4 sm:pr-12">
-            <p className="text-[#606060] text-sm md:text-[15px] leading-[1.85]">
+            <p className="text-[#6b7280] text-sm md:text-[15px] leading-[1.85]">
               {item.answer}
             </p>
           </div>
@@ -101,7 +101,7 @@ function AccordionItem({
         className="h-px transition-colors duration-300"
         style={{
           background: isOpen
-            ? 'rgba(255,107,53,0.15)'
+            ? 'rgba(56,189,248,0.15)'
             : 'rgba(255,255,255,0.05)',
         }}
       />
@@ -143,13 +143,13 @@ export function FAQ() {
       id="faq"
       role="region"
       aria-label="Frequently asked questions"
-      style={{ background: '#0a0a0a' }}
+      style={{ background: '#030712' }}
     >
       {/* Subtle background accent */}
       <div
         className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-[0.03] pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, #ff6b35 0%, transparent 70%)',
+          background: 'radial-gradient(circle, #38bdf8 0%, transparent 70%)',
         }}
       />
 
@@ -158,13 +158,13 @@ export function FAQ() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12">
           <div>
             <div className="mb-6" style={anim(0)}>
-              <span className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase">
+              <span className="text-[#38bdf8] text-sm font-semibold tracking-[0.2em] uppercase">
                 <TextScramble text="// FAQ" delay={0} />
               </span>
             </div>
 
             <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-[1.1]"
+              className="text-3xl sm:text-4xl md:text-5xl font-medium text-white leading-[1.1]"
               style={anim(0.1)}
             >
               Got questions?{' '}
@@ -189,18 +189,18 @@ export function FAQ() {
                   className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border cursor-pointer"
                   style={{
                     background: isActive
-                      ? 'rgba(255,107,53,0.12)'
+                      ? 'rgba(56,189,248,0.12)'
                       : 'rgba(255,255,255,0.02)',
-                    color: isActive ? '#ff6b35' : '#606060',
+                    color: isActive ? '#38bdf8' : '#6b7280',
                     borderColor: isActive
-                      ? 'rgba(255,107,53,0.3)'
+                      ? 'rgba(56,189,248,0.3)'
                       : 'rgba(255,255,255,0.06)',
                   }}
                 >
                   {category.label}
                   <span
                     className="text-[11px] font-mono transition-colors duration-300"
-                    style={{ color: isActive ? '#ff6b35' : '#404040' }}
+                    style={{ color: isActive ? '#38bdf8' : '#374151' }}
                   >
                     {count}
                   </span>
@@ -212,7 +212,7 @@ export function FAQ() {
 
         {/* Accordion area */}
         <div
-          className="rounded-2xl border border-white/[0.06] bg-[#0d0d0d] p-6 md:p-10"
+          className="rounded-2xl border border-white/[0.06] bg-[#030712] p-6 md:p-10"
           style={anim(0.4)}
         >
           {/* Top border accent */}
@@ -245,13 +245,13 @@ export function FAQ() {
           className="mt-8 flex items-center justify-center gap-4"
           style={anim(0.6)}
         >
-          <p className="text-[#404040] text-sm">
+          <p className="text-[#374151] text-sm">
             Can&apos;t find what you&apos;re looking for?
           </p>
           <a
             href="#contact"
             className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 group/link hover:gap-3"
-            style={{ color: '#ff6b35' }}
+            style={{ color: '#38bdf8' }}
           >
             Let&apos;s talk
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 transition-transform group-hover/link:translate-x-1" aria-hidden="true">

@@ -22,8 +22,8 @@ const services: Service[] = [
     description:
       'High-performance landing pages and web apps — clean UI engineering, accessible UX, and polished interactions that convert.',
     pills: ['React / Next.js', 'TypeScript', 'Design Systems', 'Accessibility'],
-    accent: '#ff6b35',
-    accentRgb: '255,107,53',
+    accent: '#38bdf8',
+    accentRgb: '56,189,248',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full" aria-hidden="true">
         <circle cx="12" cy="12" r="10" />
@@ -121,7 +121,7 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
         <div
           className="relative overflow-hidden rounded-2xl h-full group cursor-default"
           style={{
-            background: '#0c0c0c',
+            background: '#030712',
             border: `1px solid rgba(${service.accentRgb},0.2)`,
             boxShadow: `0 30px 80px -20px rgba(0,0,0,0.9), inset 0 1px 0 rgba(${service.accentRgb},0.1)`,
           }}
@@ -156,7 +156,7 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
                 </div>
 
                 {/* Title */}
-                <h3 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-3 tracking-tight">
+                <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3 tracking-tight">
                   {service.title}
                 </h3>
 
@@ -272,18 +272,18 @@ export function Services() {
   });
 
   return (
-    <section ref={containerRef} className="relative bg-[#0a0a0a]" id="services">
+    <section ref={containerRef} className="relative bg-[#030712]" id="services">
       <div className="container relative z-10 pt-24 md:pt-32">
         {/* Section header */}
         <div className="mb-16 md:mb-20">
           <div style={anim(0)}>
-            <span className="text-[#ff6b35] text-xs font-semibold tracking-[0.25em] uppercase">
+            <span className="text-[#38bdf8] text-xs font-semibold tracking-[0.25em] uppercase">
               <TextScramble text="// Services" delay={0} />
             </span>
           </div>
 
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-4"
+            className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mt-6 mb-4"
             style={anim(0.1, 30)}
           >
             <TextScramble text="What I build" delay={150} />

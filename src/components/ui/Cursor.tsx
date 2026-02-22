@@ -96,7 +96,7 @@ export function Cursor() {
           width: isHovering ? 60 : 20,
           height: isHovering ? 60 : 20,
           scale: isClicking ? 0.8 : 1,
-          backgroundColor: isHovering ? '#ff2d92' : '#F2D0A4',
+          backgroundColor: isHovering ? '#818cf8' : '#38bdf8',
         }}
         transition={{ duration: 0.15 }}
       />
@@ -113,7 +113,7 @@ export function Cursor() {
         animate={{
           width: isHovering ? 80 : 40,
           height: isHovering ? 80 : 40,
-          borderColor: isHovering ? 'rgba(255, 45, 146, 0.3)' : 'rgba(0, 255, 240, 0.3)',
+          borderColor: isHovering ? 'rgba(129, 140, 248, 0.3)' : 'rgba(56, 189, 248, 0.3)',
         }}
         transition={{ duration: 0.2 }}
       />

@@ -61,7 +61,7 @@ export function Footer() {
   });
 
   return (
-    <footer ref={footerRef} className="relative py-10 bg-[#0a0a0a] border-t border-white/[0.06]" role="contentinfo" aria-label="Footer">
+    <footer ref={footerRef} className="relative py-10 bg-[#030712] border-t border-white/[0.06]" role="contentinfo" aria-label="Footer">
       <div className="container relative z-10">
         {/* Main footer — single compact row */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8" style={anim(0)}>
@@ -70,12 +70,12 @@ export function Footer() {
             <Magnetic strength={0.1}>
               <a href="#home" className="inline-block">
                 <span className="text-xl font-bold tracking-tight text-white">
-                  Rai<span className="text-[#ff6b35]">.</span>
+                  Rai<span className="text-[#38bdf8]">.</span>
                 </span>
               </a>
             </Magnetic>
-            <span className="hidden md:inline text-[#303030]">|</span>
-            <span className="hidden md:inline text-sm text-[#505050]">Full-Stack Developer & DevOps Expert</span>
+            <span className="hidden md:inline text-[#374151]">|</span>
+            <span className="hidden md:inline text-sm text-[#374151]">Full-Stack Developer & DevOps Expert</span>
           </div>
 
           {/* Navigation links — horizontal */}
@@ -84,7 +84,7 @@ export function Footer() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-[#606060] hover:text-[#ff6b35] transition-colors"
+                className="text-sm text-[#6b7280] hover:text-[#38bdf8] transition-colors"
               >
                 {link.label}
               </a>
@@ -100,18 +100,18 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Visit ${link.name} profile`}
-                  className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#161616] border border-white/[0.06] text-[#606060] hover:text-white hover:border-[#ff6b35]/30 transition-all duration-300"
+                  className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#111827] border border-white/[0.06] text-[#6b7280] hover:text-white hover:border-[#38bdf8]/30 transition-all duration-300"
                 >
                   {link.icon}
                 </a>
               </Magnetic>
             ))}
-            <div className="ml-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#ff6b35]/10 border border-[#ff6b35]/20">
+            <div className="ml-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/20">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff6b35] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff6b35]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#38bdf8] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#38bdf8]" />
               </span>
-              <span className="text-xs font-medium text-[#ff6b35]">Available</span>
+              <span className="text-xs font-medium text-[#38bdf8]">Available</span>
             </div>
           </div>
         </div>
@@ -119,12 +119,12 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 border-t border-white/[0.06]" style={anim(0.3)}>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-xs text-[#404040]">
+            <p className="text-xs text-[#374151]">
               &copy; {currentYear} Rai Ansar. All rights reserved.
             </p>
             <a
               href="mailto:hello@raiansar.com"
-              className="text-xs text-[#505050] hover:text-[#ff6b35] transition-colors"
+              className="text-xs text-[#374151] hover:text-[#38bdf8] transition-colors"
             >
               hello@raiansar.com
             </a>

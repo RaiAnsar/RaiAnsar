@@ -26,7 +26,7 @@ export function ScrollProgress() {
     <div
       className="fixed top-0 left-0 right-0 h-[3px] z-[9999] origin-left"
       style={{
-        background: 'linear-gradient(to right, #F2D0A4, #9945ff, #ff2d92)',
+        background: 'linear-gradient(to right, #38bdf8, #818cf8, #a78bfa)',
         transform: `scaleX(${progress})`,
         transformOrigin: 'left',
         opacity: visible ? 1 : 0,

@@ -23,9 +23,9 @@ function PlatformChip({ platform }: { platform: 'Upwork' | 'Fiverr' }) {
     <span
       className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide uppercase"
       style={{
-        background: isUpwork ? 'rgba(20, 168, 0, 0.12)' : 'rgba(255, 107, 53, 0.12)',
-        color: isUpwork ? '#4caf50' : '#ff8555',
-        border: `1px solid ${isUpwork ? 'rgba(76, 175, 80, 0.2)' : 'rgba(255, 133, 85, 0.2)'}`,
+        background: isUpwork ? 'rgba(20, 168, 0, 0.12)' : 'rgba(56, 189, 248, 0.12)',
+        color: isUpwork ? '#4caf50' : '#7dd3fc',
+        border: `1px solid ${isUpwork ? 'rgba(76, 175, 80, 0.2)' : 'rgba(125, 211, 252, 0.2)'}`,
       }}
     >
       {platform}
@@ -47,9 +47,9 @@ function TestimonialCard({
 
   return (
     <div
-      className="group relative flex flex-col justify-between rounded-2xl p-6 transition-colors duration-300 hover:border-[#ff6b35]/20"
+      className="group relative flex flex-col justify-between rounded-2xl p-6 transition-colors duration-300 hover:border-[#38bdf8]/20"
       style={{
-        background: '#161616',
+        background: '#111827',
         border: '1px solid rgba(255, 255, 255, 0.06)',
         animation: `testimonialCardIn 0.4s ${index * 0.07}s both`,
       }}
@@ -65,7 +65,7 @@ function TestimonialCard({
       </div>
 
       {/* Quote */}
-      <p className="text-[#a0a0a0] text-sm leading-relaxed mb-5 flex-1">
+      <p className="text-[#9ca3af] text-sm leading-relaxed mb-5 flex-1">
         &ldquo;{truncated}&rdquo;
       </p>
 
@@ -74,8 +74,8 @@ function TestimonialCard({
         <div
           className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
           style={{
-            background: 'linear-gradient(135deg, rgba(255,107,53,0.25), rgba(255,133,85,0.12))',
-            border: '1px solid rgba(255,107,53,0.2)',
+            background: 'linear-gradient(135deg, rgba(56,189,248,0.25), rgba(125,211,252,0.12))',
+            border: '1px solid rgba(56,189,248,0.2)',
           }}
         >
           {testimonial.name.charAt(0).toUpperCase()}
@@ -154,7 +154,7 @@ export function Testimonials() {
   return (
     <section
       ref={containerRef}
-      className="relative py-24 md:py-32 bg-[#0a0a0a] overflow-hidden"
+      className="relative py-24 md:py-32 bg-[#030712] overflow-hidden"
       id="testimonials"
       role="region"
       aria-label="Testimonials section"
@@ -162,7 +162,7 @@ export function Testimonials() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,107,53,0.03) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(56,189,248,0.03) 0%, transparent 60%)',
         }}
       />
 
@@ -170,19 +170,19 @@ export function Testimonials() {
         {/* Section header */}
         <div className="text-center mb-14 md:mb-20">
           <div style={anim(0)}>
-            <span className="text-[#ff6b35] text-xs font-semibold tracking-[0.25em] uppercase">
+            <span className="text-[#38bdf8] text-xs font-semibold tracking-[0.25em] uppercase">
               <TextScramble text="// Testimonials" delay={0} />
             </span>
           </div>
 
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-4"
+            className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mt-6 mb-4"
             style={anim(0.1, 30)}
           >
             <TextScramble text="Client voices" delay={150} />
           </h2>
 
-          <p className="text-[#6b6b6b] text-lg tracking-wide max-w-md mx-auto" style={anim(0.2)}>
+          <p className="text-[#6b7280] text-lg tracking-wide max-w-md mx-auto" style={anim(0.2)}>
             Real feedback from clients across platforms.
           </p>
         </div>
@@ -198,10 +198,10 @@ export function Testimonials() {
                 onClick={() => setActiveFilter(filter)}
                 className="px-5 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 cursor-pointer"
                 style={{
-                  background: isActive ? '#ff6b35' : 'rgba(255, 255, 255, 0.04)',
-                  color: isActive ? '#ffffff' : '#a0a0a0',
-                  border: `1px solid ${isActive ? '#ff6b35' : 'rgba(255, 255, 255, 0.08)'}`,
-                  boxShadow: isActive ? '0 4px 20px rgba(255,107,53,0.25)' : 'none',
+                  background: isActive ? '#38bdf8' : 'rgba(255, 255, 255, 0.04)',
+                  color: isActive ? '#ffffff' : '#9ca3af',
+                  border: `1px solid ${isActive ? '#38bdf8' : 'rgba(255, 255, 255, 0.08)'}`,
+                  boxShadow: isActive ? '0 4px 20px rgba(56,189,248,0.25)' : 'none',
                 }}
               >
                 {filter}
@@ -238,11 +238,11 @@ export function Testimonials() {
             <button
               type="button"
               onClick={goPrev}
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:border-[#ff6b35]/40 cursor-pointer"
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:border-[#38bdf8]/40 cursor-pointer"
               style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.08)' }}
               aria-label="Previous page"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="#a0a0a0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
             </button>
@@ -264,8 +264,8 @@ export function Testimonials() {
                       style={{
                         width: isActiveDot ? 24 : 8,
                         height: 8,
-                        background: isActiveDot ? '#ff6b35' : 'rgba(255, 255, 255, 0.15)',
-                        boxShadow: isActiveDot ? '0 0 10px rgba(255,107,53,0.4)' : 'none',
+                        background: isActiveDot ? '#38bdf8' : 'rgba(255, 255, 255, 0.15)',
+                        boxShadow: isActiveDot ? '0 0 10px rgba(56,189,248,0.4)' : 'none',
                       }}
                     />
                   </button>
@@ -276,11 +276,11 @@ export function Testimonials() {
             <button
               type="button"
               onClick={goNext}
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:border-[#ff6b35]/40 cursor-pointer"
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:border-[#38bdf8]/40 cursor-pointer"
               style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.08)' }}
               aria-label="Next page"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="#a0a0a0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </button>
@@ -289,7 +289,7 @@ export function Testimonials() {
 
         {/* Divider */}
         <div
-          className="my-16 md:my-20 h-px bg-gradient-to-r from-transparent via-[#ff6b35]/20 to-transparent"
+          className="my-16 md:my-20 h-px bg-gradient-to-r from-transparent via-[#38bdf8]/20 to-transparent"
           style={{
             transformOrigin: 'left',
             transform: isInView ? 'scaleX(1)' : 'scaleX(0)',
@@ -308,10 +308,10 @@ export function Testimonials() {
               className="text-center group cursor-default"
               style={anim(1 + index * 0.1, 20)}
             >
-              <div className="text-3xl md:text-4xl font-black text-white mb-2 group-hover:text-[#ff6b35] transition-colors duration-300">
+              <div className="text-3xl md:text-4xl font-black text-white mb-2 group-hover:text-[#38bdf8] transition-colors duration-300">
                 {stat.value}
               </div>
-              <div className="text-sm text-[#6b6b6b]">{stat.label}</div>
+              <div className="text-sm text-[#6b7280]">{stat.label}</div>
             </div>
           ))}
         </div>

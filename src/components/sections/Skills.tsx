@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from '@/hooks/useInView';
 import { TextScramble } from '@/components/ui/TextScramble';
 import { skills, skillsDescription } from '@/data/skills';
@@ -25,31 +25,31 @@ export function Skills() {
   return (
     <section
       ref={containerRef}
-      className="relative py-20 md:py-28 bg-[#0a0a0a] overflow-hidden"
+      className="relative py-20 md:py-28 bg-[#030712] overflow-hidden"
       id="skills"
       role="region"
       aria-label="Skills section"
     >
       {/* Subtle background accent */}
-      <div className="absolute inset-0 bg-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-[#030712]" />
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.03] pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, #ff6b35 0%, transparent 70%)',
+          background: 'radial-gradient(circle, #38bdf8 0%, transparent 70%)',
         }}
       />
 
       <div className="container relative z-10">
         {/* Section label */}
         <div className="mb-4" style={anim(0)}>
-          <span className="text-[#ff6b35] text-sm font-semibold tracking-[0.2em] uppercase">
+          <span className="text-[#38bdf8] text-sm font-semibold tracking-[0.2em] uppercase">
             <TextScramble text="// Skills" delay={0} />
           </span>
         </div>
 
         {/* Main heading */}
         <h2
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.15] mb-10"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-white leading-[1.15] mb-10"
           style={anim(0.2)}
         >
           <span className="block mb-2">
@@ -76,7 +76,7 @@ export function Skills() {
             {skillsDescription.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className="text-[#6b6b6b] text-base md:text-lg leading-relaxed mb-6 last:mb-0"
+                className="text-[#6b7280] text-base md:text-lg leading-relaxed mb-6 last:mb-0"
                 style={anim(0.4 + index * 0.1)}
               >
                 {paragraph}
@@ -85,7 +85,7 @@ export function Skills() {
 
             {/* Divider accent */}
             <div
-              className="mt-10 h-px bg-gradient-to-r from-[#ff6b35]/40 to-transparent"
+              className="mt-10 h-px bg-gradient-to-r from-[#38bdf8]/40 to-transparent"
               style={{
                 transformOrigin: 'left',
                 transform: isInView ? 'scaleX(1)' : 'scaleX(0)',
@@ -107,7 +107,7 @@ export function Skills() {
                     {skill.name}
                   </span>
                   <span
-                    className="text-[#a0a0a0] text-xs font-mono tabular-nums"
+                    className="text-[#9ca3af] text-xs font-mono tabular-nums"
                     style={anim(0.6 + index * 0.08)}
                   >
                     {skill.percentage}%
@@ -115,16 +115,16 @@ export function Skills() {
                 </div>
 
                 {/* Progress bar track */}
-                <div className="relative h-2 bg-[#1a1a1a] rounded-full overflow-hidden border border-white/[0.04]">
+                <div className="relative h-2 bg-[#1f2937] rounded-full overflow-hidden border border-white/[0.04]">
                   {/* Animated fill */}
                   <div
                     className="absolute inset-y-0 left-0 rounded-full transition-all duration-1000 ease-out"
                     style={{
                       width: animateBars ? `${skill.percentage}%` : '0%',
-                      background: 'linear-gradient(90deg, #ff6b35, #ff8555)',
+                      background: 'linear-gradient(90deg, #38bdf8, #7dd3fc)',
                       transitionDelay: `${index * 100}ms`,
                       boxShadow: animateBars
-                        ? '0 0 12px rgba(255, 107, 53, 0.3)'
+                        ? '0 0 12px rgba(56, 189, 248, 0.3)'
                         : 'none',
                     }}
                   />

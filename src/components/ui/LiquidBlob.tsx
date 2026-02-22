@@ -41,7 +41,7 @@ export function LiquidBlob() {
         style={{
           x: x1,
           y: y1,
-          background: 'radial-gradient(circle, rgba(255,107,53,0.4) 0%, rgba(255,133,85,0.2) 40%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(56,189,248,0.4) 0%, rgba(125,211,252,0.2) 40%, transparent 70%)',
           filter: 'blur(60px)',
         }}
       />
@@ -52,7 +52,7 @@ export function LiquidBlob() {
         style={{
           x: x2,
           y: y2,
-          background: 'radial-gradient(circle, rgba(255,133,85,0.3) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(125,211,252,0.3) 0%, transparent 60%)',
           filter: 'blur(80px)',
         }}
       />
@@ -62,7 +62,7 @@ export function LiquidBlob() {
         <div
           className="absolute w-[600px] h-[600px] rounded-full blob-accent-left"
           style={{
-            background: 'radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 60%)',
             left: '-10%',
             top: '20%',
             filter: 'blur(80px)',
@@ -71,7 +71,7 @@ export function LiquidBlob() {
         <div
           className="absolute w-[500px] h-[500px] rounded-full blob-accent-right"
           style={{
-            background: 'radial-gradient(circle, rgba(255,133,85,0.08) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(125,211,252,0.08) 0%, transparent 60%)',
             right: '-5%',
             bottom: '10%',
             filter: 'blur(70px)',

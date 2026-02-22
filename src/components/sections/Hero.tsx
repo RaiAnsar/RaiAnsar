@@ -38,7 +38,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center overflow-hidden bg-[#0a0a0a]"
+      className="relative min-h-screen flex items-center overflow-hidden bg-[#030712]"
       aria-label="Hero section"
     >
       {/* Subtle grid texture */}
@@ -46,7 +46,7 @@ export function Hero() {
         className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,107,53,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,53,0.2) 1px, transparent 1px)',
+            'linear-gradient(rgba(56,189,248,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.2) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
         }}
       />
@@ -55,7 +55,7 @@ export function Hero() {
       <div
         className="absolute top-1/4 right-1/4 w-[700px] h-[700px] rounded-full blur-[200px] pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(255,107,53,0.05), transparent 70%)',
+          background: 'radial-gradient(circle, rgba(56,189,248,0.05), transparent 70%)',
         }}
       />
 
@@ -66,15 +66,15 @@ export function Hero() {
           <div className="max-w-2xl">
             {/* Role line */}
             <div className="flex items-center gap-3 mb-10">
-              <span className="h-px w-8 bg-[#ff6b35]" />
-              <span className="text-[#ff6b35] text-xs font-semibold tracking-[0.2em] uppercase">
+              <span className="h-px w-8 bg-[#38bdf8]" />
+              <span className="text-[#38bdf8] text-xs font-semibold tracking-[0.2em] uppercase">
                 Full-Stack Developer &amp; DevOps
               </span>
             </div>
 
             {/* Name */}
             <h1
-              className="font-black tracking-[-0.04em] leading-[0.85] mb-8"
+              className="font-normal tracking-[-0.04em] leading-[0.85] mb-8"
               style={{ fontSize: 'clamp(3rem, 7vw, 7rem)' }}
             >
               <span className="text-white block">Rai</span>
@@ -82,10 +82,10 @@ export function Hero() {
             </h1>
 
             {/* Tagline — LCP element: no motion, no opacity delay */}
-            <p className="text-lg md:text-xl text-[#707070] leading-relaxed max-w-lg mb-10">
+            <p className="text-lg md:text-xl text-[#6b7280] leading-relaxed max-w-lg mb-10">
               I build fast websites, fix broken servers, and turn technical debt
               into clean, scalable systems.{' '}
-              <span className="text-[#a0a0a0]">
+              <span className="text-[#9ca3af]">
                 6+ years of shipping code that works.
               </span>
             </p>
@@ -139,12 +139,12 @@ export function Hero() {
                   role="listitem"
                 >
                   <div
-                    className="text-3xl md:text-4xl font-black text-white group-hover:text-[#ff6b35] transition-colors duration-300"
+                    className="text-3xl md:text-4xl font-black text-white group-hover:text-[#38bdf8] transition-colors duration-300"
                     aria-label={`${stat.value} ${stat.label}`}
                   >
                     {stat.value}
                   </div>
-                  <div className="text-xs text-[#505050] uppercase tracking-widest mt-1">
+                  <div className="text-xs text-[#374151] uppercase tracking-widest mt-1">
                     {stat.label}
                   </div>
                 </div>
@@ -157,8 +157,8 @@ export function Hero() {
             ref={photoRef}
             className="relative hidden lg:flex justify-center"
           >
-            {/* Orange glow behind photo */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-[#ff6b35]/[0.08] rounded-full blur-[120px]" />
+            {/* Sky glow behind photo */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-[#38bdf8]/[0.08] rounded-full blur-[120px]" />
 
             {/* Photo frame */}
             <div className="relative w-[340px] h-[440px] rounded-2xl overflow-hidden">
@@ -174,11 +174,11 @@ export function Hero() {
               />
 
               {/* Bottom fade */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-50" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent opacity-50" />
 
               {/* Corner accents */}
-              <div className="absolute top-4 right-4 w-4 h-4 border-t border-r border-[#ff6b35]/30 z-10" />
-              <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-[#ff6b35]/30 z-10" />
+              <div className="absolute top-4 right-4 w-4 h-4 border-t border-r border-[#38bdf8]/30 z-10" />
+              <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-[#38bdf8]/30 z-10" />
             </div>
           </div>
         </div>
@@ -189,11 +189,11 @@ export function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         aria-hidden="true"
       >
-        <span className="text-xs font-medium tracking-widest uppercase text-[#404040]">
+        <span className="text-xs font-medium tracking-widest uppercase text-[#374151]">
           Scroll
         </span>
         <div
-          className="w-px h-10 bg-gradient-to-b from-[#ff6b35] to-transparent"
+          className="w-px h-10 bg-gradient-to-b from-[#38bdf8] to-transparent"
           style={{ animation: 'heroPulseY 2s ease-in-out infinite' }}
         />
       </div>

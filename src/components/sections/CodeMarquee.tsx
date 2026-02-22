@@ -7,7 +7,7 @@ export function CodeMarquee() {
   const tripled = marqueeText + marqueeText + marqueeText;
 
   return (
-    <section className="relative bg-[#0a0a0a] overflow-hidden" aria-hidden="true">
+    <section className="relative bg-[#030712] overflow-hidden" aria-hidden="true">
       <div className="py-16 md:py-24">
         <div
           className="flex whitespace-nowrap"

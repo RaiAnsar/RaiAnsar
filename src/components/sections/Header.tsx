@@ -112,7 +112,7 @@ export function Header() {
               aria-label="Rai Ansar - Home"
             >
               <span className="text-xl font-bold tracking-tight text-white">
-                Rai<span className="text-[#ff6b35]">.</span>
+                Rai<span className="text-[#38bdf8]">.</span>
               </span>
             </a>
 
@@ -147,7 +147,7 @@ export function Header() {
               {/* CTA Button */}
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center text-sm font-semibold px-4 py-2 rounded-full bg-[#ff6b35] text-white hover:bg-[#ff8555] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                className="inline-flex items-center justify-center text-sm font-semibold px-4 py-2 rounded-full bg-[#38bdf8] text-white hover:bg-[#7dd3fc] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                 aria-label="Book a call"
               >
                 Book a Call
@@ -187,7 +187,7 @@ export function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-40 bg-[#0a0a0a] transition-opacity duration-300 ${
+        className={`fixed inset-0 z-40 bg-[#030712] transition-opacity duration-300 ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         role={mobileMenuOpen ? 'dialog' : undefined}
@@ -200,7 +200,7 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="text-3xl font-semibold text-white hover:text-[#ff6b35] transition-colors"
+              className="text-3xl font-semibold text-white hover:text-[#38bdf8] transition-colors"
               style={{
                 transitionProperty: 'opacity, transform, color',
                 transitionDuration: '0.3s',

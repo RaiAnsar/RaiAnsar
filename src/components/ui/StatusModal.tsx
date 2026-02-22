@@ -149,7 +149,7 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
           style={{
             background: 'linear-gradient(135deg, rgba(20,20,25,0.95) 0%, rgba(10,10,15,0.98) 100%)',
             border: '1px solid rgba(255,255,255,0.1)',
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8), 0 0 60px rgba(0,255,240,0.1)',
+            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8), 0 0 60px rgba(56,189,248,0.1)',
           }}
         >
           {/* Close button */}
@@ -169,13 +169,13 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                 className="w-12 h-12 rounded-xl flex items-center justify-center"
                 style={{
                   background: isAvailable
-                    ? 'linear-gradient(135deg, rgba(0,255,240,0.2) 0%, rgba(0,255,240,0.05) 100%)'
+                    ? 'linear-gradient(135deg, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0.05) 100%)'
                     : 'linear-gradient(135deg, rgba(255,180,0,0.2) 0%, rgba(255,180,0,0.05) 100%)',
-                  border: `1px solid ${isAvailable ? 'rgba(0,255,240,0.3)' : 'rgba(255,180,0,0.3)'}`,
+                  border: `1px solid ${isAvailable ? 'rgba(56,189,248,0.3)' : 'rgba(255,180,0,0.3)'}`,
                 }}
               >
                 {isAvailable ? (
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F2D0A4" strokeWidth="2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2">
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <polyline points="22 4 12 14.01 9 11.01" />
                   </svg>
@@ -191,7 +191,7 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                 <div className="flex items-center gap-2">
                   <h3
                     className="text-xl font-bold"
-                    style={{ color: isAvailable ? '#F2D0A4' : '#ffb400' }}
+                    style={{ color: isAvailable ? '#38bdf8' : '#ffb400' }}
                   >
                     {isAvailable ? 'AVAILABLE' : 'AWAY'}
                   </h3>
@@ -199,9 +199,9 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                     <span
                       className="px-2 py-0.5 text-[10px] font-semibold rounded-full"
                       style={{
-                        background: 'rgba(0,255,240,0.15)',
-                        color: '#F2D0A4',
-                        border: '1px solid rgba(0,255,240,0.3)',
+                        background: 'rgba(56,189,248,0.15)',
+                        color: '#38bdf8',
+                        border: '1px solid rgba(56,189,248,0.3)',
                       }}
                     >
                       LIVE
@@ -307,15 +307,15 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
             <div
               className="p-4 rounded-xl mb-4"
               style={{
-                background: 'rgba(0,255,240,0.03)',
-                border: '1px solid rgba(0,255,240,0.1)',
+                background: 'rgba(56,189,248,0.03)',
+                border: '1px solid rgba(56,189,248,0.1)',
               }}
             >
               <div className="flex items-center gap-2 mb-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F2D0A4" strokeWidth="2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2">
                   <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                 </svg>
-                <span className="text-xs font-semibold text-[#F2D0A4] uppercase tracking-wider">How It Works</span>
+                <span className="text-xs font-semibold text-[#38bdf8] uppercase tracking-wider">How It Works</span>
               </div>
               <p className="text-xs text-white/50 leading-relaxed">
                 {isLiveSync
