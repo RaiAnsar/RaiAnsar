@@ -13,12 +13,12 @@ export function Hero() {
     const handleScroll = () => {
       rafId = requestAnimationFrame(() => {
         const scrollY = window.scrollY;
-        const progress = Math.min(scrollY / (window.innerHeight * 0.5), 1);
+        const progress = Math.min(scrollY / (window.innerHeight * 1.2), 1);
 
         const el = contentRef.current;
         if (el) {
-          el.style.transform = `translateY(${progress * 60}px) scale(${1 - progress * 0.03})`;
-          el.style.opacity = String(Math.max(0, 1 - progress * 1.2));
+          el.style.transform = `translateY(${progress * 40}px) scale(${1 - progress * 0.02})`;
+          el.style.opacity = String(Math.max(0, 1 - progress * 0.9));
         }
 
         const photoEl = photoRef.current;

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { useInView } from '@/hooks/useInView';
 import { TextScramble } from '@/components/ui/TextScramble';
 
@@ -57,6 +58,31 @@ const icons = [
 
 export function Process() {
   const [containerRef, isInView] = useInView<HTMLElement>({ threshold: 0.1, once: true });
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const [glowY, setGlowY] = useState(0);
+
+  // Track scroll position to move the glow light along the timeline
+  useEffect(() => {
+    let rafId: number;
+    const handleScroll = () => {
+      rafId = requestAnimationFrame(() => {
+        const el = timelineRef.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const viewportCenter = window.innerHeight / 2;
+        // How far the viewport center is into the timeline (0 to 1)
+        const progress = Math.min(Math.max((viewportCenter - rect.top) / rect.height, 0), 1);
+        setGlowY(progress * 100);
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   const anim = (delay = 0, y = 50): React.CSSProperties => ({
     opacity: isInView ? 1 : 0,
@@ -122,7 +148,7 @@ export function Process() {
         {/* Timeline */}
         <div className="relative max-w-6xl mx-auto">
           {/* CENTER TIMELINE — grows on inView */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 md:w-1.5 hidden md:block" aria-hidden="true">
+          <div ref={timelineRef} className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 md:w-1.5 hidden md:block" aria-hidden="true">
             <div
               className="absolute inset-0 rounded-full"
               style={{ background: 'rgba(255, 255, 255, 0.08)' }}
@@ -138,6 +164,18 @@ export function Process() {
                   0 0 60px rgba(56, 189, 248, 0.3)
                 `,
                 transition: 'height 1.8s 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
+              }}
+            />
+            {/* Scroll-following glow light */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full pointer-events-none"
+              style={{
+                top: `${glowY}%`,
+                transform: `translate(-50%, -50%)`,
+                background: 'radial-gradient(circle, rgba(56, 189, 248, 1) 0%, rgba(56, 189, 248, 0.6) 30%, transparent 70%)',
+                boxShadow: '0 0 30px rgba(56, 189, 248, 0.9), 0 0 60px rgba(56, 189, 248, 0.5), 0 0 100px rgba(56, 189, 248, 0.3)',
+                opacity: isInView ? 1 : 0,
+                transition: 'opacity 0.5s ease',
               }}
             />
           </div>

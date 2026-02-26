@@ -110,7 +110,7 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
     <div
       className="relative"
       style={{
-        height: isLast ? '90vh' : '200vh',
+        height: isLast ? '100vh' : '200vh',
         marginBottom: isLast ? undefined : '-100vh',
       }}
     >
@@ -296,7 +296,7 @@ export function Services() {
       </div>
 
       {/* Full-width stacking cards area */}
-      <div className="relative px-4 md:px-8 lg:px-12">
+      <div className="relative px-4 md:px-8 lg:px-12 overflow-hidden">
         {services.map((service, index) => (
           <ClouCard
             key={service.id}
