@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, IBM_Plex_Mono } from "next/font/google";
+import { Poppins, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "optional",
 });
 
@@ -116,7 +117,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${ibmPlexMono.variable} antialiased`} style={{ fontFamily: 'var(--font-inter), system-ui, -apple-system, sans-serif' }}>
+      <body className={`${poppins.variable} ${ibmPlexMono.variable} antialiased`} style={{ fontFamily: 'var(--font-poppins), system-ui, -apple-system, sans-serif' }}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
