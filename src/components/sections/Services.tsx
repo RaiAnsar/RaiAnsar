@@ -116,7 +116,14 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
     >
       <div
         className="sticky"
-        style={{ top: '5vh', height: '90vh', zIndex: index + 1 }}
+        style={{
+          top: 0,
+          height: '100vh',
+          zIndex: index + 1,
+          paddingTop: '5vh',
+          paddingBottom: '5vh',
+          background: '#030712',
+        }}
       >
         <div
           className="relative overflow-hidden rounded-2xl h-full group cursor-default"
