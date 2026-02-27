@@ -110,13 +110,13 @@ function ClouCard({ service, index, isLast }: { service: Service; index: number;
     <div
       className="relative"
       style={{
-        height: isLast ? '90vh' : '200vh',
+        height: '200vh',
         marginBottom: isLast ? undefined : '-100vh',
       }}
     >
       <div
         className="sticky"
-        style={{ top: '10vh', height: '90vh', zIndex: index + 1 }}
+        style={{ top: '5vh', height: '90vh', zIndex: index + 1 }}
       >
         <div
           className="relative overflow-hidden rounded-2xl h-full group cursor-default"
@@ -305,8 +305,6 @@ export function Services() {
             isLast={index === services.length - 1}
           />
         ))}
-        {/* Spacer so last card stays sticky and fully covers the second-to-last */}
-        <div style={{ height: '10vh' }} aria-hidden="true" />
       </div>
     </section>
   );
