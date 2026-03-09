@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://raiansar.com/</loc>
-    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+    <lastmod>2026-03-09T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -11,41 +11,9 @@
       <image:title>Rai Ansar - Full-Stack Developer &amp; DevOps Expert</image:title>
       <image:caption>Full-stack developer with 6+ years of experience, based in Islamabad, Pakistan</image:caption>
     </image:image>
-  </url>
-  <url>
-    <loc>https://raiansar.com/#about</loc>
-    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://raiansar.com/#services</loc>
-    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://raiansar.com/#skills</loc>
-    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://raiansar.com/#testimonials</loc>
-    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://raiansar.com/#faq</loc>
-    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://raiansar.com/#contact</loc>
-    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://raiansar.com/images/og-image.png</image:loc>
+      <image:title>Rai Ansar Portfolio</image:title>
+    </image:image>
   </url>
 </urlset>

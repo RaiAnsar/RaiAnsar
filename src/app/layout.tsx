@@ -66,6 +66,9 @@ export const metadata: Metadata = {
     creator: "@raiansar",
     images: ["/images/og-image.png"],
   },
+  alternates: {
+    canonical: "https://raiansar.com",
+  },
   robots: {
     index: true,
     follow: true,
