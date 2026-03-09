@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins, IBM_Plex_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+
+const GA_ID = "G-CS3DHX5C7C";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -120,6 +123,15 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+        </Script>
+      </head>
       <body className={`${poppins.variable} ${ibmPlexMono.variable} antialiased`} style={{ fontFamily: 'var(--font-poppins), system-ui, -apple-system, sans-serif' }}>
         <script
           type="application/ld+json"
