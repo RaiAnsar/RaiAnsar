@@ -131,6 +131,11 @@ export default function RootLayout({
         <Script id="ga4-init" strategy="afterInteractive">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
         </Script>
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="gjastYNKOtl/ihbW4MSPPw"
+          strategy="afterInteractive"
+        />
       </head>
       <body className={`${poppins.variable} ${ibmPlexMono.variable} antialiased`} style={{ fontFamily: 'var(--font-poppins), system-ui, -apple-system, sans-serif' }}>
         <script
