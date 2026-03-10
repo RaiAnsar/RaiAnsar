@@ -74,14 +74,7 @@ const rai = {
 ### Stats
 
 <div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-streak-stats.herokuapp.com/?user=RaiAnsar&theme=github-dark-blue&hide_border=true&background=0d1117&stroke=21262d&ring=1f6feb&fire=1f6feb&currStreakLabel=1f6feb&sideLabels=c9d1d9&dates=8b949e" />
-  <img width="53%" src="https://github-readme-streak-stats.herokuapp.com/?user=RaiAnsar&theme=github-dark-blue&hide_border=true&background=0d1117&stroke=21262d&ring=1f6feb&fire=1f6feb&currStreakLabel=1f6feb" />
-</picture>
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=RaiAnsar&layout=compact&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=1f6feb&langs_count=8" />
-  <img width="42%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=RaiAnsar&layout=compact&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=1f6feb&langs_count=8" />
-</picture>
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=RaiAnsar&theme=github-dark-blue&hide_border=true&background=0d1117&stroke=21262d&ring=1f6feb&fire=1f6feb&currStreakLabel=1f6feb&sideLabels=c9d1d9&dates=8b949e" width="60%" />
 </div>
 
 <br/>
