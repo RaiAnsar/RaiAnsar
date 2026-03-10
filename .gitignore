@@ -1,7 +1,6 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
+scripts/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -30,11 +29,37 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env and secrets
 .env*
-
-# credentials
+.secrets.env
 CREDENTIALS.md
+
+# AI agent config (private)
+CLAUDE.md
+AGENTS.md
+PLAN.md
+.claude/
+.kilocode/
+.grok/
+.mcp.json
+
+# screenshots and temp files
+Screenshot*
+tmp*
+
+# internal docs (not part of the website)
+EEAT_*.md
+EEAT_*.txt
+SNIPPET_*.md
+SNIPPET_*.txt
+README_SNIPPET_*.md
+DELIVER*.txt
+llms-full.txt
+docs/plans/
+page-*.md
+
+# scripts (local tooling, not part of the website)
+scripts/
 
 # vercel
 .vercel
