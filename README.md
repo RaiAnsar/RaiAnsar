@@ -14,7 +14,7 @@
 
 I'm a **full-stack engineer and founder** based in Islamabad, Pakistan. I build AI-powered products, scalable web platforms, and automated content systems. My stack centers on **Next.js, TypeScript, Node.js, PostgreSQL, and AI/ML integrations** — with a focus on shipping fast and shipping well.
 
-I run multiple products across AI, SEO, web monitoring, and finance — all self-hosted, all profitable.
+I run multiple products across AI, SEO, web monitoring, and web design — all self-hosted, all profitable.
 
 - Currently building AI-powered content and automation platforms
 - Deep expertise in **Claude Code, GPT Codex, AI agents, and LLM integrations**
@@ -56,11 +56,11 @@ Uptime monitoring, visual regression detection, performance tracking, SSL monito
 <td width="50%" valign="top">
 
 ### <a href="https://acefina.com">Acefina</a>
-**Smart Finance & Business Tools**
+**Web Design & Development Agency**
 
-Financial analytics and business intelligence platform helping companies make data-driven decisions.
+Full-service web design agency building modern, high-performance websites and web applications for businesses.
 
-`Next.js` `TypeScript` `PostgreSQL` `Charts` `Analytics`
+`Next.js` `TypeScript` `Tailwind CSS` `UI/UX` `Web Design`
 
 [![Visit](https://img.shields.io/badge/acefina.com-Visit-1f6feb?style=flat-square&logo=googlechrome&logoColor=white)](https://acefina.com)
 
