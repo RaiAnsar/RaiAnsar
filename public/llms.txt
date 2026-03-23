@@ -2,9 +2,14 @@
 
 > Personal portfolio of Rai Ansar, a full-stack developer and DevOps expert based in Islamabad, Pakistan with 6+ years of experience and 300+ projects delivered.
 
-## About
+## Pages
 
-Rai Ansar specializes in building high-performance web applications, cloud infrastructure, and DevOps automation. He works with React, Next.js, TypeScript, Node.js, WordPress, Docker, AWS, and more.
+- **Home** (https://raiansar.com/): Overview, contact form, work history
+- **About** (https://raiansar.com/about/): Bio, social links, portrait
+- **Services** (https://raiansar.com/projects/): Frontend, WordPress, E-Commerce, DevOps, Backend
+- **Reviews** (https://raiansar.com/reviews/): 27 client testimonials from Upwork and Fiverr
+- **Uses** (https://raiansar.com/uses/): Tech stack, tools, and infrastructure
+- **Articles** (https://raiansar.com/articles/): Blog posts and technical writing
 
 ## Services
 
@@ -17,7 +22,7 @@ Rai Ansar specializes in building high-performance web applications, cloud infra
 ## Contact
 
 - Website: https://raiansar.com
-- Email: raimuhammadansar@gmail.com
+- Email: hello@raiansar.com
 - LinkedIn: https://www.linkedin.com/in/raiansar/
 - GitHub: https://github.com/RaiAnsar
 - X/Twitter: https://x.com/raiansar
