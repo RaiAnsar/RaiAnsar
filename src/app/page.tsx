@@ -19,7 +19,7 @@ import image2 from '@/images/photos/image-2.webp'
 import image3 from '@/images/photos/image-3.jpg'
 import image4 from '@/images/photos/image-4.webp'
 import image5 from '@/images/photos/image-5.webp'
-import { type ArticleWithSlug, getAllArticles } from '@/lib/articles'
+import { type ArticleWithSlug } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
 
 function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
@@ -286,8 +286,8 @@ function Photos() {
   )
 }
 
-export default async function Home() {
-  let articles = (await getAllArticles()).slice(0, 4)
+export default function Home() {
+  let articles: ArticleWithSlug[] = []
 
   return (
     <>
