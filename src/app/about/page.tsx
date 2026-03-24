@@ -1,132 +1,91 @@
-import { type Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
-import clsx from 'clsx'
-
-import { Container } from '@/components/Container'
-import {
-  GitHubIcon,
-  LinkedInIcon,
-  XIcon,
-} from '@/components/SocialIcons'
-import portraitImage from '@/images/portrait.jpg'
-
-function SocialLink({
-  className,
-  href,
-  children,
-  icon: Icon,
-}: {
-  className?: string
-  href: string
-  icon: React.ComponentType<{ className?: string }>
-  children: React.ReactNode
-}) {
-  return (
-    <li className={clsx(className, 'flex')}>
-      <Link
-        href={href}
-        className="group flex text-sm font-medium text-zinc-800 transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
-      >
-        <Icon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-teal-500" />
-        <span className="ml-4">{children}</span>
-      </Link>
-    </li>
-  )
-}
-
-function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-      <path
-        fillRule="evenodd"
-        d="M6 5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H6Zm.245 2.187a.75.75 0 0 0-.99 1.126l6.25 5.5a.75.75 0 0 0 .99 0l6.25-5.5a.75.75 0 0 0-.99-1.126L12 12.251 6.245 7.187Z"
-      />
-    </svg>
-  )
-}
+import { Container } from '@/components/container'
+import { Footer } from '@/components/footer'
+import { GradientBackground } from '@/components/gradient'
+import { Navbar } from '@/components/navbar'
+import { Heading, Lead } from '@/components/text'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About',
-  description:
-    'I\'m Rai Ansar. I live in Islamabad, where I build the web.',
+  description: 'Full-stack engineer and founder based in Islamabad, Pakistan.',
+}
+
+function Header() {
+  return (
+    <Container className="mt-16">
+      <Heading as="h1">Full-stack engineer and founder.</Heading>
+      <Lead className="mt-6 max-w-3xl">
+        I build AI-powered products, scalable web platforms, and automated
+        content systems — then self-host and run them profitably.
+      </Lead>
+      <section className="mt-16 grid grid-cols-1 lg:grid-cols-2 lg:gap-12">
+        <div className="max-w-lg">
+          <h2 className="text-2xl font-medium tracking-tight">My story</h2>
+          <p className="mt-6 text-sm/6 text-gray-600">
+            I've been building for the web since I was a teenager — starting with
+            WordPress sites and gradually moving into full-stack development,
+            cloud infrastructure, and AI integrations. What began as curiosity
+            turned into a career spanning 6+ years and 300+ projects.
+          </p>
+          <p className="mt-4 text-sm/6 text-gray-600">
+            My core stack is Next.js, TypeScript, Node.js, PostgreSQL, and
+            Docker. I obsess over performance, SEO, and shipping fast. I'm
+            equally comfortable building a landing page or architecting a
+            distributed system.
+          </p>
+          <p className="mt-4 text-sm/6 text-gray-600">
+            Today I build and run my own products — AIToolRanked, Visual
+            Sentinel, Acefina, and PrimeTime Anime — while taking on select
+            client projects. I have deep expertise in Claude Code, AI agents, and
+            LLM integrations.
+          </p>
+        </div>
+        <div className="max-w-lg pt-10 lg:pt-0">
+          <h2 className="text-2xl font-medium tracking-tight">
+            By the numbers
+          </h2>
+          <hr className="mt-6 border-t border-dotted border-gray-200" />
+          <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-y-2 border-b border-dotted border-gray-200 pb-4">
+              <dt className="text-sm/6 text-gray-600">Years of experience</dt>
+              <dd className="order-first text-6xl font-medium tracking-tight">
+                6<span className="text-[#38bdf8]">+</span>
+              </dd>
+            </div>
+            <div className="flex flex-col gap-y-2 border-b border-dotted border-gray-200 pb-4">
+              <dt className="text-sm/6 text-gray-600">Projects delivered</dt>
+              <dd className="order-first text-6xl font-medium tracking-tight">
+                300<span className="text-[#38bdf8]">+</span>
+              </dd>
+            </div>
+            <div className="flex flex-col gap-y-2 border-b border-dotted border-gray-200 pb-4">
+              <dt className="text-sm/6 text-gray-600">Products launched</dt>
+              <dd className="order-first text-6xl font-medium tracking-tight">
+                4
+              </dd>
+            </div>
+            <div className="flex flex-col gap-y-2 border-b border-dotted border-gray-200 pb-4">
+              <dt className="text-sm/6 text-gray-600">Client satisfaction</dt>
+              <dd className="order-first text-6xl font-medium tracking-tight">
+                95<span className="text-[#38bdf8]">%</span>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+    </Container>
+  )
 }
 
 export default function About() {
   return (
-    <Container className="mt-16 sm:mt-32">
-      <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
-        <div className="lg:pl-20">
-          <div className="max-w-xs px-2.5 lg:max-w-none">
-            <Image
-              src={portraitImage}
-              alt=""
-              sizes="(min-width: 1024px) 32rem, 20rem"
-              className="aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
-            />
-          </div>
-        </div>
-        <div className="lg:order-first lg:row-span-2">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            I&apos;m Rai Ansar. I live in Islamabad, where I build the web.
-          </h1>
-          <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
-            <p>
-              I&apos;ve been building for the web since I was a teenager —
-              starting with WordPress sites and gradually moving into full-stack
-              development, cloud infrastructure, and DevOps. What began as
-              curiosity turned into a career spanning 6+ years and 300+
-              projects.
-            </p>
-            <p>
-              I&apos;ve worked with agencies, startups, and established
-              companies — building everything from landing pages to full SaaS
-              platforms. I write code that other developers can actually
-              maintain, and I ship on time.
-            </p>
-            <p>
-              My core stack is React, Next.js, TypeScript, and Node.js, but
-              I&apos;m equally comfortable with WordPress, WooCommerce, Docker,
-              AWS, and CI/CD pipelines. I pick the right tool for the job, not
-              the trendy one.
-            </p>
-            <p>
-              Today I work as a freelance developer, helping clients worldwide
-              build fast, reliable, and maintainable software. Whether it&apos;s
-              a new build or rescuing a broken production server at 2am — I get
-              it done.
-            </p>
-          </div>
-        </div>
-        <div className="lg:pl-20">
-          <ul role="list">
-            <SocialLink href="https://x.com/raiansar" icon={XIcon}>
-              Follow on X
-            </SocialLink>
-            <SocialLink
-              href="https://github.com/RaiAnsar"
-              icon={GitHubIcon}
-              className="mt-4"
-            >
-              Follow on GitHub
-            </SocialLink>
-            <SocialLink
-              href="https://www.linkedin.com/in/raiansar/"
-              icon={LinkedInIcon}
-              className="mt-4"
-            >
-              Follow on LinkedIn
-            </SocialLink>
-            <SocialLink
-              href="mailto:hello@raiansar.com"
-              icon={MailIcon}
-              className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
-            >
-              hello@raiansar.com
-            </SocialLink>
-          </ul>
-        </div>
-      </div>
-    </Container>
+    <main className="overflow-hidden">
+      <GradientBackground />
+      <Container>
+        <Navbar />
+      </Container>
+      <Header />
+      <Footer />
+    </main>
   )
 }

@@ -1,45 +1,194 @@
-import Link from 'next/link'
+import { PlusGrid, PlusGridItem, PlusGridRow } from '@/components/plus-grid'
+import { Button } from './button'
+import { Container } from './container'
+import { Gradient } from './gradient'
+import { Link } from './link'
+import { Logo } from './logo'
+import { Subheading } from './text'
 
-import { ContainerInner, ContainerOuter } from '@/components/Container'
-
-function NavLink({
-  href,
-  children,
-}: {
-  href: string
-  children: React.ReactNode
-}) {
+function CallToAction() {
   return (
-    <Link
-      href={href}
-      className="transition hover:text-teal-500 dark:hover:text-teal-400"
-    >
-      {children}
-    </Link>
+    <div className="relative pt-20 pb-16 text-center sm:py-24">
+      <hgroup>
+        <Subheading>Get started</Subheading>
+        <p className="mt-6 text-3xl font-medium tracking-tight text-gray-950 sm:text-5xl">
+          Have a project in mind?
+          <br />
+          Let&apos;s build something great.
+        </p>
+      </hgroup>
+      <p className="mx-auto mt-6 max-w-xs text-sm/6 text-gray-500">
+        I respond within 24 hours. Let&apos;s talk about your project.
+      </p>
+      <div className="mt-6">
+        <Button className="w-full sm:w-auto" href="/contact">
+          Get in touch
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+function SitemapHeading({ children }: { children: React.ReactNode }) {
+  return <h3 className="text-sm/6 font-medium text-gray-950/50">{children}</h3>
+}
+
+function SitemapLinks({ children }: { children: React.ReactNode }) {
+  return <ul className="mt-6 space-y-4 text-sm/6">{children}</ul>
+}
+
+function SitemapLink(props: React.ComponentPropsWithoutRef<typeof Link>) {
+  return (
+    <li>
+      <Link
+        {...props}
+        className="font-medium text-gray-950 data-hover:text-gray-950/75"
+      />
+    </li>
+  )
+}
+
+function Sitemap() {
+  return (
+    <>
+      <div>
+        <SitemapHeading>Services</SitemapHeading>
+        <SitemapLinks>
+          <SitemapLink href="/#services">Frontend</SitemapLink>
+          <SitemapLink href="/#services">Backend</SitemapLink>
+          <SitemapLink href="/#services">AI / ML</SitemapLink>
+          <SitemapLink href="/#services">DevOps</SitemapLink>
+          <SitemapLink href="/#services">WordPress</SitemapLink>
+        </SitemapLinks>
+      </div>
+      <div>
+        <SitemapHeading>Products</SitemapHeading>
+        <SitemapLinks>
+          <SitemapLink href="https://aitoolranked.com">AIToolRanked</SitemapLink>
+          <SitemapLink href="https://visualsentinel.com">Visual Sentinel</SitemapLink>
+          <SitemapLink href="https://acefina.com">Acefina</SitemapLink>
+          <SitemapLink href="https://primetimeanime.com">PrimeTime Anime</SitemapLink>
+        </SitemapLinks>
+      </div>
+      <div>
+        <SitemapHeading>Connect</SitemapHeading>
+        <SitemapLinks>
+          <SitemapLink href="https://github.com/RaiAnsar">GitHub</SitemapLink>
+          <SitemapLink href="https://linkedin.com/in/raiansar">LinkedIn</SitemapLink>
+          <SitemapLink href="https://x.com/iraiansar">X / Twitter</SitemapLink>
+          <SitemapLink href="mailto:hello@raiansar.com">Email</SitemapLink>
+        </SitemapLinks>
+      </div>
+      <div>
+        <SitemapHeading>More</SitemapHeading>
+        <SitemapLinks>
+          <SitemapLink href="/about">About</SitemapLink>
+          <SitemapLink href="/reviews">Reviews</SitemapLink>
+          <SitemapLink href="/contact">Contact</SitemapLink>
+        </SitemapLinks>
+      </div>
+    </>
+  )
+}
+
+function SocialIconX(props: React.ComponentPropsWithoutRef<'svg'>) {
+  return (
+    <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
+      <path d="M12.6 0h2.454l-5.36 6.778L16 16h-4.937l-3.867-5.594L2.771 16H.316l5.733-7.25L0 0h5.063l3.495 5.114L12.6 0zm-.86 14.376h1.36L4.323 1.539H2.865l8.875 12.837z" />
+    </svg>
+  )
+}
+
+function SocialIconGitHub(props: React.ComponentPropsWithoutRef<'svg'>) {
+  return (
+    <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+    </svg>
+  )
+}
+
+function SocialIconLinkedIn(props: React.ComponentPropsWithoutRef<'svg'>) {
+  return (
+    <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
+      <path d="M14.82 0H1.18A1.169 1.169 0 000 1.154v13.694A1.168 1.168 0 001.18 16h13.64A1.17 1.17 0 0016 14.845V1.15A1.171 1.171 0 0014.82 0zM4.744 13.64H2.369V5.996h2.375v7.644zm-1.18-8.684a1.377 1.377 0 11.52-.106 1.377 1.377 0 01-.527.103l.007.003zm10.075 8.683h-2.375V9.921c0-.885-.015-2.025-1.234-2.025-1.218 0-1.425.966-1.425 1.968v3.775H6.233V5.997H8.51v1.05h.032c.317-.601 1.09-1.235 2.246-1.235 2.405-.005 2.851 1.578 2.851 3.63v4.197z" />
+    </svg>
+  )
+}
+
+function SocialLinks() {
+  return (
+    <>
+      <Link
+        href="https://github.com/RaiAnsar"
+        target="_blank"
+        aria-label="Visit us on GitHub"
+        className="text-gray-950 data-hover:text-gray-950/75"
+      >
+        <SocialIconGitHub className="size-4" />
+      </Link>
+      <Link
+        href="https://x.com/iraiansar"
+        target="_blank"
+        aria-label="Visit us on X"
+        className="text-gray-950 data-hover:text-gray-950/75"
+      >
+        <SocialIconX className="size-4" />
+      </Link>
+      <Link
+        href="https://linkedin.com/in/raiansar"
+        target="_blank"
+        aria-label="Visit us on LinkedIn"
+        className="text-gray-950 data-hover:text-gray-950/75"
+      >
+        <SocialIconLinkedIn className="size-4" />
+      </Link>
+    </>
+  )
+}
+
+function Copyright() {
+  return (
+    <div className="text-sm/6 text-gray-950">
+      &copy; {new Date().getFullYear()} Rai Ansar
+    </div>
   )
 }
 
 export function Footer() {
   return (
-    <footer className="mt-32 flex-none">
-      <ContainerOuter>
-        <div className="border-t border-zinc-100 pt-10 pb-16 dark:border-zinc-700/40">
-          <ContainerInner>
-            <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-              <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-zinc-800 dark:text-zinc-200">
-                <NavLink href="/about">About</NavLink>
-                <NavLink href="/projects">Projects</NavLink>
-                <NavLink href="/reviews">Reviews</NavLink>
-                <NavLink href="/uses">Uses</NavLink>
+    <footer>
+      <Gradient className="relative">
+        <div className="absolute inset-2 rounded-4xl bg-white/80" />
+        <Container>
+          <CallToAction />
+          <PlusGrid className="pb-16">
+            <PlusGridRow>
+              <div className="grid grid-cols-2 gap-y-10 pb-6 lg:grid-cols-6 lg:gap-8">
+                <div className="col-span-2 flex">
+                  <PlusGridItem className="pt-6 lg:pb-6">
+                    <Logo className="h-9" />
+                  </PlusGridItem>
+                </div>
+                <div className="col-span-2 grid grid-cols-2 gap-x-8 gap-y-12 lg:col-span-4 lg:grid-cols-subgrid lg:pt-6">
+                  <Sitemap />
+                </div>
               </div>
-              <p className="text-sm text-zinc-400 dark:text-zinc-500">
-                &copy; {new Date().getFullYear()} Rai Ansar. All rights
-                reserved.
-              </p>
-            </div>
-          </ContainerInner>
-        </div>
-      </ContainerOuter>
+            </PlusGridRow>
+            <PlusGridRow className="flex justify-between">
+              <div>
+                <PlusGridItem className="py-3">
+                  <Copyright />
+                </PlusGridItem>
+              </div>
+              <div className="flex">
+                <PlusGridItem className="flex items-center gap-8 py-3">
+                  <SocialLinks />
+                </PlusGridItem>
+              </div>
+            </PlusGridRow>
+          </PlusGrid>
+        </Container>
+      </Gradient>
     </footer>
   )
 }

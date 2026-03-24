@@ -1,10 +1,6 @@
-import { type Metadata } from 'next'
-import Script from 'next/script'
-
-import { Providers } from '@/app/providers'
-import { Layout } from '@/components/Layout'
-
 import '@/styles/tailwind.css'
+import type { Metadata } from 'next'
+import Script from 'next/script'
 
 const GA_ID = 'G-CS3DHX5C7C'
 
@@ -12,24 +8,23 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://raiansar.com'),
   title: {
     template: '%s - Rai Ansar',
-    default:
-      'Rai Ansar - Full-Stack Developer & DevOps Expert',
+    default: 'Rai Ansar - Full-Stack Engineer & Founder',
   },
   description:
-    'Full-stack developer & DevOps expert in Islamabad. I build fast websites, fix servers, and turn technical debt into scalable systems. 6+ years experience.',
+    'Full-stack engineer and founder based in Islamabad. I build AI-powered products, scalable web platforms, and automated content systems. 6+ years shipping.',
   keywords: [
-    'full-stack developer',
-    'DevOps engineer',
-    'software architect',
-    'React developer',
+    'full-stack engineer',
+    'founder',
+    'AI products',
     'Next.js developer',
     'TypeScript',
     'Node.js',
-    'WordPress',
-    'cloud infrastructure',
-    'web performance',
+    'PostgreSQL',
+    'Docker',
+    'Claude Code',
+    'AI agents',
+    'LLM integrations',
     'freelance developer',
-    'site optimization',
   ],
   authors: [{ name: 'Rai Ansar', url: 'https://raiansar.com' }],
   creator: 'Rai Ansar',
@@ -38,31 +33,28 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://raiansar.com',
     siteName: 'Rai Ansar',
-    title: 'Rai Ansar | Full-Stack Developer & DevOps Expert',
+    title: 'Rai Ansar | Full-Stack Engineer & Founder',
     description:
-      'Full-stack developer & DevOps expert. I build fast websites, fix servers, and turn technical debt into scalable systems.',
+      'I build AI-powered products, scalable web platforms, and automated content systems — then self-host and run them profitably.',
     images: [
       {
         url: '/images/og-image.png',
         width: 1792,
         height: 1024,
-        alt: 'Rai Ansar - Full-Stack Developer & DevOps Expert',
+        alt: 'Rai Ansar - Full-Stack Engineer & Founder',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rai Ansar | Full-Stack Developer & DevOps Expert',
+    title: 'Rai Ansar | Full-Stack Engineer & Founder',
     description:
-      'Full-stack developer & DevOps expert. I build fast websites, fix servers, and turn technical debt into scalable systems.',
-    creator: '@raiansar',
+      'I build AI-powered products, scalable web platforms, and automated content systems.',
+    creator: '@iraiansar',
     images: ['/images/og-image.png'],
   },
   alternates: {
     canonical: 'https://raiansar.com',
-    types: {
-      'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
-    },
   },
   robots: {
     index: true,
@@ -79,18 +71,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Rai Ansar',
     url: 'https://raiansar.com',
     image: 'https://raiansar.com/images/hero-rai.jpg',
-    jobTitle: 'Full-Stack Developer & DevOps Expert',
+    jobTitle: 'Full-Stack Engineer & Founder',
     description:
-      'Full-stack developer and DevOps expert based in Islamabad, Pakistan with 6+ years of experience and 300+ projects delivered.',
+      'Full-stack engineer and founder based in Islamabad, Pakistan. Builds AI-powered products, scalable web platforms, and automated content systems. 6+ years, 300+ projects.',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Islamabad',
@@ -98,25 +90,28 @@ export default function RootLayout({
     },
     sameAs: [
       'https://github.com/RaiAnsar',
-      'https://www.linkedin.com/in/raiansar/',
-      'https://x.com/raiansar',
-      'https://www.upwork.com/freelancers/iraiansar',
+      'https://linkedin.com/in/raiansar',
+      'https://x.com/iraiansar',
     ],
     knowsAbout: [
       'Full-Stack Development',
-      'DevOps',
-      'React',
+      'AI/ML Integrations',
+      'Claude Code',
       'Next.js',
-      'WordPress',
-      'Node.js',
       'TypeScript',
-      'Cloud Infrastructure',
+      'Node.js',
+      'PostgreSQL',
+      'Docker',
     ],
   }
 
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+    <html lang="en">
       <head>
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/css?f%5B%5D=switzer@400,500,600,700&display=swap"
+        />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
@@ -130,16 +125,12 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
-      <body className="flex h-full bg-zinc-50 dark:bg-black">
+      <body className="text-gray-950 antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Providers>
-          <div className="flex w-full">
-            <Layout>{children}</Layout>
-          </div>
-        </Providers>
+        {children}
       </body>
     </html>
   )
