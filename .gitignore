@@ -43,8 +43,8 @@ PLAN.md
 .grok/
 .mcp.json
 
-# screenshots and temp files
-Screenshot*
+# root screenshots and temp files
+/Screenshot*
 tmp*
 
 # internal docs (not part of the website)
