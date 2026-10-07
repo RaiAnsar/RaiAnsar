@@ -99,7 +99,7 @@ function TestimonialCard({
     }
   }, [ref, bounds.width, bounds.left, bounds.right])
 
-  let opacity = useSpring(computeOpacity(), {
+  let opacity = useSpring(1, {
     stiffness: 154,
     damping: 23,
   })
@@ -119,6 +119,7 @@ function TestimonialCard({
       {...props}
       className="relative flex aspect-9/16 w-72 shrink-0 snap-start scroll-ml-(--scroll-padding) flex-col justify-end overflow-hidden rounded-3xl sm:aspect-3/4 sm:w-96"
     >
+      {/* oxlint-disable-next-line nextjs/no-img-element -- Static export has no image optimizer; local assets retain their CSS sizing. */}
       <img
         alt=""
         src={img}

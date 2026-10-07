@@ -67,11 +67,13 @@ function Photos() {
   return (
     <div className="z-10 col-start-1 row-start-1">
       <div className="mx-auto flex size-full max-w-md items-center justify-around">
+        {/* oxlint-disable-next-line nextjs/no-img-element -- Static export has no image optimizer; local assets retain their CSS sizing. */}
         <img
           alt=""
           src="/linked-avatars/customer.jpg"
           className="size-20 rounded-full bg-white/15 ring-4 ring-white/10"
         />
+        {/* oxlint-disable-next-line nextjs/no-img-element -- Static export has no image optimizer; local assets retain their CSS sizing. */}
         <img
           alt=""
           src="/linked-avatars/manager.jpg"

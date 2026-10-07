@@ -20,6 +20,7 @@ export function Screenshot({
       )}
     >
       <div className="absolute -inset-(--padding) rounded-[calc(var(--radius)+var(--padding))] shadow-xs ring-1 ring-black/5 [--padding:--spacing(2)]" />
+      {/* oxlint-disable-next-line nextjs/no-img-element -- Static export has no image optimizer; local assets retain their CSS sizing. */}
       <img
         alt=""
         src={src}

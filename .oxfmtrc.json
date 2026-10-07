@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "semi": false,
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "sortTailwindcss": {
+    "stylesheet": "./src/styles/tailwind.css",
+    "functions": [
+      "clsx"
+    ]
+  },
+  "ignorePatterns": [
+    ".next/**",
+    "out/**",
+    "node_modules/**",
+    "docs/evidence/**",
+    "next-env.d.ts",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "CREDENTIALS.md",
+    ".env*",
+    ".mcp.json"
+  ]
+}

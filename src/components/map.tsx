@@ -33,6 +33,7 @@ function Marker({
           className="fill-white"
         />
       </svg>
+      {/* oxlint-disable-next-line nextjs/no-img-element -- Static export has no image optimizer; local assets retain their CSS sizing. */}
       <img
         alt=""
         src={src}

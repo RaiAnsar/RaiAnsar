@@ -147,9 +147,12 @@ function SocialLinks() {
 }
 
 function Copyright() {
+  // oxlint-disable-next-line react/purity -- Server component evaluates the year per render/build, never at module load.
+  const year = new Date().getFullYear()
+
   return (
     <div className="text-sm/6 text-gray-950">
-      &copy; {new Date().getFullYear()} Rai Ansar
+      &copy; {year} Rai Ansar
     </div>
   )
 }

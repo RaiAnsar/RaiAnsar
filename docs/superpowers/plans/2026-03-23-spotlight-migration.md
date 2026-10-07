@@ -31,7 +31,7 @@ Steps:
 
 **Files:**
 - Delete: `next.config.ts`, `postcss.config.mjs`
-- Create from template: `next.config.mjs`, `typography.ts`, `mdx-components.tsx`, `postcss.config.js`, `.eslintrc.json`, `prettier.config.js`
+- Create from template: `next.config.mjs`, `typography.ts`, `mdx-components.tsx`, `postcss.config.js`; use `.oxlintrc.json` and `.oxfmtrc.json` for the current standalone Oxc toolchain.
 - Overwrite: `tsconfig.json`
 - Create from template: `src/styles/tailwind.css`, `src/styles/prism.css`
 - Create from template (verbatim): `src/components/Card.tsx`, `src/components/Button.tsx`, `src/components/Container.tsx`, `src/components/Section.tsx`, `src/components/SimpleLayout.tsx`, `src/components/Prose.tsx`, `src/components/SocialIcons.tsx`, `src/components/Layout.tsx`, `src/components/ArticleLayout.tsx`

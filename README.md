@@ -13,6 +13,36 @@
 
 ---
 
+### Local verification
+
+Use the locked dependency graph with `npm ci`. This Next.js 16 static export
+uses standalone Oxlint 1.87.0 and Oxfmt 0.72.0:
+
+```sh
+npm run lint
+npm run format:check
+npm run build
+npx tsc --noEmit
+python3 -m http.server 3837 --bind 127.0.0.1 --directory out
+```
+
+Run `npm run format` to format source and sort Tailwind classes. Configuration
+lives in `.oxlintrc.json` and `.oxfmtrc.json`. The linter enables correctness
+errors and maps the core web vitals hooks, internal links, and script checks.
+The formatter preserves the previous single quotes, no semicolons, and 80-column
+width; it sorts Tailwind classes using `src/styles/tailwind.css` and `clsx` calls.
+Import organization from the previous formatter plugin is not supported by the
+migration and is not enabled.
+
+Inspect the local static preview at desktop and phone widths before acceptance.
+The preview check workflow has no deployment step. Branch pushes are preview
+evidence; production requires Rai's separate approval in Acefina Portal.
+
+Use `git config blame.ignoreRevsFile .git-blame-ignore-revs` locally to exclude
+the dedicated formatting commit when inspecting blame.
+
+---
+
 I build **AI-powered products**, ship them to production, and run them profitably — all self-hosted. My days: wiring LLMs into real products, squeezing milliseconds out of web performance, and automating everything that shouldn't be manual.
 
 ```ts
