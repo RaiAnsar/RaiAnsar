@@ -47,13 +47,13 @@ I build **AI-powered products**, ship them to production, and run them profitabl
 
 ```ts
 const rai = {
-  code:    ["TypeScript", "Python", "JavaScript", "SQL", "Bash"],
-  build:   ["Next.js", "React", "Node.js", "Tailwind CSS", "WordPress"],
-  data:    ["PostgreSQL", "Redis", "Drizzle ORM"],
-  ai:      ["Claude API", "OpenAI", "Perplexity", "Replicate"],
-  devops:  ["Docker", "Nginx", "AWS", "GitHub Actions", "Cloudflare"],
-  current: "Building AI agents that ship content at scale",
-};
+  code: ['TypeScript', 'Python', 'JavaScript', 'SQL', 'Bash'],
+  build: ['Next.js', 'React', 'Node.js', 'Tailwind CSS', 'WordPress'],
+  data: ['PostgreSQL', 'Redis', 'Drizzle ORM'],
+  ai: ['Claude API', 'OpenAI', 'Perplexity', 'Replicate'],
+  devops: ['Docker', 'Nginx', 'AWS', 'GitHub Actions', 'Cloudflare'],
+  current: 'Building AI agents that ship content at scale',
+}
 ```
 
 ---

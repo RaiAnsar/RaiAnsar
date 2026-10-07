@@ -1,9 +1,14 @@
 import { clsx } from 'clsx'
 
-export function Logo({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function Logo({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<'div'>) {
   return (
     <div className={clsx('flex items-center gap-1', className)} {...props}>
-      <span className="text-xl font-bold tracking-tight text-gray-950">Rai</span>
+      <span className="text-xl font-bold tracking-tight text-gray-950">
+        Rai
+      </span>
       <span className="text-xl font-bold tracking-tight text-[#38bdf8]">.</span>
     </div>
   )

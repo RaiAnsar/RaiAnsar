@@ -22,10 +22,11 @@ function Header() {
         <div className="max-w-lg">
           <h2 className="text-2xl font-medium tracking-tight">My story</h2>
           <p className="mt-6 text-sm/6 text-gray-600">
-            I've been building for the web since I was a teenager — starting with
-            WordPress sites and gradually moving into full-stack development,
-            cloud infrastructure, and AI integrations. What began as curiosity
-            turned into a career spanning 6+ years and 300+ projects.
+            I've been building for the web since I was a teenager — starting
+            with WordPress sites and gradually moving into full-stack
+            development, cloud infrastructure, and AI integrations. What began
+            as curiosity turned into a career spanning 6+ years and 300+
+            projects.
           </p>
           <p className="mt-4 text-sm/6 text-gray-600">
             My core stack is Next.js, TypeScript, Node.js, PostgreSQL, and
@@ -36,8 +37,8 @@ function Header() {
           <p className="mt-4 text-sm/6 text-gray-600">
             Today I build and run my own products — AIToolRanked, Visual
             Sentinel, Acefina, and PrimeTime Anime — while taking on select
-            client projects. I have deep expertise in Claude Code, AI agents, and
-            LLM integrations.
+            client projects. I have deep expertise in Claude Code, AI agents,
+            and LLM integrations.
           </p>
         </div>
         <div className="max-w-lg pt-10 lg:pt-0">

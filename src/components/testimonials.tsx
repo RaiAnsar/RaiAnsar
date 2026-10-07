@@ -23,7 +23,7 @@ const testimonials = [
     name: 'Leif Mulican',
     title: 'Client via Upwork',
     quote:
-      'This dude is legit. Quick, knows what he\'s doing, communicates well. I already have him working on my next project.',
+      "This dude is legit. Quick, knows what he's doing, communicates well. I already have him working on my next project.",
   },
   {
     img: '/testimonials/dillon-lenora.jpg',
@@ -51,7 +51,7 @@ const testimonials = [
     name: 'andreakollova',
     title: 'Client via Fiverr',
     quote:
-      'He is a true expert. Great communication, high quality work. If you\'re looking for an experienced web specialist, no need to look any further!',
+      "He is a true expert. Great communication, high quality work. If you're looking for an experienced web specialist, no need to look any further!",
   },
   {
     img: '/testimonials/conor-neville.jpg',

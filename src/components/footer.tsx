@@ -64,17 +64,25 @@ function Sitemap() {
       <div>
         <SitemapHeading>Products</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="https://aitoolranked.com">AIToolRanked</SitemapLink>
-          <SitemapLink href="https://visualsentinel.com">Visual Sentinel</SitemapLink>
+          <SitemapLink href="https://aitoolranked.com">
+            AIToolRanked
+          </SitemapLink>
+          <SitemapLink href="https://visualsentinel.com">
+            Visual Sentinel
+          </SitemapLink>
           <SitemapLink href="https://acefina.com">Acefina</SitemapLink>
-          <SitemapLink href="https://primetimeanime.com">PrimeTime Anime</SitemapLink>
+          <SitemapLink href="https://primetimeanime.com">
+            PrimeTime Anime
+          </SitemapLink>
         </SitemapLinks>
       </div>
       <div>
         <SitemapHeading>Connect</SitemapHeading>
         <SitemapLinks>
           <SitemapLink href="https://github.com/RaiAnsar">GitHub</SitemapLink>
-          <SitemapLink href="https://linkedin.com/in/raiansar">LinkedIn</SitemapLink>
+          <SitemapLink href="https://linkedin.com/in/raiansar">
+            LinkedIn
+          </SitemapLink>
           <SitemapLink href="https://x.com/iraiansar">X / Twitter</SitemapLink>
           <SitemapLink href="mailto:hello@raiansar.com">Email</SitemapLink>
         </SitemapLinks>
@@ -150,11 +158,7 @@ function Copyright() {
   // oxlint-disable-next-line react/purity -- Server component evaluates the year per render/build, never at module load.
   const year = new Date().getFullYear()
 
-  return (
-    <div className="text-sm/6 text-gray-950">
-      &copy; {year} Rai Ansar
-    </div>
-  )
+  return <div className="text-sm/6 text-gray-950">&copy; {year} Rai Ansar</div>
 }
 
 export function Footer() {

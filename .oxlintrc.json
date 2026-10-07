@@ -1,6 +1,14 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "nextjs", "jsx-a11y", "import", "typescript", "unicorn", "oxc"],
+  "plugins": [
+    "react",
+    "nextjs",
+    "jsx-a11y",
+    "import",
+    "typescript",
+    "unicorn",
+    "oxc"
+  ],
   "categories": {
     "correctness": "error"
   },
@@ -10,5 +18,10 @@
     "nextjs/no-html-link-for-pages": "error",
     "nextjs/no-sync-scripts": "error"
   },
-  "ignorePatterns": [".next/**", "out/**", "node_modules/**", "docs/evidence/**"]
+  "ignorePatterns": [
+    ".next/**",
+    "out/**",
+    "node_modules/**",
+    "docs/evidence/**"
+  ]
 }

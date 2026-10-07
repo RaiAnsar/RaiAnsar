@@ -28,7 +28,7 @@ const upworkReviews = [
   {
     name: 'Joy Mallard, CEO at digitalonlineservices.co.uk',
     quote:
-      "Thank you so much. Once again you have been really helpful in the tasks I need completing. Not only have you done them quickly for me but also you have taken your time in ensuring I understand everything that has been done, you have answered all my questions I had without making me feel silly and also recommend some great things for the future.",
+      'Thank you so much. Once again you have been really helpful in the tasks I need completing. Not only have you done them quickly for me but also you have taken your time in ensuring I understand everything that has been done, you have answered all my questions I had without making me feel silly and also recommend some great things for the future.',
   },
   {
     name: 'Yolanda Soto via Upwork',
