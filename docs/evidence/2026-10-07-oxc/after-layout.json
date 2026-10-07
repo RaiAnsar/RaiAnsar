@@ -1,0 +1,746 @@
+[
+  {
+    "route": "home",
+    "width": 1280,
+    "metrics": {
+      "brokenImages": [],
+      "headings": [
+        {
+          "rect": {
+            "height": 204.796875,
+            "width": 1216,
+            "x": 32,
+            "y": 270
+          },
+          "text": "I build products that ship."
+        },
+        {
+          "rect": {
+            "height": 120,
+            "width": 768,
+            "x": 32,
+            "y": 1162.796875
+          },
+          "text": "Products I've built and run profitably."
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 1216,
+            "x": 32,
+            "y": 2210.796875
+          },
+          "text": "Services"
+        },
+        {
+          "rect": {
+            "height": 120,
+            "width": 768,
+            "x": 32,
+            "y": 2238.796875
+          },
+          "text": "End-to-end expertise across the full stack."
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 519.9921875,
+            "x": 72,
+            "y": 2782.796875
+          },
+          "text": "Frontend"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 520,
+            "x": 687.9921875,
+            "y": 2782.796875
+          },
+          "text": "Backend"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 314.6640625,
+            "x": 72,
+            "y": 3334.796875
+          },
+          "text": "AI / ML"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 314.6640625,
+            "x": 482.6640625,
+            "y": 3334.796875
+          },
+          "text": "DevOps"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 314.6640625,
+            "x": 893.328125,
+            "y": 3334.796875
+          },
+          "text": "WordPress"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 1200,
+            "x": 40,
+            "y": 3774.796875
+          },
+          "text": "Products"
+        },
+        {
+          "rect": {
+            "height": 120,
+            "width": 768,
+            "x": 40,
+            "y": 3802.796875
+          },
+          "text": "Things I've built, launched, and run."
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 714.6640625,
+            "x": 80,
+            "y": 4346.796875
+          },
+          "text": "AI Tools"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 309.3359375,
+            "x": 890.6640625,
+            "y": 4346.796875
+          },
+          "text": "Monitoring"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 309.328125,
+            "x": 80,
+            "y": 4898.796875
+          },
+          "text": "Agency"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 714.671875,
+            "x": 485.328125,
+            "y": 4898.796875
+          },
+          "text": "Content"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 1216,
+            "x": 32,
+            "y": 5330.796875
+          },
+          "text": "What my clients say"
+        },
+        {
+          "rect": {
+            "height": 60,
+            "width": 1216,
+            "x": 32,
+            "y": 5358.796875
+          },
+          "text": "Trusted by clients worldwide."
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 1216,
+            "x": 32,
+            "y": 6363.296875
+          },
+          "text": "Get started"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 448,
+            "y": 6768.296875
+          },
+          "text": "Services"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 656,
+            "y": 6768.296875
+          },
+          "text": "Products"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 864,
+            "y": 6768.296875
+          },
+          "text": "Connect"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 1072,
+            "y": 6768.296875
+          },
+          "text": "More"
+        }
+      ],
+      "height": 900,
+      "scrollHeight": 7154,
+      "scrollWidth": 1280,
+      "width": 1280
+    }
+  },
+  {
+    "route": "about",
+    "width": 1280,
+    "metrics": {
+      "brokenImages": [],
+      "headings": [
+        {
+          "rect": {
+            "height": 60,
+            "width": 1216,
+            "x": 32,
+            "y": 206
+          },
+          "text": "Full-stack engineer and founder."
+        },
+        {
+          "rect": {
+            "height": 32,
+            "width": 512,
+            "x": 32,
+            "y": 418
+          },
+          "text": "My story"
+        },
+        {
+          "rect": {
+            "height": 32,
+            "width": 512,
+            "x": 664,
+            "y": 418
+          },
+          "text": "By the numbers"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 1216,
+            "x": 32,
+            "y": 842
+          },
+          "text": "Get started"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 448,
+            "y": 1247
+          },
+          "text": "Services"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 656,
+            "y": 1247
+          },
+          "text": "Products"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 864,
+            "y": 1247
+          },
+          "text": "Connect"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 1072,
+            "y": 1247
+          },
+          "text": "More"
+        }
+      ],
+      "height": 900,
+      "scrollHeight": 1633,
+      "scrollWidth": 1280,
+      "width": 1280
+    }
+  },
+  {
+    "route": "contact",
+    "width": 1280,
+    "metrics": {
+      "brokenImages": [],
+      "headings": [
+        {
+          "rect": {
+            "height": 60,
+            "width": 576,
+            "x": 32,
+            "y": 206
+          },
+          "text": "Let's work together."
+        },
+        {
+          "rect": {
+            "height": 28,
+            "width": 512,
+            "x": 704,
+            "y": 238
+          },
+          "text": "Send a message"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 1216,
+            "x": 32,
+            "y": 898
+          },
+          "text": "Get started"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 448,
+            "y": 1303
+          },
+          "text": "Services"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 656,
+            "y": 1303
+          },
+          "text": "Products"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 864,
+            "y": 1303
+          },
+          "text": "Connect"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 176,
+            "x": 1072,
+            "y": 1303
+          },
+          "text": "More"
+        }
+      ],
+      "height": 900,
+      "scrollHeight": 1689,
+      "scrollWidth": 1280,
+      "width": 1280
+    }
+  },
+  {
+    "route": "home",
+    "width": 390,
+    "metrics": {
+      "brokenImages": [],
+      "headings": [
+        {
+          "rect": {
+            "height": 162,
+            "width": 342,
+            "x": 24,
+            "y": 190
+          },
+          "text": "I build products that ship."
+        },
+        {
+          "rect": {
+            "height": 80,
+            "width": 342,
+            "x": 24,
+            "y": 1048
+          },
+          "text": "Products I've built and run profitably."
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 342,
+            "x": 24,
+            "y": 1864
+          },
+          "text": "Services"
+        },
+        {
+          "rect": {
+            "height": 80,
+            "width": 342,
+            "x": 24,
+            "y": 1892
+          },
+          "text": "End-to-end expertise across the full stack."
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 262,
+            "x": 64,
+            "y": 2372
+          },
+          "text": "Frontend"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 262,
+            "x": 64,
+            "y": 2924
+          },
+          "text": "Backend"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 262,
+            "x": 64,
+            "y": 3500
+          },
+          "text": "AI / ML"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 262,
+            "x": 64,
+            "y": 4076
+          },
+          "text": "DevOps"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 262,
+            "x": 64,
+            "y": 4628
+          },
+          "text": "WordPress"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 326,
+            "x": 32,
+            "y": 5068
+          },
+          "text": "Products"
+        },
+        {
+          "rect": {
+            "height": 80,
+            "width": 326,
+            "x": 32,
+            "y": 5096
+          },
+          "text": "Things I've built, launched, and run."
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 246,
+            "x": 72,
+            "y": 5576
+          },
+          "text": "AI Tools"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 246,
+            "x": 72,
+            "y": 6128
+          },
+          "text": "Monitoring"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 246,
+            "x": 72,
+            "y": 6704
+          },
+          "text": "Agency"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 246,
+            "x": 72,
+            "y": 7256
+          },
+          "text": "Content"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 342,
+            "x": 24,
+            "y": 7688
+          },
+          "text": "What my clients say"
+        },
+        {
+          "rect": {
+            "height": 80,
+            "width": 342,
+            "x": 24,
+            "y": 7716
+          },
+          "text": "Trusted by clients worldwide."
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 342,
+            "x": 24,
+            "y": 8724.5
+          },
+          "text": "Get started"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 24,
+            "y": 9185.5
+          },
+          "text": "Services"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 211,
+            "y": 9185.5
+          },
+          "text": "Products"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 24,
+            "y": 9465.5
+          },
+          "text": "Connect"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 211,
+            "y": 9465.5
+          },
+          "text": "More"
+        }
+      ],
+      "height": 900,
+      "scrollHeight": 9811,
+      "scrollWidth": 390,
+      "width": 390
+    }
+  },
+  {
+    "route": "about",
+    "width": 390,
+    "metrics": {
+      "brokenImages": [],
+      "headings": [
+        {
+          "rect": {
+            "height": 80,
+            "width": 342,
+            "x": 24,
+            "y": 190
+          },
+          "text": "Full-stack engineer and founder."
+        },
+        {
+          "rect": {
+            "height": 32,
+            "width": 342,
+            "x": 24,
+            "y": 518
+          },
+          "text": "My story"
+        },
+        {
+          "rect": {
+            "height": 32,
+            "width": 342,
+            "x": 24,
+            "y": 1006
+          },
+          "text": "By the numbers"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 342,
+            "x": 24,
+            "y": 1651
+          },
+          "text": "Get started"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 24,
+            "y": 2112
+          },
+          "text": "Services"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 211,
+            "y": 2112
+          },
+          "text": "Products"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 24,
+            "y": 2392
+          },
+          "text": "Connect"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 211,
+            "y": 2392
+          },
+          "text": "More"
+        }
+      ],
+      "height": 900,
+      "scrollHeight": 2738,
+      "scrollWidth": 390,
+      "width": 390
+    }
+  },
+  {
+    "route": "contact",
+    "width": 390,
+    "metrics": {
+      "brokenImages": [],
+      "headings": [
+        {
+          "rect": {
+            "height": 40,
+            "width": 342,
+            "x": 24,
+            "y": 190
+          },
+          "text": "Let's work together."
+        },
+        {
+          "rect": {
+            "height": 28,
+            "width": 278,
+            "x": 56,
+            "y": 766
+          },
+          "text": "Send a message"
+        },
+        {
+          "rect": {
+            "height": 20,
+            "width": 342,
+            "x": 24,
+            "y": 1400
+          },
+          "text": "Get started"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 24,
+            "y": 1861
+          },
+          "text": "Services"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 211,
+            "y": 1861
+          },
+          "text": "Products"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 24,
+            "y": 2141
+          },
+          "text": "Connect"
+        },
+        {
+          "rect": {
+            "height": 24,
+            "width": 155,
+            "x": 211,
+            "y": 2141
+          },
+          "text": "More"
+        }
+      ],
+      "height": 900,
+      "scrollHeight": 2487,
+      "scrollWidth": 390,
+      "width": 390
+    }
+  }
+]

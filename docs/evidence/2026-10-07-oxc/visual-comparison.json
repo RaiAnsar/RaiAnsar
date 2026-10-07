@@ -1,0 +1,83 @@
+[
+  {
+    "route": "home",
+    "width": 1280,
+    "geometryIdentical": true,
+    "imageSize": [
+      1265,
+      7154
+    ],
+    "pixelsIdentical": false,
+    "differenceBounds": [
+      48,
+      1343,
+      1249,
+      6000
+    ]
+  },
+  {
+    "route": "about",
+    "width": 1280,
+    "geometryIdentical": true,
+    "imageSize": [
+      1265,
+      1633
+    ],
+    "pixelsIdentical": true,
+    "differenceBounds": null
+  },
+  {
+    "route": "contact",
+    "width": 1280,
+    "geometryIdentical": true,
+    "imageSize": [
+      1265,
+      1689
+    ],
+    "pixelsIdentical": false,
+    "differenceBounds": [
+      152,
+      880,
+      1056,
+      1344
+    ]
+  },
+  {
+    "route": "home",
+    "width": 390,
+    "geometryIdentical": true,
+    "imageSize": [
+      375,
+      9963
+    ],
+    "pixelsIdentical": false,
+    "differenceBounds": [
+      336,
+      7856,
+      375,
+      8376
+    ]
+  },
+  {
+    "route": "about",
+    "width": 390,
+    "geometryIdentical": true,
+    "imageSize": [
+      375,
+      2762
+    ],
+    "pixelsIdentical": true,
+    "differenceBounds": null
+  },
+  {
+    "route": "contact",
+    "width": 390,
+    "geometryIdentical": true,
+    "imageSize": [
+      375,
+      2487
+    ],
+    "pixelsIdentical": true,
+    "differenceBounds": null
+  }
+]

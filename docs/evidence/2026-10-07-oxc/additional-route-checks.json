@@ -1,0 +1,42 @@
+[
+  {
+    "route": "reviews",
+    "width": 1280,
+    "result": {
+      "brokenImages": 0,
+      "heading": "Real feedback from clients.",
+      "scrollWidth": 1280,
+      "viewportWidth": 1280
+    }
+  },
+  {
+    "route": "thank-you",
+    "width": 1280,
+    "result": {
+      "brokenImages": 0,
+      "heading": "Thanks for reaching out.",
+      "scrollWidth": 1280,
+      "viewportWidth": 1280
+    }
+  },
+  {
+    "route": "reviews",
+    "width": 390,
+    "result": {
+      "brokenImages": 0,
+      "heading": "Real feedback from clients.",
+      "scrollWidth": 390,
+      "viewportWidth": 390
+    }
+  },
+  {
+    "route": "thank-you",
+    "width": 390,
+    "result": {
+      "brokenImages": 0,
+      "heading": "Thanks for reaching out.",
+      "scrollWidth": 390,
+      "viewportWidth": 390
+    }
+  }
+]

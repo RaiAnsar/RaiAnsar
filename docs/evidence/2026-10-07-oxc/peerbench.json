@@ -1,0 +1,40 @@
+{
+  "decision": "unreviewed",
+  "advisory": false,
+  "badge": "Grok! MiMo!",
+  "summary": "strict quorum unavailable \u2014 Grok: sandbox-exec: sandbox_apply: Operation not permitted | MiMo: authentication failed on this run \u2014 no API key",
+  "findings": "",
+  "parts": 1,
+  "reviewedParts": 1,
+  "gaps": [],
+  "skipped": [
+    "docs/evidence/2026-10-07-oxc/after-about-1280.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/after-about-390.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/after-contact-1280.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/after-contact-390.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/after-home-1280.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/after-home-390.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/before-about-1280.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/before-about-390.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/before-contact-1280.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/before-contact-390.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/before-home-1280.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/before-home-390.jpg (binary)",
+    "docs/evidence/2026-10-07-oxc/pre-format-home-1280.jpg (binary)"
+  ],
+  "results": [
+    {
+      "name": "Grok",
+      "error": "sandbox-exec: sandbox_apply: Operation not permitted",
+      "latencyMs": 1240,
+      "errorKind": "unclassified"
+    },
+    {
+      "name": "MiMo",
+      "error": "authentication failed on this run \u2014 no API key",
+      "errorKind": "auth",
+      "latencyMs": 1,
+      "cooldownUntil": 1791386115191
+    }
+  ]
+}
