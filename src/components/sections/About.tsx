@@ -67,7 +67,7 @@ export function About() {
           </h2>
 
           <div className="flex items-end" style={isInView ? fadeIn(0.3) : hidden()}>
-            <p className="text-lg text-[#6b7280] leading-relaxed">
+            <p className="text-lg text-[#7d838f] leading-relaxed">
               I&apos;ve worked with agencies, startups, and established
               companies — building everything from landing pages to full SaaS
               platforms. I write code that other developers can actually
@@ -93,7 +93,7 @@ export function About() {
                   {item.title}
                 </h3>
 
-                <p className="text-[#6b7280] text-sm leading-relaxed">
+                <p className="text-[#7d838f] text-sm leading-relaxed">
                   {item.description}
                 </p>
 
@@ -126,7 +126,7 @@ export function About() {
                 <div className="text-3xl md:text-4xl font-black text-white mb-1 group-hover:text-[#38bdf8] transition-colors duration-300">
                   {stat.value}
                 </div>
-                <div className="text-xs text-[#374151] uppercase tracking-wider">
+                <div className="text-xs text-[#737a85] uppercase tracking-wider">
                   {stat.label}
                 </div>
               </div>

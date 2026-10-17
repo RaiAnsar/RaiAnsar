@@ -104,7 +104,7 @@ export function Contact() {
   };
 
   const getInputClasses = (hasError: boolean) =>
-    `w-full bg-[#111827] border ${hasError ? 'border-red-500/60' : 'border-[#374151]'} rounded-xl px-5 py-4 text-white placeholder-[#6b7280] text-sm outline-none transition-all duration-300 focus:border-[#38bdf8] focus:ring-1 focus:ring-[#38bdf8]/30`;
+    `w-full bg-[#111827] border ${hasError ? 'border-red-500/60' : 'border-[#374151]'} rounded-xl px-5 py-4 text-white placeholder-[#7d838f] text-sm outline-none transition-all duration-300 focus:border-[#38bdf8] focus:ring-1 focus:ring-[#38bdf8]/30`;
 
   const anim = (delay = 0, y = 20): React.CSSProperties => ({
     opacity: isInView ? 1 : 0,
@@ -256,8 +256,8 @@ export function Contact() {
                   className="w-full h-2 bg-[#374151] rounded-full appearance-none cursor-pointer accent-[#38bdf8] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#38bdf8] [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(56,189,248,0.4)] [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#38bdf8] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
                 />
                 <div className="flex justify-between mt-1.5">
-                  <span className="text-xs text-[#6b7280]">$500</span>
-                  <span className="text-xs text-[#6b7280]">$25,000</span>
+                  <span className="text-xs text-[#7d838f]">$500</span>
+                  <span className="text-xs text-[#7d838f]">$25,000</span>
                 </div>
               </div>
 
@@ -265,10 +265,10 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="w-full bg-[#38bdf8] hover:bg-[#0ea5e9] hover:scale-[1.02] active:scale-[0.98] disabled:bg-[#38bdf8]/60 disabled:scale-100 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 text-sm tracking-wide cursor-pointer disabled:cursor-not-allowed"
+                className="w-full bg-[#38bdf8] hover:bg-[#0ea5e9] hover:scale-[1.02] active:scale-[0.98] disabled:bg-[#38bdf8]/60 disabled:scale-100 text-[#030712] font-semibold py-4 px-8 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 text-sm tracking-wide cursor-pointer disabled:cursor-not-allowed"
               >
                 {status === 'submitting' && (
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg className="animate-spin h-5 w-5 text-[#030712]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
@@ -315,7 +315,7 @@ export function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-[#6b7280] uppercase tracking-wider">Email</p>
+                    <p className="text-xs text-[#7d838f] uppercase tracking-wider">Email</p>
                     <a href="mailto:hello@raiansar.com" className="text-sm text-white hover:text-[#38bdf8] transition-colors">
                       hello@raiansar.com
                     </a>
@@ -330,7 +330,7 @@ export function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-[#6b7280] uppercase tracking-wider">Based in</p>
+                    <p className="text-xs text-[#7d838f] uppercase tracking-wider">Based in</p>
                     <p className="text-sm text-white">Pakistan</p>
                   </div>
                 </div>
@@ -342,7 +342,7 @@ export function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-[#6b7280] uppercase tracking-wider">Availability</p>
+                    <p className="text-xs text-[#7d838f] uppercase tracking-wider">Availability</p>
                     <p className="text-sm text-green-400">Open for projects</p>
                   </div>
                 </div>

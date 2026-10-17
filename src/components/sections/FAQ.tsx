@@ -35,7 +35,7 @@ function AccordionItem({
         <span
           className="text-[11px] font-mono tabular-nums w-7 h-7 rounded-md flex items-center justify-center shrink-0 transition-all duration-300 border"
           style={{
-            color: isOpen ? '#38bdf8' : '#374151',
+            color: isOpen ? '#38bdf8' : '#737a85',
             borderColor: isOpen ? 'rgba(56,189,248,0.3)' : 'rgba(255,255,255,0.06)',
             background: isOpen ? 'rgba(56,189,248,0.08)' : 'transparent',
           }}
@@ -67,7 +67,7 @@ function AccordionItem({
             strokeLinecap="round"
             className="w-4 h-4 transition-all duration-200"
             style={{
-              color: isOpen ? '#38bdf8' : '#374151',
+              color: isOpen ? '#38bdf8' : '#737a85',
               transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
             }}
             aria-hidden="true"
@@ -89,7 +89,7 @@ function AccordionItem({
       >
         <div style={{ overflow: 'hidden' }}>
           <div className="pl-8 sm:pl-12 pb-6 pr-4 sm:pr-12">
-            <p className="text-[#6b7280] text-sm md:text-[15px] leading-[1.85]">
+            <p className="text-[#7d838f] text-sm md:text-[15px] leading-[1.85]">
               {item.answer}
             </p>
           </div>
@@ -191,7 +191,7 @@ export function FAQ() {
                     background: isActive
                       ? 'rgba(56,189,248,0.12)'
                       : 'rgba(255,255,255,0.02)',
-                    color: isActive ? '#38bdf8' : '#6b7280',
+                    color: isActive ? '#38bdf8' : '#7d838f',
                     borderColor: isActive
                       ? 'rgba(56,189,248,0.3)'
                       : 'rgba(255,255,255,0.06)',
@@ -200,7 +200,7 @@ export function FAQ() {
                   {category.label}
                   <span
                     className="text-[11px] font-mono transition-colors duration-300"
-                    style={{ color: isActive ? '#38bdf8' : '#374151' }}
+                    style={{ color: isActive ? '#38bdf8' : '#737a85' }}
                   >
                     {count}
                   </span>
@@ -245,7 +245,7 @@ export function FAQ() {
           className="mt-8 flex items-center justify-center gap-4"
           style={anim(0.6)}
         >
-          <p className="text-[#374151] text-sm">
+          <p className="text-[#737a85] text-sm">
             Can&apos;t find what you&apos;re looking for?
           </p>
           <a

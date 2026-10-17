@@ -140,7 +140,7 @@ export function Process() {
             From vision to{' '}
             <span className="gradient-text">reality.</span>
           </h2>
-          <p className="text-lg md:text-xl text-white/40 max-w-2xl leading-relaxed tracking-wide">
+          <p className="text-lg md:text-xl text-white/50 max-w-2xl leading-relaxed tracking-wide">
             A proven process refined over years of delivering exceptional digital products.
           </p>
         </div>
@@ -283,7 +283,7 @@ export function Process() {
                         </p>
 
                         {/* Description */}
-                        <p className="text-sm md:text-base text-white/40 leading-relaxed mb-6">
+                        <p className="text-sm md:text-base text-white/50 leading-relaxed mb-6">
                           {step.description}
                         </p>
 
@@ -420,14 +420,14 @@ export function Process() {
                 }}
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, #38bdf8 0%, #7dd3fc 100%)' }} />
-                <span className="relative z-10 text-white">Start a Conversation</span>
+                <span className="relative z-10 text-[#030712]">Start a Conversation</span>
                 <svg
                   className="relative z-10 transition-transform group-hover:translate-x-1"
                   width="20"
                   height="20"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="white"
+                  stroke="#030712"
                   strokeWidth="2.5"
                   aria-hidden="true"
                 >

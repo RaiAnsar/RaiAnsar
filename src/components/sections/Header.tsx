@@ -91,7 +91,7 @@ export function Header() {
 
   const statusColor = effectiveStatus === 'available' ? '#22c55e'
     : effectiveStatus === 'away' ? '#eab308'
-    : '#6b7280';
+    : '#7d838f';
 
   const handleStatusClick = useCallback(() => {
     setStatusModalOpen(true);
@@ -147,7 +147,7 @@ export function Header() {
               {/* CTA Button */}
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center text-sm font-semibold px-4 py-2 rounded-full bg-[#38bdf8] text-white hover:bg-[#7dd3fc] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                className="inline-flex items-center justify-center text-sm font-semibold px-4 py-2 rounded-full bg-[#38bdf8] text-[#030712] hover:bg-[#7dd3fc] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                 aria-label="Book a call"
               >
                 Book a Call

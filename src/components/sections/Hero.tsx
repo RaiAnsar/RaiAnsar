@@ -81,7 +81,7 @@ export function Hero() {
             </h1>
 
             {/* Tagline — LCP element: no motion, no opacity delay */}
-            <p className="text-lg md:text-xl text-[#6b7280] leading-relaxed max-w-lg mb-10">
+            <p className="text-lg md:text-xl text-[#7d838f] leading-relaxed max-w-lg mb-10">
               I build fast websites, fix broken servers, and turn technical debt
               into clean, scalable systems.{' '}
               <span className="text-[#9ca3af]">
@@ -143,7 +143,7 @@ export function Hero() {
                   >
                     {stat.value}
                   </div>
-                  <div className="text-xs text-[#374151] uppercase tracking-widest mt-1">
+                  <div className="text-xs text-[#737a85] uppercase tracking-widest mt-1">
                     {stat.label}
                   </div>
                 </div>
@@ -193,7 +193,7 @@ export function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         aria-hidden="true"
       >
-        <span className="text-xs font-medium tracking-widest uppercase text-[#374151]">
+        <span className="text-xs font-medium tracking-widest uppercase text-[#737a85]">
           Scroll
         </span>
         <div

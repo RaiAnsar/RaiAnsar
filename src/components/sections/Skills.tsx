@@ -76,7 +76,7 @@ export function Skills() {
             {skillsDescription.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className="text-[#6b7280] text-base md:text-lg leading-relaxed mb-6 last:mb-0"
+                className="text-[#7d838f] text-base md:text-lg leading-relaxed mb-6 last:mb-0"
                 style={anim(0.4 + index * 0.1)}
               >
                 {paragraph}

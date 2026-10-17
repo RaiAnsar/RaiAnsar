@@ -231,11 +231,11 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                 }}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/40">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/50">
                     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
-                  <span className="text-[10px] uppercase tracking-wider text-white/40">Location</span>
+                  <span className="text-[10px] uppercase tracking-wider text-white/50">Location</span>
                 </div>
                 <p className="text-sm font-medium text-white/80">Islamabad, PK</p>
               </div>
@@ -248,13 +248,13 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                 }}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/40">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/50">
                     <circle cx="12" cy="12" r="10" />
                     <polyline points="12 6 12 12 16 14" />
                   </svg>
-                  <span className="text-[10px] uppercase tracking-wider text-white/40">Local Time</span>
+                  <span className="text-[10px] uppercase tracking-wider text-white/50">Local Time</span>
                 </div>
-                <p className="text-sm font-medium text-white/80 tabular-nums">{localTime} <span className="text-white/40 text-xs">({utcTime} UTC)</span></p>
+                <p className="text-sm font-medium text-white/80 tabular-nums">{localTime} <span className="text-white/50 text-xs">({utcTime} UTC)</span></p>
               </div>
 
               <div
@@ -265,10 +265,10 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                 }}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/40">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/50">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                   </svg>
-                  <span className="text-[10px] uppercase tracking-wider text-white/40">Response</span>
+                  <span className="text-[10px] uppercase tracking-wider text-white/50">Response</span>
                 </div>
                 <p className="text-sm font-medium text-white/80">
                   {isAvailable ? 'Quick' : 'Later'}
@@ -283,13 +283,13 @@ export function StatusModal({ isOpen, onClose }: StatusModalProps) {
                 }}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/40">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/50">
                     <path d="M5 12.55a11 11 0 0 1 14.08 0" />
                     <path d="M1.42 9a16 16 0 0 1 21.16 0" />
                     <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
                     <circle cx="12" cy="20" r="1" fill="currentColor" />
                   </svg>
-                  <span className="text-[10px] uppercase tracking-wider text-white/40">
+                  <span className="text-[10px] uppercase tracking-wider text-white/50">
                     {statusData?.idleMinutes !== undefined ? 'Idle' : 'Connection'}
                   </span>
                 </div>

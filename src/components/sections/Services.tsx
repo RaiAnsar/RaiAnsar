@@ -296,7 +296,7 @@ export function Services() {
             <TextScramble text="What I build" delay={150} />
           </h2>
 
-          <p className="text-white/40 text-lg tracking-wide max-w-2xl" style={anim(0.2)}>
+          <p className="text-white/50 text-lg tracking-wide max-w-2xl" style={anim(0.2)}>
             End-to-end expertise across the full stack, from pixel-perfect frontends to bulletproof infrastructure.
           </p>
         </div>

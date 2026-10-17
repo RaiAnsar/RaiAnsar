@@ -182,7 +182,7 @@ export function Testimonials() {
             <TextScramble text="Client voices" delay={150} />
           </h2>
 
-          <p className="text-[#6b7280] text-lg tracking-wide max-w-md mx-auto" style={anim(0.2)}>
+          <p className="text-[#7d838f] text-lg tracking-wide max-w-md mx-auto" style={anim(0.2)}>
             Real feedback from clients across platforms.
           </p>
         </div>
@@ -199,7 +199,7 @@ export function Testimonials() {
                 className="px-5 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 cursor-pointer"
                 style={{
                   background: isActive ? '#38bdf8' : 'rgba(255, 255, 255, 0.04)',
-                  color: isActive ? '#ffffff' : '#9ca3af',
+                  color: isActive ? '#030712' : '#9ca3af',
                   border: `1px solid ${isActive ? '#38bdf8' : 'rgba(255, 255, 255, 0.08)'}`,
                   boxShadow: isActive ? '0 4px 20px rgba(56,189,248,0.25)' : 'none',
                 }}
@@ -311,7 +311,7 @@ export function Testimonials() {
               <div className="text-3xl md:text-4xl font-black text-white mb-2 group-hover:text-[#38bdf8] transition-colors duration-300">
                 {stat.value}
               </div>
-              <div className="text-sm text-[#6b7280]">{stat.label}</div>
+              <div className="text-sm text-[#7d838f]">{stat.label}</div>
             </div>
           ))}
         </div>

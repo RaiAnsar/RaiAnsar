@@ -56,8 +56,8 @@
   /* Text Colors */
   --color-text-primary: #ffffff;
   --color-text-secondary: #9ca3af;
-  --color-text-muted: #6b7280;
-  --color-text-dim: #374151;
+  --color-text-muted: #7d838f;
+  --color-text-dim: #737a85;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -89,8 +89,8 @@
     /* Text Scale */
     --text-primary: #ffffff;
     --text-secondary: #9ca3af;
-    --text-muted: #6b7280;
-    --text-dim: #374151;
+    --text-muted: #7d838f;
+    --text-dim: #737a85;
 
     /* Borders */
     --border-subtle: rgba(255, 255, 255, 0.06);

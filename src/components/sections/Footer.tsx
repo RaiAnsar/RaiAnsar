@@ -74,8 +74,8 @@ export function Footer() {
                 </span>
               </a>
             </Magnetic>
-            <span className="hidden md:inline text-[#374151]">|</span>
-            <span className="hidden md:inline text-sm text-[#374151]">Full-Stack Developer & DevOps Expert</span>
+            <span className="hidden md:inline text-[#737a85]">|</span>
+            <span className="hidden md:inline text-sm text-[#737a85]">Full-Stack Developer & DevOps Expert</span>
           </div>
 
           {/* Navigation links — horizontal */}
@@ -84,7 +84,7 @@ export function Footer() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-[#6b7280] hover:text-[#38bdf8] transition-colors"
+                className="text-sm text-[#7d838f] hover:text-[#38bdf8] transition-colors"
               >
                 {link.label}
               </a>
@@ -100,7 +100,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Visit ${link.name} profile`}
-                  className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#111827] border border-white/[0.06] text-[#6b7280] hover:text-white hover:border-[#38bdf8]/30 transition-all duration-300"
+                  className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#111827] border border-white/[0.06] text-[#7d838f] hover:text-white hover:border-[#38bdf8]/30 transition-all duration-300"
                 >
                   {link.icon}
                 </a>
@@ -119,12 +119,12 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 border-t border-white/[0.06]" style={anim(0.3)}>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-xs text-[#374151]">
+            <p className="text-xs text-[#737a85]">
               &copy; {currentYear} Rai Ansar. All rights reserved.
             </p>
             <a
               href="mailto:hello@raiansar.com"
-              className="text-xs text-[#374151] hover:text-[#38bdf8] transition-colors"
+              className="text-xs text-[#737a85] hover:text-[#38bdf8] transition-colors"
             >
               hello@raiansar.com
             </a>
