@@ -1,0 +1,12 @@
+{
+  "name": "raiansar-contact",
+  "main": "contact.js",
+  "compatibility_date": "2026-10-01",
+  "account_id": "4b39065aa32f8e91032d3bee1c318857",
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "raiansar.com/api/contact", "zone_name": "raiansar.com" },
+    { "pattern": "www.raiansar.com/api/contact", "zone_name": "raiansar.com" }
+  ],
+  "send_email": [{ "name": "EMAIL" }]
+}
