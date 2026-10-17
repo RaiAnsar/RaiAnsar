@@ -3,7 +3,6 @@
 import { useRef, useState, FormEvent } from 'react';
 import { useInView } from '@/hooks/useInView';
 import Image from 'next/image';
-import emailjs from '@emailjs/browser';
 import { TextScramble } from '@/components/ui/TextScramble';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -33,6 +32,7 @@ export function Contact() {
     message: '',
     budget: 5000,
   });
+  const [honeypot, setHoneypot] = useState('');
   const [status, setStatus] = useState<FormStatus>('idle');
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
 
@@ -73,22 +73,26 @@ export function Contact() {
     setStatus('submitting');
 
     try {
-      await Promise.race([
-        emailjs.send(
-          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-          {
-            from_name: formData.name,
-            from_email: formData.email,
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 10000);
+      let res: Response;
+      try {
+        res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
             message: formData.message,
             budget: formatBudget(formData.budget),
-          },
-          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-        ),
-        new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('Request timed out')), 10000)
-        ),
-      ]);
+            website: honeypot,
+          }),
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timer);
+      }
+      if (!res.ok) throw new Error(`Contact request failed: ${res.status}`);
 
       setStatus('success');
       setFormData({ name: '', email: '', message: '', budget: 5000 });
@@ -143,6 +147,17 @@ export function Contact() {
           {/* Left Column: Form */}
           <div className="lg:col-span-3" style={anim(0.2, 30)}>
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-6" noValidate>
+              {/* Honeypot: hidden from people, filled by bots */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                className="absolute left-[-9999px] h-0 w-0 opacity-0"
+              />
               {/* Name */}
               <div>
                 <label htmlFor="contact-name" className="block text-sm text-[#9ca3af] mb-2 tracking-wide">
