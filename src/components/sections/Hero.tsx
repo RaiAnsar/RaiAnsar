@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Image from 'next/image';
 
 export function Hero() {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -164,13 +163,18 @@ export function Hero() {
             <div className="relative w-[340px] h-[440px] rounded-2xl overflow-hidden">
               <div className="absolute inset-0 rounded-2xl border border-white/[0.08] z-10 pointer-events-none" />
 
-              <Image
-                src="/images/hero-rai.jpg"
+              {/* Static export serves images unoptimised, so the sizes ship pre-cropped to the 340x440 frame. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/hero-rai-680.webp"
+                srcSet="/images/hero-rai-340.webp 340w, /images/hero-rai-680.webp 680w"
+                sizes="(max-width: 1023px) 1px, 340px"
+                width={340}
+                height={440}
                 alt="Rai Ansar"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 0px, 340px"
+                className="absolute inset-0 h-full w-full object-cover"
                 fetchPriority="high"
+                decoding="async"
               />
 
               {/* Bottom fade */}
