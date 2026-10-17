@@ -368,7 +368,7 @@ export function Contact() {
                   >
                     <Image
                       src={link.icon}
-                      alt={link.name}
+                      alt=""
                       width={18}
                       height={18}
                       className="invert opacity-60 group-hover:opacity-100 transition-opacity duration-300"
