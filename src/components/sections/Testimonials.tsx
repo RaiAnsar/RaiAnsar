@@ -247,7 +247,7 @@ export function Testimonials() {
               </svg>
             </button>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               {Array.from({ length: totalPages }).map((_, i) => {
                 const isActiveDot = i === currentPage;
                 return (
@@ -255,7 +255,7 @@ export function Testimonials() {
                     key={i}
                     type="button"
                     onClick={() => goToPage(i)}
-                    className="transition-all duration-300 cursor-pointer"
+                    className="p-2 transition-all duration-300 cursor-pointer"
                     aria-label={`Go to page ${i + 1}`}
                     aria-current={isActiveDot ? 'true' : undefined}
                   >
