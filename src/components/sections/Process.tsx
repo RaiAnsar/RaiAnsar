@@ -195,7 +195,7 @@ export function Process() {
           </div>
 
           {/* Process steps */}
-          <div className="relative space-y-16 md:space-y-24">
+          <div className="relative space-y-16 md:space-y-24" role="list">
             {steps.map((step, index) => {
               const isLeft = index % 2 === 0;
 
@@ -290,6 +290,7 @@ export function Process() {
                         {/* Details */}
                         <div
                           className={`flex flex-wrap gap-2 ${!isLeft ? 'md:justify-end' : ''}`}
+                          role="list"
                           aria-label={`${step.title} details`}
                         >
                           {step.details.map((detail, i) => (
