@@ -35,10 +35,19 @@ jobs:
 
       - name: Deploy via rsync
         run: |
+          # Keep the previous builds' hashed chunks: Cloudflare caches HTML at the edge
+          # for up to a day (cdn-cache-control), and that HTML still points at the old
+          # chunk names. Deleting them served the 2026-10-17 HTML with a 404 stylesheet
+          # (unstyled site) until a manual purge on 2026-10-18.
           rsync -avz --delete \
+            --filter='protect /_next/static/***' \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
             ./out/ \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
+          # Bounded retention: drop static chunks no build has written for 14 days.
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            "find '${{ secrets.DEPLOY_PATH }}/_next/static' -type f -mtime +14 -delete 2>/dev/null; true"
 
       - name: Cleanup SSH key
         if: always()
