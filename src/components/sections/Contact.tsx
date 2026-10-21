@@ -9,7 +9,7 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 const socialLinks = [
   { name: 'GitHub', href: 'https://github.com/RaiAnsar', icon: '/images/svg/github.svg' },
-  { name: 'X', href: 'https://x.com/raiansar', icon: '/images/svg/x.svg' },
+  { name: 'X', href: 'https://x.com/iraiansar', icon: '/images/svg/x.svg' },
   { name: 'Upwork', href: 'https://www.upwork.com/freelancers/iraiansar', icon: '/images/svg/upwork.svg' },
   { name: 'Fiverr', href: 'https://www.fiverr.com/raiansar', icon: '/images/svg/fiverr.svg' },
   { name: 'LinkedIn', href: 'https://www.linkedin.com/in/raiansar/', icon: '/images/svg/linkedin.svg' },

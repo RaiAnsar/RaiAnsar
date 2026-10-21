@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Rai Ansar | Full-Stack Developer & DevOps Expert",
     description: "DevOps, infrastructure & speed experts. We turn slow, crashing sites into sub-2-second machines that convert.",
-    creator: "@raiansar",
+    creator: "@iraiansar",
     images: ["/images/og-image.png"],
   },
   alternates: {
@@ -106,7 +106,7 @@ export default function RootLayout({
     sameAs: [
       'https://github.com/RaiAnsar',
       'https://www.linkedin.com/in/raiansar/',
-      'https://x.com/raiansar',
+      'https://x.com/iraiansar',
       'https://www.upwork.com/freelancers/iraiansar',
     ],
     knowsAbout: [
