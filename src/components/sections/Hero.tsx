@@ -85,7 +85,7 @@ export function Hero() {
               I build fast websites, fix broken servers, and turn technical debt
               into clean, scalable systems.{' '}
               <span className="text-[#9ca3af]">
-                6+ years of shipping code that works.
+                Shipping code that works since 2019.
               </span>
             </p>
 
@@ -128,7 +128,7 @@ export function Hero() {
               aria-label="Statistics"
             >
               {[
-                { value: '6+', label: 'Years' },
+                { value: '2019', label: 'Building since' },
                 { value: '300+', label: 'Projects' },
                 { value: '<24h', label: 'Response' },
               ].map((stat) => (

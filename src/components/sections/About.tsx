@@ -61,7 +61,7 @@ export function About() {
             className="text-3xl sm:text-4xl md:text-5xl font-medium text-white leading-[1.15]"
             style={isInView ? fadeIn(0.1, 30) : hidden(30)}
           >
-            6+ years of turning{' '}
+            Since 2019, turning{' '}
             <span className="gradient-text">complexity</span> into clean,
             maintainable software.
           </h2>
@@ -116,7 +116,7 @@ export function About() {
           style={isInView ? fadeIn(0.8, 30) : hidden(30)}
         >
           {[
-            { value: '6+', label: 'Years Experience' },
+            { value: '2019', label: 'Shipping Since' },
             { value: '300+', label: 'Projects Shipped' },
             { value: '20+', label: 'Technologies' },
             { value: '100%', label: 'Satisfaction' },

@@ -29,7 +29,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://raiansar.com"),
   title: "Rai Ansar | Full-Stack Developer & DevOps Expert",
-  description: "Full-stack developer & DevOps expert in Islamabad. I build fast websites, fix servers, and turn technical debt into scalable systems. 6+ years experience.",
+  description: "Full-stack developer and DevOps engineer since 2019, based in Islamabad. I make websites fast, fix servers and turn technical debt into clean systems.",
   keywords: [
     "full-stack developer",
     "DevOps engineer",
@@ -97,7 +97,7 @@ export default function RootLayout({
     url: 'https://raiansar.com',
     image: 'https://raiansar.com/images/hero-rai.jpg',
     jobTitle: 'Full-Stack Developer & DevOps Expert',
-    description: 'Full-stack developer and DevOps expert based in Islamabad, Pakistan with 6+ years of experience and 300+ projects delivered.',
+    description: 'Full-stack developer and DevOps engineer based in Islamabad, Pakistan, building and running production websites since May 2019, with 300+ projects delivered.',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Islamabad',
