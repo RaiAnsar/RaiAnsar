@@ -2,7 +2,6 @@
 
 import { useRef, useState, FormEvent } from 'react';
 import { useInView } from '@/hooks/useInView';
-import Image from 'next/image';
 import { TextScramble } from '@/components/ui/TextScramble';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -366,12 +365,19 @@ export function Contact() {
                     className="group flex items-center gap-2.5 bg-[#111827] border border-[#374151] rounded-xl px-4 py-3 hover:border-[#38bdf8]/40 hover:-translate-y-0.5 transition-all duration-300"
                     style={anim(0.8 + index * 0.08)}
                   >
-                    <Image
-                      src={link.icon}
-                      alt=""
-                      width={18}
-                      height={18}
-                      className="invert opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                    <span
+                      aria-hidden="true"
+                      className="inline-block w-[18px] h-[18px] bg-white opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{
+                        WebkitMaskImage: `url(${link.icon})`,
+                        maskImage: `url(${link.icon})`,
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskSize: 'contain',
+                        maskSize: 'contain',
+                        WebkitMaskPosition: 'center',
+                        maskPosition: 'center',
+                      }}
                     />
                     <span className="text-sm text-[#9ca3af] group-hover:text-white transition-colors duration-300">
                       {link.name}
