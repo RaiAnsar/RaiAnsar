@@ -41,9 +41,23 @@ const Footer = dynamic(() => import('@/components/sections/Footer').then(mod => 
   loading: () => <div className="min-h-[200px]" />,
 });
 
+// Homepage only: Google reads the site name from WebSite JSON-LD on the homepage.
+// name matches og:site_name and the header; url is the homepage canonical.
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Rai Ansar',
+  alternateName: 'raiansar',
+  url: 'https://raiansar.com/',
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       {/* Skip to main content link for accessibility */}
       <SkipLink />
 
