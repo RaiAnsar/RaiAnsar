@@ -76,7 +76,7 @@ export function Hero() {
               className="font-normal tracking-[-0.04em] leading-[0.85] mb-8"
               style={{ fontSize: 'clamp(3rem, 7vw, 7rem)' }}
             >
-              <span className="text-white block">Rai</span>
+              <span className="text-white block">Rai</span>{' '}
               <span className="gradient-text block">Ansar.</span>
             </h1>
 

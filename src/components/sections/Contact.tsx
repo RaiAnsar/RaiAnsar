@@ -129,7 +129,7 @@ export function Contact() {
           </span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6">
-            <TextScramble text="Let's Work" delay={200} />
+            <TextScramble text="Let's Work" delay={200} />{' '}
             <br />
             <span className="gradient-text">
               <TextScramble text="Together" delay={400} />

@@ -54,7 +54,7 @@ export function Skills() {
         >
           <span className="block mb-2">
             <TextScramble text="My" delay={100} />
-          </span>
+          </span>{' '}
           <span className="block">
             <span className="gradient-text">
               <TextScramble text="Skills" delay={300} />
