@@ -71,7 +71,14 @@ export function About() {
               I&apos;ve worked with agencies, startups, and established
               companies — building everything from landing pages to full SaaS
               platforms. I write code that other developers can actually
-              maintain, and I ship on time.
+              maintain, and I ship on time. I&apos;m also{' '}
+              <a
+                href="https://acefina.com/team/rai-ansar"
+                className="text-[#9ca3af] border-b border-[#38bdf8]/60 hover:text-[#38bdf8] hover:border-[#38bdf8] focus-visible:text-[#38bdf8] transition-colors"
+              >
+                founder and lead engineer at Acefina
+              </a>
+              .
             </p>
           </div>
         </div>
