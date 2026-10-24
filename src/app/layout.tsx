@@ -103,11 +103,19 @@ export default function RootLayout({
       addressLocality: 'Islamabad',
       addressCountry: 'PK',
     },
+    worksFor: {
+      '@type': 'Organization',
+      name: 'ACEFINA LLC',
+      url: 'https://acefina.com',
+    },
     sameAs: [
       'https://github.com/RaiAnsar',
       'https://www.linkedin.com/in/raiansar/',
       'https://x.com/iraiansar',
       'https://www.upwork.com/freelancers/iraiansar',
+      'https://www.fiverr.com/raiansar',
+      'https://peerlist.io/raiansar',
+      'https://acefina.com/team/rai-ansar',
     ],
     knowsAbout: [
       'Full-Stack Development',
