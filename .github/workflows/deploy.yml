@@ -49,6 +49,15 @@ jobs:
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
             "find '${{ secrets.DEPLOY_PATH }}/_next/static' -type f -mtime +14 -delete 2>/dev/null; true"
 
+      - name: Purge the Cloudflare cache
+        run: |
+          # HTML is cached at the edge for up to a day, so without a purge a deploy
+          # stays invisible (10-22 and 10-29 needed a manual purge). cf-purge on the
+          # server holds a token scoped to Zone Cache Purge only.
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            "sudo -n /usr/local/bin/cf-purge raiansar.com"
+
       - name: Cleanup SSH key
         if: always()
         run: rm -f ~/.ssh/deploy_key
