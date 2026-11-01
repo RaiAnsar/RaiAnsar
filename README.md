@@ -57,6 +57,11 @@ const rai = {
 </tr>
 </table>
 
+- [WebHostingGuide.net](https://webhostingguide.net): web hosting comparisons with intro and renewal prices
+- [VerifyABN](https://verifyabn.com): free, independent ABN lookup on Australian Business Register data
+- [MultiplicationChart.app](https://multiplicationchart.app): printable multiplication charts 1-12 and times tables worksheets with answer keys
+- [PaletteQuiz](https://palettequiz.com): a 14-question seasonal color analysis quiz, no photo needed
+
 ---
 
 ### Tech
