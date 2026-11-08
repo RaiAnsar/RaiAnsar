@@ -7,13 +7,7 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://raiansar.com/images/hero-rai.jpg</image:loc>
-      <image:title>Rai Ansar, full-stack developer and DevOps engineer</image:title>
-      <image:caption>Rai Ansar, full-stack developer and DevOps engineer since 2019, based in Islamabad, Pakistan</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://raiansar.com/images/og-image.png</image:loc>
-      <image:title>Rai Ansar Portfolio</image:title>
+      <image:loc>https://raiansar.com/images/hero-rai-680.webp</image:loc>
     </image:image>
   </url>
 </urlset>

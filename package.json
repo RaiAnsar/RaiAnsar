@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "check": "npm run lint && npm run build",
+    "check": "npm run lint && npm test && npm run build",
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node checks/export.mjs out",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --test checks/*.test.mjs"
   },
   "dependencies": {
     "@heroui/react": "^3.0.0-beta.5",
